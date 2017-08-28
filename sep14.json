@@ -1,9 +1,9 @@
 {
   "appid": "80da1c61-9e8a-41fa-a147-bb7cc55a9323", 
   "name": "Symantec Endpoint Protection 14",
-  "description": "Integrate with Symantec Endpoint Protection 14 to execute investigative, containment and corrective actions.",
+  "description": "Integrate with Symantec Endpoint Protection 14 to execute <b>investigative</b>, <b>containment</b> and <b>corrective</b> actions",
   "publisher": "Phantom", 
-  "package_name": "phantom_symantecendpointprotection14",
+  "package_name": "phantom_sep14",
   "license": "Copyright (c) Phantom Cyber Corporation 2017",
   "main_module": "sep14_connector.pyc",
   "type": "endpoint",
