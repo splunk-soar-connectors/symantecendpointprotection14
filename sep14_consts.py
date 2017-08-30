@@ -1,5 +1,5 @@
 # --
-# File: sep14/sep14_consts.py
+# File: sep14_consts.py
 #
 # Copyright (c) Phantom Cyber Corporation, 2017
 #

@@ -1,5 +1,5 @@
 # --
-# File: sep14/sep14_view.py
+# File: sep14_view.py
 #
 # Copyright (c) Phantom Cyber Corporation, 2017
 #
