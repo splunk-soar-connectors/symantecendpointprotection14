@@ -1,5 +1,5 @@
 # --
-# File: sep14/sep14_connector.py
+# File: sep14_connector.py
 #
 # Copyright (c) Phantom Cyber Corporation, 2017
 #
