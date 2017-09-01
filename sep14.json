@@ -102,7 +102,7 @@
           "data_path": "action_result.data.*.companyName",
           "data_type": "string",
           "example_values": [
-            "Crest Data Systems"
+            "Phantom"
           ]
         },
         {
@@ -1037,7 +1037,7 @@
           "data_path": "action_result.data.*.lastServerName",
           "data_type": "string",
           "example_values": [
-            "Crest-HyperV"
+            "Phantom-HyperV"
           ]
         },
         {
@@ -1239,7 +1239,7 @@
           "data_path": "action_result.data.*.logonUserName",
           "data_type": "string",
           "example_values": [
-            "crest"
+            "phantom"
           ],
           "contains": [
             "user name"
@@ -2197,7 +2197,7 @@
           "data_path": "action_result.data.*.lastServerName",
           "data_type": "string",
           "example_values": [
-            "Crest-HyperV"
+            "Phantom-HyperV"
           ]
         },
         {
@@ -2399,7 +2399,7 @@
           "data_path": "action_result.data.*.logonUserName",
           "data_type": "string",
           "example_values": [
-            "crest"
+            "phantom"
           ],
           "contains": [
             "user name"
@@ -2779,7 +2779,7 @@
           "data_path": "action_result.data.*.currentLoginUserName",
           "data_type": "string",
           "example_values": [
-            "crest"
+            "phantom"
           ],
           "contains": [
             "user name"
