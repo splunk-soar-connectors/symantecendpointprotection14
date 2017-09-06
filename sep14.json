@@ -1,18 +1,18 @@
 {
-  "appid": "80da1c61-9e8a-41fa-a147-bb7cc55a9323", 
+  "appid": "80da1c61-9e8a-41fa-a147-bb7cc55a9323",
   "name": "Symantec Endpoint Protection 14",
   "description": "Integrate with Symantec Endpoint Protection 14 to execute <b>investigative</b>, <b>containment</b> and <b>corrective</b> actions",
-  "publisher": "Phantom", 
+  "publisher": "Phantom",
   "package_name": "phantom_sep14",
   "license": "Copyright (c) Phantom Cyber Corporation 2017",
   "main_module": "sep14_connector.pyc",
   "type": "endpoint",
-    "app_version": "1.0.5",
-    "utctime_updated": "2017-09-01T01:00:20.000000Z",
+  "app_version": "1.0.6",
+  "utctime_updated": "2017-09-06T18:38:03.000000Z",
   "product_vendor": "Symantec",
   "product_name": "Symantec Endpoint Protection 14",
   "product_version_regex": "14.0.*",
-  "min_phantom_version": "3.0.247", 
+  "min_phantom_version": "3.0.247",
   "logo": "symantec.png",
   "configuration": {
     "url": {
@@ -42,13 +42,13 @@
   },
   "actions": [
     {
-      "action": "test connectivity", 
-      "description": "Validate credentials provided for connectivity", 
-      "type": "test", 
-      "identifier": "test_asset_connectivity", 
-      "read_only": true, 
-      "parameters": {}, 
-      "output": [], 
+      "action": "test connectivity",
+      "description": "Validate credentials provided for connectivity",
+      "type": "test",
+      "identifier": "test_asset_connectivity",
+      "read_only": true,
+      "parameters": {},
+      "output": [],
       "versions": "EQ(*)"
     },
     {
@@ -2667,7 +2667,7 @@
       "identifier": "get_status",
       "read_only": true,
       "parameters": {
-        "id":{
+        "id": {
           "description": "Command ID",
           "data_type": "string",
           "required": true,
@@ -2849,7 +2849,7 @@
       "identifier": "unquarantine_device",
       "read_only": false,
       "parameters": {
-        "id":{
+        "id": {
           "description": "Computer ID",
           "data_type": "string",
           "contains": [
@@ -2863,7 +2863,8 @@
           "data_type": "string",
           "order": 1,
           "contains": [
-            "ip", "host name"
+            "ip",
+            "host name"
           ],
           "primary": true
         },
@@ -2937,9 +2938,13 @@
         {
           "data_path": "action_result.parameter.ip_hostname",
           "data_type": "string",
-          "contains": ["ip", "host name"],
+          "contains": [
+            "ip",
+            "host name"
+          ],
           "example_values": [
-            "172.16.4.82", "admin-PC"
+            "172.16.4.82",
+            "admin-PC"
           ]
         },
         {
@@ -2975,7 +2980,7 @@
       "identifier": "quarantine_device",
       "read_only": false,
       "parameters": {
-        "id":{
+        "id": {
           "description": "Computer ID",
           "data_type": "string",
           "contains": [
@@ -2989,7 +2994,8 @@
           "data_type": "string",
           "order": 1,
           "contains": [
-            "ip", "host name"
+            "ip",
+            "host name"
           ],
           "primary": true
         },
@@ -3063,9 +3069,13 @@
         {
           "data_path": "action_result.parameter.ip_hostname",
           "data_type": "string",
-          "contains": ["ip", "host name"],
+          "contains": [
+            "ip",
+            "host name"
+          ],
           "example_values": [
-            "172.16.4.82", "admin-PC"
+            "172.16.4.82",
+            "admin-PC"
           ]
         },
         {
@@ -3101,7 +3111,7 @@
       "identifier": "unblock_hash",
       "read_only": false,
       "parameters": {
-          "group_id": {
+        "group_id": {
           "description": "Group ID",
           "data_type": "string",
           "primary": true,
@@ -3526,7 +3536,7 @@
       "identifier": "scan_endpoint",
       "read_only": true,
       "parameters": {
-        "id":{
+        "id": {
           "description": "Computer ID",
           "data_type": "string",
           "contains": [
@@ -3541,7 +3551,8 @@
           "data_type": "string",
           "order": 1,
           "contains": [
-            "ip", "host name"
+            "ip",
+            "host name"
           ],
           "primary": true,
           "allow_list": true
@@ -3550,7 +3561,10 @@
           "description": "Scan Type (Default: QUICK_SCAN)",
           "data_type": "string",
           "order": 2,
-          "value_list": ["QUICK_SCAN", "FULL_SCAN"],
+          "value_list": [
+            "QUICK_SCAN",
+            "FULL_SCAN"
+          ],
           "contains": [
             "symantec scan type"
           ],
@@ -3628,9 +3642,13 @@
         {
           "data_path": "action_result.parameter.ip_hostname",
           "data_type": "string",
-          "contains": ["ip", "host name"],
+          "contains": [
+            "ip",
+            "host name"
+          ],
           "example_values": [
-            "172.16.4.82", "admin-PC"
+            "172.16.4.82",
+            "admin-PC"
           ]
         },
         {
@@ -3640,7 +3658,8 @@
             "symantec scan type"
           ],
           "example_values": [
-            "FULL_SCAN", "QUICK_SCAN"
+            "FULL_SCAN",
+            "QUICK_SCAN"
           ]
         },
         {
