@@ -91,7 +91,11 @@ of Phantom Cyber Corporation.
     }
 
     .sep .glyphicon.glyphicon-dot:before {
-    content: "\25cf"; font-size: 10px;
+        content: "\25cf"; font-size: 10px;
+    }
+
+    .sep a.nowrap {
+        white-space:nowrap;
     }
 
 </style>
@@ -233,12 +237,17 @@ of Phantom Cyber Corporation.
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
                                 </td>
-                                <td><a href="javascript:;"
-                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.ipAddresses }}' }], 0, {{ container.id }}, null, false);">
-                                        {{ current_entry.ipAddresses }}
+                                <td>
+                                    {% for ip_addr in current_entry.ipAddresses %}
+                                    <span class="glyphicon glyphicon-dot"></span>&nbsp;
+                                    <a class="nowrap" href="javascript:;"
+                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                                        {{ ip_addr }}
                                         &nbsp;
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
+                                    {% if not forloop.last %}<br/> {% endif %}
+                                    {% endfor %}
                                 </td>
                                 <td>{{ current_entry.agentVersion }}</td>
                                 <td>{{ current_entry.lastUpdateTime }}</td>
@@ -296,12 +305,17 @@ of Phantom Cyber Corporation.
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
                                 </td>
-                                <td><a href="javascript:;"
-                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.ipAddresses }}' }], 0, {{ container.id }}, null, false);">
-                                        {{ current_entry.ipAddresses }}
+                                <td>
+                                    {% for ip_addr in current_entry.ipAddresses %}
+                                    <span class="glyphicon glyphicon-dot"></span>&nbsp;
+                                    <a class="nowrap" href="javascript:;"
+                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                                        {{ ip_addr }}
                                         &nbsp;
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
+                                    {% if not forloop.last %}<br/> {% endif %}
+                                    {% endfor %}
                                 </td>
                                 <td>{{ current_entry.lastScanTime }}</td>
                                 <td>{{ current_entry.firewallOnOff }}</td>
@@ -367,19 +381,12 @@ of Phantom Cyber Corporation.
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
                                 </td>
-                                <td><a href="javascript:;"
-                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.ipAddresses }}' }], 0, {{ container.id }}, null, false);">
-                                        {{ current_entry.ipAddresses }}
-                                        &nbsp;
-                                        <span class="fa fa-caret-down" style="font-size: smaller;"></span>
-                                    </a>
-                                </td>
                                 <td>
-                                    {% for dns_server in current_entry.dnsServers %}
+                                    {% for ip_addr in current_entry.ipAddresses %}
                                     <span class="glyphicon glyphicon-dot"></span>&nbsp;
-                                    <a href="javascript:;"
-                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ dns_server }}' }], 0, {{ container.id }}, null, false);">
-                                        {{ dns_server }}
+                                    <a class="nowrap" href="javascript:;"
+                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                                        {{ ip_addr }}
                                         &nbsp;
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
@@ -387,8 +394,25 @@ of Phantom Cyber Corporation.
                                     {% endfor %}
                                 </td>
                                 <td>
+                                    {% for dns_server in current_entry.dnsServers %}
+                                    <span class="glyphicon glyphicon-dot"></span>&nbsp;
+                                    {% if dns_server != '...' %}
+                                        <a href="javascript:;"
+                                           onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ dns_server }}' }], 0, {{ container.id }}, null, false);">
+                                            {{ dns_server }}
+                                            &nbsp;
+                                            <span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                                        </a>
+                                        {% if not forloop.last %}<br/> {% endif %}
+                                    {% else %}
+                                    {{ dns_server }}<br/>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
                                     {% for win_server in current_entry.winServers %}
                                     <span class="glyphicon glyphicon-dot"></span>&nbsp;
+                                    {% if win_server != '...' %}
                                     <a href="javascript:;"
                                        onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ win_server }}' }], 0, {{ container.id }}, null, false);">
                                         {{ win_server }}
@@ -396,6 +420,9 @@ of Phantom Cyber Corporation.
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
                                     {% if not forloop.last %}<br/> {% endif %}
+                                    {% else %}
+                                    {{ win_server }}<br/>
+                                    {% endif %}
                                     {% endfor %}
                                 </td>
                                 <td><a href="javascript:;"
@@ -460,12 +487,17 @@ of Phantom Cyber Corporation.
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
                                 </td>
-                                <td><a href="javascript:;"
-                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.ipAddresses }}' }], 0, {{ container.id }}, null, false);">
-                                        {{ current_entry.ipAddresses }}
+                                <td>
+                                    {% for ip_addr in current_entry.ipAddresses %}
+                                    <span class="glyphicon glyphicon-dot"></span>&nbsp;
+                                    <a class="nowrap" href="javascript:;"
+                                       onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                                        {{ ip_addr }}
                                         &nbsp;
                                         <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                     </a>
+                                    {% if not forloop.last %}<br/> {% endif %}
+                                    {% endfor %}
                                 </td>
                                 <td>{{ current_entry.operatingSystem }}</td>
                                 <td>{{ current_entry.osServicePack }}</td>

@@ -57,7 +57,6 @@ SEP_SCAN_ENDPOINT_PAYLOAD = "<EOC creator='Phantom' version='1.1' id='1'><DataSo
                             "time='{curr_time}'><Description>{scan_description}" \
                             "</Description><Attacker></Attacker></Threat><Activity></Activity>" \
                             "</EOC>"
-SEP_ENDPOINT_DESCRIPTION = "message: {message}\nmachine status: {status}"
 SEP_PARAM_NOT_SPECIFIED = "Neither {0} nor {1} specified. Please specify at least one of them"
 SEP_IP_HOSTNAME_VALIDATION_ERROR = "Parameter validation failed for 'ip_hostname' field"
 SEP_DEVICE_NOT_FOUND = "Device not found to {action}"
@@ -74,6 +73,8 @@ SEP_PARAM_HASH = "hash"
 SEP_PARAM_COMPUTER_ID = "id"
 SEP_PARAM_IP_HOSTNAME = "ip_hostname"
 SEP_PARAM_DOMAIN = "domain"
+SEP_PARAM_TIMEOUT = "timeout"
+SEP_INVALID_TIMEOUT = "Invalid Timeout"
 SEP_INVALID_DOMAIN = "Invalid Domain"
 SEP_INVALID_IP_HOSTNAME = "Invalid IP/Hostname"
 SEP_PARAM_SCAN_TYPE = "type"
