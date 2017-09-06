@@ -2811,7 +2811,7 @@
           "data_path": "action_result.summary.command_state",
           "data_type": "string",
           "example_values": [
-            "INITIAL", "IN_PROGRESS"
+            "MCHWIN20- INITIAL, MCHWIN17- COMPLETED"
           ]
         },
         {
@@ -2866,18 +2866,23 @@
             "ip", "host name"
           ],
           "primary": true
+        },
+        "timeout": {
+          "description": "Timeout (Default: 30)",
+          "data_type": "numeric",
+          "order": 3,
+          "default": 30
         }
       },
       "render": {
         "width": 12,
         "title": "Unquarantine Device",
-        "type": "table",
-        "height": 5
+        "type": "custom",
+        "height": 5,
+        "view": "sep14_view.display_view"
       },
       "output": [
         {
-          "column_order": 0,
-          "column_name": "Command ID",
           "data_path": "action_result.data.*.commandID_computer",
           "data_type": "string",
           "contains": [
@@ -2913,8 +2918,13 @@
           ]
         },
         {
-          "column_order": 1,
-          "column_name": "Computer ID",
+          "data_path": "action_result.summary.state_id_status",
+          "data_type": "string",
+          "example_values": [
+            "COMPLETED"
+          ]
+        },
+        {
           "data_path": "action_result.parameter.id",
           "data_type": "string",
           "contains": [
@@ -2925,13 +2935,18 @@
           ]
         },
         {
-          "column_order": 2,
-          "column_name": "IP/Hostname",
           "data_path": "action_result.parameter.ip_hostname",
           "data_type": "string",
           "contains": ["ip", "host name"],
           "example_values": [
             "172.16.4.82", "admin-PC"
+          ]
+        },
+        {
+          "data_path": "action_result.parameter.timeout",
+          "data_type": "numeric",
+          "example_values": [
+            30
           ]
         },
         {
@@ -2977,18 +2992,23 @@
             "ip", "host name"
           ],
           "primary": true
+        },
+        "timeout": {
+          "description": "Timeout (Default: 30)",
+          "data_type": "numeric",
+          "order": 3,
+          "default": 30
         }
       },
       "render": {
         "width": 12,
         "title": "Quarantine Device",
-        "type": "table",
-        "height": 5
+        "type": "custom",
+        "height": 5,
+        "view": "sep14_view.display_view"
       },
       "output": [
         {
-          "column_order": 0,
-          "column_name": "Command ID",
           "data_path": "action_result.data.*.commandID_computer",
           "data_type": "string",
           "contains": [
@@ -3024,8 +3044,13 @@
           ]
         },
         {
-          "column_order": 1,
-          "column_name": "Computer ID",
+          "data_path": "action_result.summary.state_id_status",
+          "data_type": "string",
+          "example_values": [
+            "COMPLETED"
+          ]
+        },
+        {
           "data_path": "action_result.parameter.id",
           "data_type": "string",
           "contains": [
@@ -3036,13 +3061,18 @@
           ]
         },
         {
-          "column_order": 2,
-          "column_name": "IP/Hostname",
           "data_path": "action_result.parameter.ip_hostname",
           "data_type": "string",
           "contains": ["ip", "host name"],
           "example_values": [
             "172.16.4.82", "admin-PC"
+          ]
+        },
+        {
+          "data_path": "action_result.parameter.timeout",
+          "data_type": "numeric",
+          "example_values": [
+            30
           ]
         },
         {
@@ -3503,7 +3533,8 @@
             "symantec device id"
           ],
           "order": 0,
-          "primary": true
+          "primary": true,
+          "allow_list": true
         },
         "ip_hostname": {
           "description": "Hostname/IP of endpoint to scan",
@@ -3512,7 +3543,8 @@
           "contains": [
             "ip", "host name"
           ],
-          "primary": true
+          "primary": true,
+          "allow_list": true
         },
         "type": {
           "description": "Scan Type (Default: QUICK_SCAN)",
@@ -3522,20 +3554,26 @@
           "contains": [
             "symantec scan type"
           ],
-          "primary": true
+          "primary": true,
+          "default": "QUICK_SCAN"
+        },
+        "timeout": {
+          "description": "Timeout (Default: 30)",
+          "data_type": "numeric",
+          "order": 3,
+          "default": 30
         }
       },
       "versions": "EQ(*)",
       "render": {
         "width": 12,
         "height": 5,
-        "type": "table",
-        "title": "Scan Endpoint"
+        "type": "custom",
+        "title": "Scan Endpoint",
+        "view": "sep14_view.display_view"
       },
       "output": [
         {
-          "column_order": 0,
-          "column_name": "Command ID",
           "data_path": "action_result.data.*.commandID_computer",
           "data_type": "string",
           "contains": [
@@ -3571,8 +3609,13 @@
           ]
         },
         {
-          "column_order": 1,
-          "column_name": "Computer ID",
+          "data_path": "action_result.summary.state_id_status",
+          "data_type": "string",
+          "example_values": [
+            "COMPLETED"
+          ]
+        },
+        {
           "data_path": "action_result.parameter.id",
           "data_type": "string",
           "contains": [
@@ -3583,8 +3626,6 @@
           ]
         },
         {
-          "column_order": 2,
-          "column_name": "IP/Hostname",
           "data_path": "action_result.parameter.ip_hostname",
           "data_type": "string",
           "contains": ["ip", "host name"],
@@ -3593,8 +3634,6 @@
           ]
         },
         {
-          "column_order": 3,
-          "column_name": "Scan Type",
           "data_path": "action_result.parameter.type",
           "data_type": "string",
           "contains": [
@@ -3602,6 +3641,13 @@
           ],
           "example_values": [
             "FULL_SCAN", "QUICK_SCAN"
+          ]
+        },
+        {
+          "data_path": "action_result.parameter.timeout",
+          "data_type": "numeric",
+          "example_values": [
+            30
           ]
         },
         {
