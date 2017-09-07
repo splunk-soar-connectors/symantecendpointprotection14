@@ -94,7 +94,7 @@ def _get_ctx_result(result, provides):
                                                                          time.localtime(item['lastUpdateTime'] / 1000)),
                                                            const_utc)
                 if item['ipAddresses']:
-                    item['ipAddresses'] = item['ipAddresses'][0]
+                    item['ipAddresses'] = (item['ipAddresses']).split(",")
                 if item['macAddresses']:
                     item['macAddresses'] = item['macAddresses'][0]
                 if item['gateways']:
@@ -140,3 +140,6 @@ def display_view(provides, all_app_runs, context):
 
     if provides in ["block hash", "unblock hash"]:
         return 'sep14_display_hash_results.html'
+
+    if provides in ["scan endpoint", "quarantine device", "unquarantine device"]:
+        return 'sep14_scan_endpoint.html'
