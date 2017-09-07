@@ -2884,16 +2884,6 @@
       },
       "output": [
         {
-          "data_path": "action_result.data.*.commandID_computer",
-          "data_type": "string",
-          "contains": [
-            "symantec command id"
-          ],
-          "example_values": [
-            "DD907E415DF84E30B1F3FD8473DC4162"
-          ]
-        },
-        {
           "data_path": "action_result.status",
           "data_type": "string",
           "example_values": [
@@ -3014,16 +3004,6 @@
         "view": "sep14_view.display_view"
       },
       "output": [
-        {
-          "data_path": "action_result.data.*.commandID_computer",
-          "data_type": "string",
-          "contains": [
-            "symantec command id"
-          ],
-          "example_values": [
-            "09357DB926FC40CE8B1A38D733DC4695"
-          ]
-        },
         {
           "data_path": "action_result.status",
           "data_type": "string",
@@ -3587,16 +3567,6 @@
         "view": "sep14_view.display_view"
       },
       "output": [
-        {
-          "data_path": "action_result.data.*.commandID_computer",
-          "data_type": "string",
-          "contains": [
-            "symantec command id"
-          ],
-          "example_values": [
-            "09357DB926FC40CE8B1A38D733DC4695"
-          ]
-        },
         {
           "data_path": "action_result.status",
           "data_type": "string",

@@ -695,11 +695,14 @@ class Sep14Connector(BaseConnector):
         action_result.add_data(response_data)
 
         # Providing Command ID in summary
-        summary_data["command_id"] = response_data["commandID_computer"]
+        try:
+            summary_data["command_id"] = response_data.pop("commandID_computer")
+        except:
+            pass
 
         # Poll for command status
         command_status, state_id_status = self._get_command_status_by_id(
-            action_result, response_data.get("commandID_computer"), timeout
+            action_result, summary_data.get("command_id"), timeout
         )
         # Something went wrong
         if phantom.is_fail(command_status):
@@ -896,11 +899,14 @@ class Sep14Connector(BaseConnector):
         action_result.add_data(response_data)
 
         # Providing Command ID in summary
-        summary_data["command_id"] = response_data["commandID_computer"]
+        try:
+            summary_data["command_id"] = response_data.pop("commandID_computer")
+        except:
+            pass
 
         # Poll for command status
         command_status, state_id_status = self._get_command_status_by_id(
-            action_result, response_data.get("commandID_computer"), timeout
+            action_result, summary_data.get("command_id"), timeout
         )
         # Something went wrong
         if phantom.is_fail(command_status):
@@ -1248,11 +1254,14 @@ class Sep14Connector(BaseConnector):
         if phantom.is_fail(status):
             return action_result.get_status()
 
-        summary_data["command_id"] = scan_resp.get("commandID_computer")
+        try:
+            summary_data["command_id"] = scan_resp.pop("commandID_computer")
+        except:
+            pass
 
         # Poll for command status
         command_status, state_id_status = self._get_command_status_by_id(action_result,
-                                                                         scan_resp.get("commandID_computer"),
+                                                                         summary_data.get("command_id"),
                                                                          timeout)
         # Something went wrong
         if phantom.is_fail(command_status):
