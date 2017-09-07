@@ -2860,7 +2860,7 @@
         {
             "action": "unquarantine device",
             "description": "Unquarantine the endpoint",
-            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to unquarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the unquarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command.",
+            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to unquarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the unquarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the unquarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action.",
             "type": "correct",
             "identifier": "unquarantine_device",
             "read_only": false,
@@ -2885,7 +2885,7 @@
                     "primary": true
                 },
                 "timeout": {
-                    "description": "Timeout (Default: 30)",
+                    "description": "Timeout (Default: 30 seconds)",
                     "data_type": "numeric",
                     "order": 3,
                     "default": 30
@@ -2981,7 +2981,7 @@
         {
             "action": "quarantine device",
             "description": "Quarantine the endpoint",
-            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to quarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the quarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command.",
+            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to quarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the quarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the quarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action.",
             "type": "contain",
             "identifier": "quarantine_device",
             "read_only": false,
@@ -3006,7 +3006,7 @@
                     "primary": true
                 },
                 "timeout": {
-                    "description": "Timeout (Default: 30)",
+                    "description": "Timeout (Default: 30 secs)",
                     "data_type": "numeric",
                     "order": 3,
                     "default": 30
@@ -3527,7 +3527,7 @@
         {
             "action": "scan endpoint",
             "description": "Scan an endpoint",
-            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to scan an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The <b>type</b> parameter can be one of the following values:<ul><li>QUICK_SCAN</li><li>FULL_SCAN</li></ul>",
+            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to scan an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The <b>type</b> parameter can be one of the following values:<ul><li>QUICK_SCAN</li><li>FULL_SCAN</li></ul>The action will start the scan and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the poll.",
             "type": "investigate",
             "identifier": "scan_endpoint",
             "read_only": true,
@@ -3568,7 +3568,7 @@
                     "default": "QUICK_SCAN"
                 },
                 "timeout": {
-                    "description": "Timeout (Default: 30)",
+                    "description": "Timeout (Default: 30 seconds)",
                     "data_type": "numeric",
                     "order": 3,
                     "default": 30
