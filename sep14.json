@@ -4,7 +4,7 @@
     "description": "Integrate with Symantec Endpoint Protection 14 to execute <b>investigative</b>, <b>containment</b> and <b>corrective</b> actions",
     "publisher": "Phantom",
     "package_name": "phantom_sep14",
-    "license": "Copyright (c) Phantom Cyber Corporation 2017",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2017-2018",
     "main_module": "sep14_connector.pyc",
     "type": "endpoint",
     "app_version": "1.0.11",
