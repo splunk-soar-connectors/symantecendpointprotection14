@@ -1,7 +1,7 @@
 # --
 # File: sep14_connector.py
 #
-# Copyright (c) Phantom Cyber Corporation, 2017
+# Copyright (c) Phantom Cyber Corporation, 2017-2018
 #
 # This unpublished material is proprietary to Phantom Cyber.
 # All rights reserved. The methods and
@@ -1086,7 +1086,7 @@ class Sep14Connector(BaseConnector):
             # set the action_result status to error
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_DOMAIN)
 
-        params = {'domain': domain_id, 'pageIndex': 1}
+        params = {'domain': domain_id, 'pageIndex': 1, 'pageSize': 500}
 
         while True:
             response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS,
