@@ -29,7 +29,7 @@
         },
         "username": {
             "required": true,
-            "description": "Username",
+            "description": "System Administrator Username",
             "data_type": "string",
             "order": 2
         },
