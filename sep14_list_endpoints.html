@@ -1,10 +1,6 @@
 {% extends 'widgets/widget_template.html' %}
 {% load custom_template %}
 
-{% block title_color %}{{ title_color|default:'white' }}{% endblock %}
-{% block title_text_color %}{{ title_text_color|default:'rgb(101, 71, 150)' }}{% endblock %}
-{% block body_color %}{{ body_color|default:'white' }}{% endblock %}
-{% block body_text_color %}{{ body_text_color|default:'black' }}{% endblock %}
 {% block custom_title_prop %}{% if title_logo %}style="background-size: auto 60%; background-position: 50%; background-repeat: no-repeat; background-image: url('/app_resource/{{ title_logo }}');"{% endif %}{% endblock %}
 {% block title1 %}{{ title1 }}{% endblock %}
 {% block title2 %}{{ title2 }}{% endblock %}
@@ -28,17 +24,11 @@ of Phantom Cyber Corporation.
 
 <style>
 
-    .sep a:link {
-        color: black;
-    }
 
     .sep a:hover {
         text-decoration:underline;
     }
 
-    .sep a:visited {
-        color: black;
-    }
 
     .sep .wf-table-vertical {
     width: initial;
@@ -47,7 +37,7 @@ of Phantom Cyber Corporation.
 
     .sep .wf-table-vertical td{
     padding: 8px 10px;
-    border: 1px solid rgb(234, 234, 234);
+    border: 1px solid;
     }
 
     .sep .wf-table-vertical tr td:first-child {
@@ -55,21 +45,20 @@ of Phantom Cyber Corporation.
     }
 
     .sep .wf-table-horizontal {
-        border: 1px solid rgb(234, 234, 234);
+        border: 1px solid;
         font-size: 12px;
     }
 
     .sep .wf-table-horizontal th {
         text-align: center;
-        border: 1px solid rgb(234, 234, 234);
+        border: 1px solid;
         text-transform: uppercase;
         font-weight: normal;
-        color: rgb(108, 129, 139);
         padding: 5px;
     }
 
     .sep .wf-table-horizontal td {
-        border: 1px solid rgb(234, 234, 234);
+        border: 1px solid;
         padding: 5px;
         padding-left: 4px;
     }
@@ -142,7 +131,7 @@ of Phantom Cyber Corporation.
     <div class="metadata_div">
         <!--Default View-->
         <div class="panel-group" id="server-information">
-            <div class="panel panel-default">
+            <div class="panel">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="default-view" href="#default-view-table">Default View:</a>
@@ -198,7 +187,7 @@ of Phantom Cyber Corporation.
         </div>
 
         <div class="panel-group" id="client-status">
-            <div class="panel panel-default">
+            <div class="panel">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="server-information" href="#client-status-table">Client Status:</a>
@@ -262,7 +251,7 @@ of Phantom Cyber Corporation.
         </div>
 
         <div class="panel-group" id="protection-technology">
-            <div class="panel panel-default">
+            <div class="panel">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="server-information" href="#protection-technology-table">Protection Technology:</a>
@@ -334,7 +323,7 @@ of Phantom Cyber Corporation.
         </div>
 
         <div class="panel-group" id="network-info">
-            <div class="panel panel-default">
+            <div class="panel">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="server-information" href="#network-info-table">Network Information:</a>
@@ -447,7 +436,7 @@ of Phantom Cyber Corporation.
         </div>
 
         <div class="panel-group" id="client-system-info">
-            <div class="panel panel-default">
+            <div class="panel">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="server-information" href="#client-system-info-table">Client System:</a>
