@@ -356,7 +356,26 @@
                     "contains": [
                         "domain"
                     ]
+                },
+                "ph": {
+                    "data_type": "ph",
+                    "order": 1
+                },
+                "page_index": {
+                    "description": "Page index (set to 0 for all results)",
+                    "data_type": "numeric",
+                    "required": false,
+                    "default": 1,
+                    "order": 2
+                },
+                "page_size": {
+                    "description": "Page size",
+                    "data_type": "numeric",
+                    "required": false,
+                    "default": 20,
+                    "order": 3
                 }
+
             },
             "versions": "EQ(*)",
             "render": {
