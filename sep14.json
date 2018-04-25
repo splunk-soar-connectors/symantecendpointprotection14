@@ -78,7 +78,7 @@
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "contains": [
-                        "domain"
+                        "symantec admin domain"
                     ],
                     "example_values": [
                         "Default"
@@ -209,7 +209,7 @@
                     "data_path": "action_result.data.*.domain.name",
                     "data_type": "string",
                     "contains": [
-                        "domain"
+                        "symantec admin domain"
                     ],
                     "example_values": [
                         "Default"
@@ -346,15 +346,15 @@
             "identifier": "list_endpoints",
             "read_only": true,
             "parameters": {
-                "domain": {
-                    "description": "Domain of the endpoints to query",
+                "admin_domain": {
+                    "description": "Administrative domain of the endpoints to query",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
                     "default": "default",
                     "order": 0,
                     "contains": [
-                        "domain"
+                        "symantec admin domain"
                     ]
                 },
                 "ph": {
@@ -463,7 +463,7 @@
                         "Default"
                     ],
                     "contains": [
-                        "domain"
+                        "symantec admin domain"
                     ]
                 },
                 {
@@ -1032,9 +1032,6 @@
                     "data_type": "string",
                     "example_values": [
                         "WORKGROUP"
-                    ],
-                    "contains": [
-                        "domain"
                     ]
                 },
                 {
@@ -1499,7 +1496,7 @@
                         "Default"
                     ],
                     "contains": [
-                        "domain"
+                        "symantec admin domain"
                     ]
                 },
                 {
@@ -1623,7 +1620,7 @@
                         "Default"
                     ],
                     "contains": [
-                        "domain"
+                        "symantec admin domain"
                     ]
                 },
                 {
@@ -2753,7 +2750,7 @@
                         "Default"
                     ],
                     "contains": [
-                        "domain"
+                        "symantec admin domain"
                     ]
                 },
                 {
