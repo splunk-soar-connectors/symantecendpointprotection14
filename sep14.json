@@ -68,20 +68,39 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.id",
+                    "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "FE1A657F0A000116678670ACF7876E1B"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.name",
-                    "data_type": "string",
-                    "contains": [
-                        "symantec admin domain"
-                    ],
+                    "data_path": "action_result.data.*.administratorCount",
+                    "data_type": "numeric",
                     "example_values": [
-                        "Default"
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.companyName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Phantom"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.contactInfo",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createdTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1499878710131
                     ]
                 },
                 {
@@ -100,46 +119,20 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.companyName",
+                    "data_path": "action_result.data.*.id",
                     "data_type": "string",
                     "example_values": [
-                        "Phantom"
+                        "FE1A657F0A000116678670ACF7876E1B"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.createdTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1499878710131
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.administratorCount",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.contactInfo",
+                    "data_path": "action_result.data.*.name",
                     "data_type": "string",
+                    "contains": [
+                        "symantec admin domain"
+                    ],
                     "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Total domains: 4"
+                        "Default"
                     ]
                 },
                 {
@@ -147,6 +140,13 @@
                     "data_type": "numeric",
                     "example_values": [
                         4
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total domains: 4"
                     ]
                 },
                 {
@@ -182,20 +182,46 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.id",
+                    "data_path": "action_result.status",
                     "data_type": "string",
-                    "contains": [
-                        "symantec group id"
-                    ],
                     "example_values": [
-                        "C582CF730A000116216D40EAE348F18B"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.name",
+                    "data_path": "action_result.data.*.childGroups",
                     "data_type": "string",
                     "example_values": [
-                        "Default Group"
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.created",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1499878710177
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createdBy",
+                    "data_type": "string",
+                    "example_values": [
+                        "AF3C39A10A320801000000DBF200C60A"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.customIpsNumber",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string",
+                    "example_values": [
+                        "Group description"
                     ]
                 },
                 {
@@ -216,38 +242,20 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.created",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1499878710177
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.createdBy",
-                    "data_type": "string",
-                    "example_values": [
-                        "AF3C39A10A320801000000DBF200C60A"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policyDate",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500443753163
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": [
-                        "Group description"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.fullPathName",
                     "data_type": "string",
                     "example_values": [
                         "My Company\\Default Group"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec group id"
+                    ],
+                    "example_values": [
+                        "C582CF730A000116216D40EAE348F18B"
                     ]
                 },
                 {
@@ -258,24 +266,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.customIpsNumber",
+                    "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "Default Group"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.childGroups",
-                    "data_type": "string",
+                    "data_path": "action_result.data.*.numberOfPhysicalComputers",
+                    "data_type": "numeric",
                     "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policySerialNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        "C582-07/19/2017 05:55:53 163"
+                        3
                     ]
                 },
                 {
@@ -283,6 +284,13 @@
                     "data_type": "numeric",
                     "example_values": [
                         3
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policyDate",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500443753163
                     ]
                 },
                 {
@@ -294,25 +302,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.numberOfPhysicalComputers",
-                    "data_type": "numeric",
-                    "example_values": [
-                        3
-                    ]
-                },
-                {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.data.*.policySerialNumber",
                     "data_type": "string",
                     "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Total groups: 8"
+                        "C582-07/19/2017 05:55:53 163"
                     ]
                 },
                 {
@@ -320,6 +313,13 @@
                     "data_type": "numeric",
                     "example_values": [
                         8
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Total groups: 8"
                     ]
                 },
                 {
@@ -375,7 +375,6 @@
                     "default": 20,
                     "order": 3
                 }
-
             },
             "versions": "EQ(*)",
             "render": {
@@ -387,31 +386,70 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.profileVersion",
+                    "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "14.0.2415"
+                        "success"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.elamOnOff",
+                    "data_path": "action_result.parameter.admin_domain",
+                    "data_type": "string",
+                    "example_values": [
+                        "Default"
+                    ],
+                    "contains": [
+                        "symantec admin domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.page_index",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.page_size",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.agentId",
+                    "data_type": "string",
+                    "example_values": [
+                        "8A6090150A0001166741799D4292838D"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentTimeStamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500542529747
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentType",
+                    "data_type": "string",
+                    "example_values": [
+                        "105"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentUsn",
+                    "data_type": "numeric",
+                    "example_values": [
+                        416828
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415.0200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.apOnOff",
                     "data_type": "numeric",
                     "example_values": [
                         1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.avEngineOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.profileChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
                     ]
                 },
                 {
@@ -422,31 +460,336 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.processorType",
-                    "data_type": "string",
-                    "example_values": [
-                        "Intel64 Family 6 Model 69 Stepping 1"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.oslanguage",
-                    "data_type": "string",
-                    "example_values": [
-                        "en-US"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.licenseId",
+                    "data_path": "action_result.data.*.atpServer",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.licenseStatus",
+                    "data_path": "action_result.data.*.attributeExtension",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.avEngineOnOff",
                     "data_type": "numeric",
                     "example_values": [
-                        -1
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.bashStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.biosVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "_ASUS_ - 1072009 X555LA.308"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.bwf",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsBrowserFfOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsBrowserIeOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsDefsetVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "170719021"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsDrvMulfCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsDrvOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsEngineVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "15.2.5.21"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsSilentMode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerName",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin-PC"
+                    ],
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerTimeStamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500523172770
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerUsn",
+                    "data_type": "numeric",
+                    "example_values": [
+                        405445
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.contentUpdate",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creationTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1499921701979
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.currentClientId",
+                    "data_type": "string",
+                    "example_values": [
+                        "6DB045630A0001166741799DB30DE69E"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.daOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deleted",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.department",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentMessage",
+                    "data_type": "string",
+                    "example_values": [
+                        "ALL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentPreVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415.0200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentRunningVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415.0200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        "302465024"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentTargetVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dhcpServer",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.16.4.1"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.diskDrive",
+                    "data_type": "string",
+                    "example_values": [
+                        "C:\\"
+                    ],
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dnsServers",
+                    "data_type": "string",
+                    "example_values": [
+                        "10.0.1.1"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.domainOrWorkgroup",
+                    "data_type": "string",
+                    "example_values": [
+                        "WORKGROUP"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.edrStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.elamOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.email",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.employeeNumber",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.employeeStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.encryptedDevicePassword",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.fbwf",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.firewallOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.freeDisk",
+                    "data_type": "numeric",
+                    "example_values": [
+                        858077577216
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.freeMem",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2546728960
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.fullName",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.gateways",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ],
+                    "example_values": [
+                        "..."
                     ]
                 },
                 {
@@ -467,28 +810,14 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.group.name",
+                    "data_path": "action_result.data.*.group.externalId",
                     "data_type": "string",
                     "example_values": [
-                        "My Company\\Default Group"
+                        ""
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.group.fullPathName",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.group.source",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.group.externalId",
                     "data_type": "string",
                     "example_values": [
                         ""
@@ -505,10 +834,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.uuid",
+                    "data_path": "action_result.data.*.group.name",
                     "data_type": "string",
                     "example_values": [
-                        "62B6A630-7B68-81E4-2B41-F079591E2900"
+                        "My Company\\Default Group"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.group.source",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
                     ]
                 },
                 {
@@ -520,350 +856,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.edrStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.freeDisk",
-                    "data_type": "numeric",
-                    "example_values": [
-                        858077577216
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.diskDrive",
+                    "data_path": "action_result.data.*.hardwareKey",
                     "data_type": "string",
                     "example_values": [
-                        "C:\\"
-                    ],
-                    "contains": [
-                        "file path"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osFunction",
-                    "data_type": "string",
-                    "example_values": [
-                        "Workstation"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.processorClock",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2394
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.mobilePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.jobTitle",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastHeuristicThreatTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osname",
-                    "data_type": "string",
-                    "example_values": [
-                        "CentOS"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.winServers",
-                    "data_type": "string",
-                    "contains": [
-                        "ip"
-                    ],
-                    "example_values": [
-                        "0.0.0.0"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentMessage",
-                    "data_type": "string",
-                    "example_values": [
-                        "ALL"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.idsSerialNo",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.employeeNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.snacLicenseId",
-                    "data_type": "string",
-                    "example_values": [
-                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastSiteId",
-                    "data_type": "string",
-                    "example_values": [
-                        "F31AA2780A00011637604B1BD158F32D"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.uwf",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.currentClientId",
-                    "data_type": "string",
-                    "example_values": [
-                        "6DB045630A0001166741799DB30DE69E"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osbitness",
-                    "data_type": "string",
-                    "example_values": [
-                        "x64"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastScanTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500523345000
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.dnsServers",
-                    "data_type": "string",
-                    "example_values": [
-                        "10.0.1.1"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.securityVirtualAppliance",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.worstInfectionIdx",
-                    "data_type": "string",
-                    "example_values": [
-                        "4"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.encryptedDevicePassword",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastServerId",
-                    "data_type": "string",
-                    "example_values": [
-                        "659C01AF0A0001164EC3F8950A6439EA"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.kernel",
-                    "data_type": "string",
-                    "example_values": [
-                        "Darwin Kernel Version 16.6.0"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.svaId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastConnectedIpAddr",
-                    "data_type": "string",
-                    "example_values": [
-                        "10.0.1.1"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "14.0.2415.0200"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ipAddresses",
-                    "data_type": "string",
-                    "example_values": [
-                        "10.0.1.37"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentTimeStamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500542529747
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osfunction",
-                    "data_type": "string",
-                    "example_values": [
-                        "Workstation"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osMajor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentTargetVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osMinor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osFlavorNumber",
-                    "data_type": "numeric",
-                    "example_values": [
-                        101
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.logicalCpus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentPreVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "14.0.2415.0200"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hypervisorVendorId",
-                    "data_type": "string",
-                    "example_values": [
-                        "0"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.fbwf",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osversion",
-                    "data_type": "string",
-                    "example_values": [
-                        "2.6"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.email",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ],
-                    "contains": [
-                        "email"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.vsicStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        3
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deleted",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentStatus",
-                    "data_type": "string",
-                    "example_values": [
-                        "302465024"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerTimeStamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500523172770
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.bwf",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.totalDiskSpace",
-                    "data_type": "numeric",
-                    "example_values": [
-                        931780
+                        "0D8147927A78F2AA0959D730955224AD"
                     ]
                 },
                 {
@@ -874,199 +870,28 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.tpmDevice",
+                    "data_path": "action_result.data.*.hypervisorVendorId",
                     "data_type": "string",
                     "example_values": [
                         "0"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.computerDescription",
+                    "data_path": "action_result.data.*.idsChecksum",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.pepOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.bashStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentUsn",
-                    "data_type": "numeric",
-                    "example_values": [
-                        416828
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osName",
-                    "data_type": "string",
-                    "example_values": [
-                        "CentOS"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.operatingSystem",
-                    "data_type": "string",
-                    "example_values": [
-                        "Windows 10 Home"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.patternIdx",
-                    "data_type": "string",
-                    "example_values": [
-                        "E34961E3DE385D0C25F032E316EAEC9C"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.employeeStatus",
+                    "data_path": "action_result.data.*.idsSerialNo",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.tmpDevice",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.rebootRequired",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.subnetMasks",
-                    "data_type": "string",
-                    "example_values": [
-                        "..."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.minorVersion",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osservicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastSiteName",
-                    "data_type": "string",
-                    "example_values": [
-                        "My Site"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsEngineVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "15.2.5.21"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastDeploymentTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500541917000
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.isGrace",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerUsn",
-                    "data_type": "numeric",
-                    "example_values": [
-                        405445
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentId",
-                    "data_type": "string",
-                    "example_values": [
-                        "8A6090150A0001166741799D4292838D"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastVirusTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsBrowserFfOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.domainOrWorkgroup",
-                    "data_type": "string",
-                    "example_values": [
-                        "WORKGROUP"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.physicalCpus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        4
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.loginDomain",
-                    "data_type": "string",
-                    "example_values": [
-                        "LocalComputer"
-                    ],
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastServerName",
-                    "data_type": "string",
-                    "example_values": [
-                        "Phantom-HyperV"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.contentUpdate",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.writeFiltersStatus",
+                    "data_path": "action_result.data.*.idsVersion",
                     "data_type": "string",
                     "example_values": [
                         ""
@@ -1080,24 +905,186 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.memory",
-                    "data_type": "numeric",
+                    "data_path": "action_result.data.*.installType",
+                    "data_type": "string",
                     "example_values": [
-                        6320447488
+                        "0"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.freeMem",
-                    "data_type": "numeric",
+                    "data_path": "action_result.data.*.ipAddresses",
+                    "data_type": "string",
                     "example_values": [
-                        2546728960
+                        "10.0.1.37"
+                    ],
+                    "contains": [
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.officePhone",
+                    "data_path": "action_result.data.*.isGrace",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.isNpvdiClient",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.jobTitle",
                     "data_type": "string",
                     "example_values": [
                         ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.kernel",
+                    "data_type": "string",
+                    "example_values": [
+                        "Darwin Kernel Version 16.6.0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastConnectedIpAddr",
+                    "data_type": "string",
+                    "example_values": [
+                        "10.0.1.1"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastDeploymentTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500541917000
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastDownloadTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1499922023388
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastHeuristicThreatTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastScanTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500523345000
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastServerId",
+                    "data_type": "string",
+                    "example_values": [
+                        "659C01AF0A0001164EC3F8950A6439EA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastServerName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Phantom-HyperV"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSiteId",
+                    "data_type": "string",
+                    "example_values": [
+                        "F31AA2780A00011637604B1BD158F32D"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSiteName",
+                    "data_type": "string",
+                    "example_values": [
+                        "My Site"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastUpdateTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500541939841
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastVirusTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.licenseExpiry",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.licenseId",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.licenseStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.logicalCpus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.loginDomain",
+                    "data_type": "string",
+                    "example_values": [
+                        "LocalComputer"
+                    ],
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.logonUserName",
+                    "data_type": "string",
+                    "example_values": [
+                        "phantom"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.macAddresses",
+                    "data_type": "string",
+                    "contains": [
+                        "mac address"
+                    ],
+                    "example_values": [
+                        "00:50:56:93:5D:CB"
                     ]
                 },
                 {
@@ -1108,14 +1095,238 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.idsVersion",
+                    "data_path": "action_result.data.*.memory",
+                    "data_type": "numeric",
+                    "example_values": [
+                        6320447488
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.minorVersion",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.mobilePhone",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.daOnOff",
+                    "data_path": "action_result.data.*.officePhone",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.onlineStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.operatingSystem",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 10 Home"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osBitness",
+                    "data_type": "string",
+                    "example_values": [
+                        "x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osElamStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osFlavorNumber",
+                    "data_type": "numeric",
+                    "example_values": [
+                        101
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osFunction",
+                    "data_type": "string",
+                    "example_values": [
+                        "Workstation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osLanguage",
+                    "data_type": "string",
+                    "example_values": [
+                        "en-US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osMajor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osMinor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osName",
+                    "data_type": "string",
+                    "example_values": [
+                        "CentOS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osServicePack",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "2.6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osbitness",
+                    "data_type": "string",
+                    "example_values": [
+                        "x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osflavorNumber",
+                    "data_type": "numeric",
+                    "example_values": [
+                        101
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osfunction",
+                    "data_type": "string",
+                    "example_values": [
+                        "Workstation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.oslanguage",
+                    "data_type": "string",
+                    "example_values": [
+                        "en-US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osmajor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osminor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osname",
+                    "data_type": "string",
+                    "example_values": [
+                        "CentOS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osservicePack",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osversion",
+                    "data_type": "string",
+                    "example_values": [
+                        "2.6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.patternIdx",
+                    "data_type": "string",
+                    "example_values": [
+                        "E34961E3DE385D0C25F032E316EAEC9C"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.pepOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.physicalCpus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processorClock",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2394
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processorType",
+                    "data_type": "string",
+                    "example_values": [
+                        "Intel64 Family 6 Model 69 Stepping 1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.profileChecksum",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.profileSerialNo",
+                    "data_type": "string",
+                    "example_values": [
+                        "C582-07/12/2017 18:30:17 767"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.profileVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ptpOnOff",
                     "data_type": "numeric",
                     "example_values": [
                         1
@@ -1136,20 +1347,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.cidsDrvMulfCode",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.biosVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "_ASUS_ - 1072009 X555LA.308"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.rebootReason",
                     "data_type": "string",
                     "example_values": [
@@ -1157,214 +1354,49 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.cidsSilentMode",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.creationTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1499921701979
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.macAddresses",
-                    "data_type": "string",
-                    "contains": [
-                        "mac address"
-                    ],
-                    "example_values": [
-                        "00:50:56:93:5D:CB"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.idsChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ptpOnOff",
+                    "data_path": "action_result.data.*.rebootRequired",
                     "data_type": "numeric",
                     "example_values": [
                         1
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.osmajor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.virtualizationPlatform",
-                    "data_type": "string",
-                    "example_values": [
-                        "Unknown"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentRunningVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "14.0.2415.0200"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osminor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osBitness",
-                    "data_type": "string",
-                    "example_values": [
-                        "x64"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsDefsetVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "170719021"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsDrvOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerName",
-                    "data_type": "string",
-                    "example_values": [
-                        "admin-PC"
-                    ],
-                    "contains": [
-                        "host name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.logonUserName",
-                    "data_type": "string",
-                    "example_values": [
-                        "phantom"
-                    ],
-                    "contains": [
-                        "user name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.atpServer",
+                    "data_path": "action_result.data.*.securityVirtualAppliance",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.osLanguage",
+                    "data_path": "action_result.data.*.serialNumber",
                     "data_type": "string",
                     "example_values": [
-                        "en-US"
+                        "ECN0CV252545509"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.gateways",
+                    "data_path": "action_result.data.*.snacLicenseId",
                     "data_type": "string",
-                    "contains": [
-                        "ip"
-                    ],
+                    "example_values": [
+                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.subnetMasks",
+                    "data_type": "string",
                     "example_values": [
                         "..."
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.uniqueId",
-                    "data_type": "string",
-                    "contains": [
-                        "symantec device id"
-                    ],
-                    "example_values": [
-                        "A3E132060A0001166741799DED7CB846"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.department",
+                    "data_path": "action_result.data.*.svaId",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.isNpvdiClient",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.dhcpServer",
-                    "data_type": "string",
-                    "example_values": [
-                        "172.16.4.1"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osflavorNumber",
-                    "data_type": "numeric",
-                    "example_values": [
-                        101
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.onlineStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastUpdateTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500541939841
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsBrowserIeOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastDownloadTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1499922023388
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.apOnOff",
+                    "data_path": "action_result.data.*.tamperOnOff",
                     "data_type": "numeric",
                     "example_values": [
                         1
@@ -1378,108 +1410,86 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fullName",
+                    "data_path": "action_result.data.*.tmpDevice",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.osVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "2.6"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.attributeExtension",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.licenseExpiry",
+                    "data_path": "action_result.data.*.totalDiskSpace",
                     "data_type": "numeric",
                     "example_values": [
-                        0
+                        931780
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.tamperOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osServicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentType",
-                    "data_type": "string",
-                    "example_values": [
-                        "105"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.serialNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        "ECN0CV252545509"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osElamStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.installType",
+                    "data_path": "action_result.data.*.tpmDevice",
                     "data_type": "string",
                     "example_values": [
                         "0"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.profileSerialNo",
+                    "data_path": "action_result.data.*.uniqueId",
                     "data_type": "string",
+                    "contains": [
+                        "symantec device id"
+                    ],
                     "example_values": [
-                        "C582-07/12/2017 18:30:17 767"
+                        "A3E132060A0001166741799DED7CB846"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.hardwareKey",
+                    "data_path": "action_result.data.*.uuid",
                     "data_type": "string",
                     "example_values": [
-                        "0D8147927A78F2AA0959D730955224AD"
+                        "62B6A630-7B68-81E4-2B41-F079591E2900"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.firewallOnOff",
+                    "data_path": "action_result.data.*.uwf",
                     "data_type": "numeric",
                     "example_values": [
-                        1
+                        2
                     ]
                 },
                 {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.data.*.virtualizationPlatform",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "Unknown"
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
+                    "data_path": "action_result.data.*.vsicStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.winServers",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ],
+                    "example_values": [
+                        "0.0.0.0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.worstInfectionIdx",
                     "data_type": "string",
                     "example_values": [
-                        "Total endpoints: 4"
+                        "4"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.writeFiltersStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
                     ]
                 },
                 {
@@ -1490,13 +1500,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.domain",
+                    "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Default"
-                    ],
-                    "contains": [
-                        "symantec admin domain"
+                        "Total endpoints: 4"
                     ]
                 },
                 {
@@ -1544,31 +1551,63 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.profileVersion",
+                    "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "14.0.2415"
+                        "success"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.elamOnOff",
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin-PC"
+                    ],
+                    "contains": [
+                        "ip",
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentId",
+                    "data_type": "string",
+                    "example_values": [
+                        "8A6090150A0001166741799D4292838D"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentTimeStamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500542529747
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentType",
+                    "data_type": "string",
+                    "example_values": [
+                        "105"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentUsn",
+                    "data_type": "numeric",
+                    "example_values": [
+                        416828
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agentVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415.0200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.apOnOff",
                     "data_type": "numeric",
                     "example_values": [
                         1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.avEngineOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.profileChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
                     ]
                 },
                 {
@@ -1579,31 +1618,339 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.processorType",
-                    "data_type": "string",
-                    "example_values": [
-                        "Intel64 Family 6 Model 69 Stepping 1"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.oslanguage",
-                    "data_type": "string",
-                    "example_values": [
-                        "en-US"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.licenseId",
+                    "data_path": "action_result.data.*.atpServer",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.licenseStatus",
+                    "data_path": "action_result.data.*.attributeExtension",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.avEngineOnOff",
                     "data_type": "numeric",
                     "example_values": [
-                        -1
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.bashStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.biosVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "_ASUS_ - 1072009 X555LA.308"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.bwf",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsBrowserFfOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsBrowserIeOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsDefsetVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "170719021"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsDrvMulfCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsDrvOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsEngineVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "15.2.5.21"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cidsSilentMode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerName",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin-PC"
+                    ],
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerTimeStamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500523172770
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerUsn",
+                    "data_type": "numeric",
+                    "example_values": [
+                        405445
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.contentUpdate",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creationTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1499921701979
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.currentClientId",
+                    "data_type": "string",
+                    "example_values": [
+                        "6DB045630A0001166741799DB30DE69E"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.daOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deleted",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.department",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentMessage",
+                    "data_type": "string",
+                    "example_values": [
+                        "ALL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentPreVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415.0200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentRunningVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415.0200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        "302465024"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deploymentTargetVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dhcpServer",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.16.4.1"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.diskDrive",
+                    "data_type": "string",
+                    "example_values": [
+                        "C:\\"
+                    ],
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dnsServers",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.8.8.8"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.domainOrWorkgroup",
+                    "data_type": "string",
+                    "example_values": [
+                        "WORKGROUP"
+                    ],
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.edrStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.elamOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.email",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.employeeNumber",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.employeeStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.encryptedDevicePassword",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.fbwf",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.firewallOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.freeDisk",
+                    "data_type": "numeric",
+                    "example_values": [
+                        858077577216
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.freeMem",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2546728960
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.fullName",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.gateways",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ],
+                    "example_values": [
+                        "..."
                     ]
                 },
                 {
@@ -1624,28 +1971,14 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.group.name",
+                    "data_path": "action_result.data.*.group.externalId",
                     "data_type": "string",
                     "example_values": [
-                        "My Company\\Default Group"
+                        ""
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.group.fullPathName",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.group.source",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.group.externalId",
                     "data_type": "string",
                     "example_values": [
                         ""
@@ -1662,10 +1995,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.uuid",
+                    "data_path": "action_result.data.*.group.name",
                     "data_type": "string",
                     "example_values": [
-                        "62B6A630-7B68-81E4-2B41-F079591E2900"
+                        "My Company\\Default Group"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.group.source",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
                     ]
                 },
                 {
@@ -1677,350 +2017,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.edrStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.freeDisk",
-                    "data_type": "numeric",
-                    "example_values": [
-                        858077577216
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.diskDrive",
+                    "data_path": "action_result.data.*.hardwareKey",
                     "data_type": "string",
                     "example_values": [
-                        "C:\\"
-                    ],
-                    "contains": [
-                        "file path"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osFunction",
-                    "data_type": "string",
-                    "example_values": [
-                        "Workstation"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.processorClock",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2394
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.mobilePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.jobTitle",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastHeuristicThreatTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osname",
-                    "data_type": "string",
-                    "example_values": [
-                        "CentOS"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.winServers",
-                    "data_type": "string",
-                    "contains": [
-                        "ip"
-                    ],
-                    "example_values": [
-                        "..."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentMessage",
-                    "data_type": "string",
-                    "example_values": [
-                        "ALL"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.idsSerialNo",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.employeeNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.snacLicenseId",
-                    "data_type": "string",
-                    "example_values": [
-                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastSiteId",
-                    "data_type": "string",
-                    "example_values": [
-                        "F31AA2780A00011637604B1BD158F32D"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.uwf",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.currentClientId",
-                    "data_type": "string",
-                    "example_values": [
-                        "6DB045630A0001166741799DB30DE69E"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osbitness",
-                    "data_type": "string",
-                    "example_values": [
-                        "x64"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastScanTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500523345000
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.dnsServers",
-                    "data_type": "string",
-                    "example_values": [
-                        "8.8.8.8"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.securityVirtualAppliance",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.worstInfectionIdx",
-                    "data_type": "string",
-                    "example_values": [
-                        "4"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.encryptedDevicePassword",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastServerId",
-                    "data_type": "string",
-                    "example_values": [
-                        "659C01AF0A0001164EC3F8950A6439EA"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.kernel",
-                    "data_type": "string",
-                    "example_values": [
-                        "Darwin Kernel Version 16.6.0"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.svaId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastConnectedIpAddr",
-                    "data_type": "string",
-                    "example_values": [
-                        "10.0.1.1"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "14.0.2415.0200"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ipAddresses",
-                    "data_type": "string",
-                    "example_values": [
-                        "172.16.4.30"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentTimeStamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500542529747
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osfunction",
-                    "data_type": "string",
-                    "example_values": [
-                        "Workstation"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osMajor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentTargetVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osMinor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osFlavorNumber",
-                    "data_type": "numeric",
-                    "example_values": [
-                        101
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.logicalCpus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentPreVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "14.0.2415.0200"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hypervisorVendorId",
-                    "data_type": "string",
-                    "example_values": [
-                        "0"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.fbwf",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osversion",
-                    "data_type": "string",
-                    "example_values": [
-                        "2.6"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.email",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ],
-                    "contains": [
-                        "email"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.vsicStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        3
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deleted",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentStatus",
-                    "data_type": "string",
-                    "example_values": [
-                        "302465024"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerTimeStamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500523172770
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.bwf",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.totalDiskSpace",
-                    "data_type": "numeric",
-                    "example_values": [
-                        931780
+                        "0D8147927A78F2AA0959D730955224AD"
                     ]
                 },
                 {
@@ -2031,202 +2031,28 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.tpmDevice",
+                    "data_path": "action_result.data.*.hypervisorVendorId",
                     "data_type": "string",
                     "example_values": [
                         "0"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.computerDescription",
+                    "data_path": "action_result.data.*.idsChecksum",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.pepOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.bashStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentUsn",
-                    "data_type": "numeric",
-                    "example_values": [
-                        416828
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osName",
-                    "data_type": "string",
-                    "example_values": [
-                        "CentOS"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.operatingSystem",
-                    "data_type": "string",
-                    "example_values": [
-                        "Windows 10 Home"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.patternIdx",
-                    "data_type": "string",
-                    "example_values": [
-                        "E34961E3DE385D0C25F032E316EAEC9C"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.employeeStatus",
+                    "data_path": "action_result.data.*.idsSerialNo",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.tmpDevice",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.rebootRequired",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.subnetMasks",
-                    "data_type": "string",
-                    "example_values": [
-                        "..."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.minorVersion",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osservicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastSiteName",
-                    "data_type": "string",
-                    "example_values": [
-                        "My Site"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsEngineVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "15.2.5.21"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastDeploymentTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500541917000
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.isGrace",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerUsn",
-                    "data_type": "numeric",
-                    "example_values": [
-                        405445
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentId",
-                    "data_type": "string",
-                    "example_values": [
-                        "8A6090150A0001166741799D4292838D"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastVirusTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsBrowserFfOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.domainOrWorkgroup",
-                    "data_type": "string",
-                    "example_values": [
-                        "WORKGROUP"
-                    ],
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.physicalCpus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        4
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.loginDomain",
-                    "data_type": "string",
-                    "example_values": [
-                        "LocalComputer"
-                    ],
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastServerName",
-                    "data_type": "string",
-                    "example_values": [
-                        "Phantom-HyperV"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.contentUpdate",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.writeFiltersStatus",
+                    "data_path": "action_result.data.*.idsVersion",
                     "data_type": "string",
                     "example_values": [
                         ""
@@ -2240,24 +2066,186 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.memory",
-                    "data_type": "numeric",
+                    "data_path": "action_result.data.*.installType",
+                    "data_type": "string",
                     "example_values": [
-                        6320447488
+                        "0"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.freeMem",
-                    "data_type": "numeric",
+                    "data_path": "action_result.data.*.ipAddresses",
+                    "data_type": "string",
                     "example_values": [
-                        2546728960
+                        "172.16.4.30"
+                    ],
+                    "contains": [
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.officePhone",
+                    "data_path": "action_result.data.*.isGrace",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.isNpvdiClient",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.jobTitle",
                     "data_type": "string",
                     "example_values": [
                         ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.kernel",
+                    "data_type": "string",
+                    "example_values": [
+                        "Darwin Kernel Version 16.6.0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastConnectedIpAddr",
+                    "data_type": "string",
+                    "example_values": [
+                        "10.0.1.1"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastDeploymentTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500541917000
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastDownloadTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1499922023388
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastHeuristicThreatTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastScanTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500523345000
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastServerId",
+                    "data_type": "string",
+                    "example_values": [
+                        "659C01AF0A0001164EC3F8950A6439EA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastServerName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Phantom-HyperV"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSiteId",
+                    "data_type": "string",
+                    "example_values": [
+                        "F31AA2780A00011637604B1BD158F32D"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSiteName",
+                    "data_type": "string",
+                    "example_values": [
+                        "My Site"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastUpdateTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1500541939841
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastVirusTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.licenseExpiry",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.licenseId",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.licenseStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.logicalCpus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.loginDomain",
+                    "data_type": "string",
+                    "example_values": [
+                        "LocalComputer"
+                    ],
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.logonUserName",
+                    "data_type": "string",
+                    "example_values": [
+                        "phantom"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.macAddresses",
+                    "data_type": "string",
+                    "contains": [
+                        "mac address"
+                    ],
+                    "example_values": [
+                        "00-50-56-C0-00-08"
                     ]
                 },
                 {
@@ -2268,14 +2256,238 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.idsVersion",
+                    "data_path": "action_result.data.*.memory",
+                    "data_type": "numeric",
+                    "example_values": [
+                        6320447488
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.minorVersion",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.mobilePhone",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.daOnOff",
+                    "data_path": "action_result.data.*.officePhone",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.onlineStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.operatingSystem",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 10 Home"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osBitness",
+                    "data_type": "string",
+                    "example_values": [
+                        "x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osElamStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osFlavorNumber",
+                    "data_type": "numeric",
+                    "example_values": [
+                        101
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osFunction",
+                    "data_type": "string",
+                    "example_values": [
+                        "Workstation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osLanguage",
+                    "data_type": "string",
+                    "example_values": [
+                        "en-US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osMajor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osMinor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osName",
+                    "data_type": "string",
+                    "example_values": [
+                        "CentOS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osServicePack",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "2.6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osbitness",
+                    "data_type": "string",
+                    "example_values": [
+                        "x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osflavorNumber",
+                    "data_type": "numeric",
+                    "example_values": [
+                        101
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osfunction",
+                    "data_type": "string",
+                    "example_values": [
+                        "Workstation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.oslanguage",
+                    "data_type": "string",
+                    "example_values": [
+                        "en-US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osmajor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osminor",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osname",
+                    "data_type": "string",
+                    "example_values": [
+                        "CentOS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osservicePack",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osversion",
+                    "data_type": "string",
+                    "example_values": [
+                        "2.6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.patternIdx",
+                    "data_type": "string",
+                    "example_values": [
+                        "E34961E3DE385D0C25F032E316EAEC9C"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.pepOnOff",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.physicalCpus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processorClock",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2394
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processorType",
+                    "data_type": "string",
+                    "example_values": [
+                        "Intel64 Family 6 Model 69 Stepping 1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.profileChecksum",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.profileSerialNo",
+                    "data_type": "string",
+                    "example_values": [
+                        "C582-07/12/2017 18:30:17 767"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.profileVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "14.0.2415"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ptpOnOff",
                     "data_type": "numeric",
                     "example_values": [
                         1
@@ -2296,20 +2508,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.cidsDrvMulfCode",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.biosVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "_ASUS_ - 1072009 X555LA.308"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.rebootReason",
                     "data_type": "string",
                     "example_values": [
@@ -2317,214 +2515,49 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.cidsSilentMode",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.creationTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1499921701979
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.macAddresses",
-                    "data_type": "string",
-                    "contains": [
-                        "mac address"
-                    ],
-                    "example_values": [
-                        "00-50-56-C0-00-08"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.idsChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ptpOnOff",
+                    "data_path": "action_result.data.*.rebootRequired",
                     "data_type": "numeric",
                     "example_values": [
                         1
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.osmajor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.virtualizationPlatform",
-                    "data_type": "string",
-                    "example_values": [
-                        "Unknown"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.deploymentRunningVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "14.0.2415.0200"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osminor",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osBitness",
-                    "data_type": "string",
-                    "example_values": [
-                        "x64"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsDefsetVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "170719021"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsDrvOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerName",
-                    "data_type": "string",
-                    "example_values": [
-                        "admin-PC"
-                    ],
-                    "contains": [
-                        "host name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.logonUserName",
-                    "data_type": "string",
-                    "example_values": [
-                        "phantom"
-                    ],
-                    "contains": [
-                        "user name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.atpServer",
+                    "data_path": "action_result.data.*.securityVirtualAppliance",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.osLanguage",
+                    "data_path": "action_result.data.*.serialNumber",
                     "data_type": "string",
                     "example_values": [
-                        "en-US"
+                        "ECN0CV252545509"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.gateways",
+                    "data_path": "action_result.data.*.snacLicenseId",
                     "data_type": "string",
-                    "contains": [
-                        "ip"
-                    ],
+                    "example_values": [
+                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.subnetMasks",
+                    "data_type": "string",
                     "example_values": [
                         "..."
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.uniqueId",
-                    "data_type": "string",
-                    "contains": [
-                        "symantec device id"
-                    ],
-                    "example_values": [
-                        "A3E132060A0001166741799DED7CB846"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.department",
+                    "data_path": "action_result.data.*.svaId",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.isNpvdiClient",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.dhcpServer",
-                    "data_type": "string",
-                    "example_values": [
-                        "172.16.4.1"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osflavorNumber",
-                    "data_type": "numeric",
-                    "example_values": [
-                        101
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.onlineStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastUpdateTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1500541939841
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.cidsBrowserIeOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastDownloadTime",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1499922023388
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.apOnOff",
+                    "data_path": "action_result.data.*.tamperOnOff",
                     "data_type": "numeric",
                     "example_values": [
                         1
@@ -2538,108 +2571,86 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fullName",
+                    "data_path": "action_result.data.*.tmpDevice",
                     "data_type": "string",
                     "example_values": [
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.osVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        "2.6"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.attributeExtension",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.licenseExpiry",
+                    "data_path": "action_result.data.*.totalDiskSpace",
                     "data_type": "numeric",
                     "example_values": [
-                        0
+                        931780
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.tamperOnOff",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osServicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.agentType",
-                    "data_type": "string",
-                    "example_values": [
-                        "105"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.serialNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        "ECN0CV252545509"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.osElamStatus",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.installType",
+                    "data_path": "action_result.data.*.tpmDevice",
                     "data_type": "string",
                     "example_values": [
                         "0"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.profileSerialNo",
+                    "data_path": "action_result.data.*.uniqueId",
                     "data_type": "string",
+                    "contains": [
+                        "symantec device id"
+                    ],
                     "example_values": [
-                        "C582-07/12/2017 18:30:17 767"
+                        "A3E132060A0001166741799DED7CB846"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.hardwareKey",
+                    "data_path": "action_result.data.*.uuid",
                     "data_type": "string",
                     "example_values": [
-                        "0D8147927A78F2AA0959D730955224AD"
+                        "62B6A630-7B68-81E4-2B41-F079591E2900"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.firewallOnOff",
+                    "data_path": "action_result.data.*.uwf",
                     "data_type": "numeric",
                     "example_values": [
-                        1
+                        2
                     ]
                 },
                 {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.data.*.virtualizationPlatform",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "Unknown"
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
+                    "data_path": "action_result.data.*.vsicStatus",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.winServers",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ],
+                    "example_values": [
+                        "..."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.worstInfectionIdx",
                     "data_type": "string",
                     "example_values": [
-                        "System found: True"
+                        "4"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.writeFiltersStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
                     ]
                 },
                 {
@@ -2651,14 +2662,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "admin-PC"
-                    ],
-                    "contains": [
-                        "ip",
-                        "host name"
+                        "System found: True"
                     ]
                 },
                 {
@@ -2705,11 +2712,22 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.stateId",
-                    "data_type": "numeric",
+                    "data_path": "action_result.status",
+                    "data_type": "string",
                     "example_values": [
-                        0,
-                        3
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "A4EA6099448A4E66B8DE962210AEC0BB",
+                        "F8315925F8BC4100B9F24BDFA98FFC7A"
+                    ],
+                    "contains": [
+                        "symantec command id"
                     ]
                 },
                 {
@@ -2718,6 +2736,13 @@
                     "example_values": [
                         "",
                         "2017-09-07T12:57:45Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.binaryFileId",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
                     ]
                 },
                 {
@@ -2744,34 +2769,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.domainName",
-                    "data_type": "string",
-                    "example_values": [
-                        "Default"
-                    ],
-                    "contains": [
-                        "symantec admin domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.subStateId",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hardwareKey",
-                    "data_type": "string",
-                    "example_values": [
-                        "0D8147927A78F2AA0959D730955224AD",
-                        "328BE916D956CF6AED900215412CDC4F"
-                    ],
-                    "contains": [
-                        "md5"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.computerName",
                     "data_type": "string",
                     "example_values": [
@@ -2783,11 +2780,35 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.subStateDesc",
+                    "data_path": "action_result.data.*.currentLoginUserName",
                     "data_type": "string",
                     "example_values": [
-                        "0",
-                        ""
+                        "phantom",
+                        "testadmin"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.domainName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Default"
+                    ],
+                    "contains": [
+                        "symantec admin domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hardwareKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "0D8147927A78F2AA0959D730955224AD",
+                        "328BE916D956CF6AED900215412CDC4F"
+                    ],
+                    "contains": [
+                        "md5"
                     ]
                 },
                 {
@@ -2807,36 +2828,26 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.currentLoginUserName",
-                    "data_type": "string",
+                    "data_path": "action_result.data.*.stateId",
+                    "data_type": "numeric",
                     "example_values": [
-                        "phantom",
-                        "testadmin"
-                    ],
-                    "contains": [
-                        "user name"
+                        0,
+                        3
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.binaryFileId",
+                    "data_path": "action_result.data.*.subStateDesc",
                     "data_type": "string",
                     "example_values": [
+                        "0",
                         ""
                     ]
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
+                    "data_path": "action_result.data.*.subStateId",
+                    "data_type": "numeric",
                     "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Command state: sym-sepm-01-t1- COMPLETED"
+                        0
                     ]
                 },
                 {
@@ -2847,15 +2858,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.id",
+                    "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "A4EA6099448A4E66B8DE962210AEC0BB",
-                        "F8315925F8BC4100B9F24BDFA98FFC7A"
-                    ],
-                    "contains": [
-                        "symantec command id",
-                        "md5"
+                        "Command state: sym-sepm-01-t1- COMPLETED"
                     ]
                 },
                 {
@@ -2926,30 +2932,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Command id: 09357DB926FC40CE8B1A38D733DC4695"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.command_id",
-                    "data_type": "string",
-                    "example_values": [
-                        "A4EA6099448A4E66B8DE962210AEC0BB"
-                    ],
-                    "contains": [
-                        "symantec command id"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.state_id_status",
-                    "data_type": "string",
-                    "example_values": [
-                        "COMPLETED"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.id",
                     "data_type": "string",
                     "contains": [
@@ -2976,6 +2958,34 @@
                     "data_type": "numeric",
                     "example_values": [
                         30
+                    ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.command_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "A4EA6099448A4E66B8DE962210AEC0BB"
+                    ],
+                    "contains": [
+                        "symantec command id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.state_id_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "COMPLETED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Command id: 09357DB926FC40CE8B1A38D733DC4695"
                     ]
                 },
                 {
@@ -3047,30 +3057,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Command id: 09357DB926FC40CE8B1A38D733DC4695"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.command_id",
-                    "data_type": "string",
-                    "contains": [
-                        "symantec command id"
-                    ],
-                    "example_values": [
-                        "09357DB926FC40CE8B1A38D733DC4695"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.state_id_status",
-                    "data_type": "string",
-                    "example_values": [
-                        "COMPLETED"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.id",
                     "data_type": "string",
                     "contains": [
@@ -3097,6 +3083,34 @@
                     "data_type": "numeric",
                     "example_values": [
                         30
+                    ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.command_id",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec command id"
+                    ],
+                    "example_values": [
+                        "09357DB926FC40CE8B1A38D733DC4695"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.state_id_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "COMPLETED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Command id: 09357DB926FC40CE8B1A38D733DC4695"
                     ]
                 },
                 {
@@ -3156,62 +3170,31 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.hash_info.*.data",
+                    "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "success",
+                        "failed"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.hash_info.*.summary",
+                    "data_path": "action_result.parameter.group_id",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "6B101E640A000116535C0CFB2704BB98"
+                    ],
+                    "contains": [
+                        "symantec group id"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.hash_info.*.extra_data",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Hash removed from the fingerprint file."
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.parameter.hash",
+                    "data_path": "action_result.parameter.hash",
                     "data_type": "string",
                     "example_values": [
                         "74ce176674b5c7e26874f2a8f3c55153"
                     ],
                     "contains": [
                         "md5"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.context",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.fingerprint_file_info.id",
-                    "data_type": "string",
-                    "example_values": [
-                        "89FEB934EECD4A628748F8F5101EBABE"
                     ]
                 },
                 {
@@ -3225,17 +3208,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fingerprint_file_info.name",
+                    "data_path": "action_result.data.*.fingerprint_file_info.description",
                     "data_type": "string",
                     "example_values": [
-                        "phantom_6B101E640A000116535C0CFB2704BB98"
+                        "List of applications that are blocked in group having ID 6B101E640A000116535C0CFB2704BB98"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fingerprint_file_info.source",
+                    "data_path": "action_result.data.*.fingerprint_file_info.domainId",
                     "data_type": "string",
                     "example_values": [
-                        "WEBSERVICE"
+                        "FE1A657F0A000116678670ACF7876E1B"
                     ]
                 },
                 {
@@ -3256,36 +3239,56 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fingerprint_file_info.description",
+                    "data_path": "action_result.data.*.fingerprint_file_info.id",
                     "data_type": "string",
                     "example_values": [
-                        "List of applications that are blocked in group having ID 6B101E640A000116535C0CFB2704BB98"
+                        "89FEB934EECD4A628748F8F5101EBABE"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fingerprint_file_info.domainId",
+                    "data_path": "action_result.data.*.fingerprint_file_info.name",
                     "data_type": "string",
                     "example_values": [
-                        "FE1A657F0A000116678670ACF7876E1B"
+                        "phantom_6B101E640A000116535C0CFB2704BB98"
                     ]
                 },
                 {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.data.*.fingerprint_file_info.source",
                     "data_type": "string",
                     "example_values": [
-                        "success",
-                        "failed"
+                        "WEBSERVICE"
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
+                    "data_path": "action_result.data.*.hash_info.*.context",
                     "data_type": "string",
                     "example_values": [
-                        "Fingerprint file name: phantom_6B101E640A000116535C0CFB2704BB98"
+                        ""
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.hash",
+                    "data_path": "action_result.data.*.hash_info.*.data",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hash_info.*.extra_data",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hash_info.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hash removed from the fingerprint file."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hash_info.*.parameter.hash",
                     "data_type": "string",
                     "example_values": [
                         "74ce176674b5c7e26874f2a8f3c55153"
@@ -3295,20 +3298,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.group_id",
+                    "data_path": "action_result.data.*.hash_info.*.status",
                     "data_type": "string",
                     "example_values": [
-                        "6B101E640A000116535C0CFB2704BB98"
-                    ],
-                    "contains": [
-                        "symantec group id"
+                        "success"
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.hashes_unblocked",
-                    "data_type": "numeric",
+                    "data_path": "action_result.data.*.hash_info.*.summary",
+                    "data_type": "string",
                     "example_values": [
-                        1
+                        ""
                     ]
                 },
                 {
@@ -3319,10 +3319,24 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary.hashes_unblocked",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
                     "data_path": "action_result.summary.invalid_hashes",
                     "data_type": "numeric",
                     "example_values": [
                         1
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Fingerprint file name: phantom_6B101E640A000116535C0CFB2704BB98"
                     ]
                 },
                 {
@@ -3382,49 +3396,25 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.hash_info.*.data",
+                    "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "success",
+                        "failed"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.hash_info.*.summary",
+                    "data_path": "action_result.parameter.group_id",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "6B101E640A000116535C0CFB2704BB98"
+                    ],
+                    "contains": [
+                        "symantec group id"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.hash_info.*.extra_data",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Hash already present in the fingerprint file, not updating"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.context",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.hash_info.*.parameter.hash",
+                    "data_path": "action_result.parameter.hash",
                     "data_type": "string",
                     "example_values": [
                         "74ce176674b5c7e26874f2a8f3c55153"
@@ -3434,17 +3424,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fingerprint_file_info.id",
+                    "data_path": "action_result.data.*.fingerprint_file_info.description",
                     "data_type": "string",
                     "example_values": [
-                        "89FEB934EECD4A628748F8F5101EBABE"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.fingerprint_file_info.name",
-                    "data_type": "string",
-                    "example_values": [
-                        "phantom_6B101E640A000116535C0CFB2704BB98"
+                        "List of applications that are blocked in group having ID 6B101E640A000116535C0CFB2704BB98"
                     ]
                 },
                 {
@@ -3462,29 +3445,49 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.fingerprint_file_info.description",
+                    "data_path": "action_result.data.*.fingerprint_file_info.id",
                     "data_type": "string",
                     "example_values": [
-                        "List of applications that are blocked in group having ID 6B101E640A000116535C0CFB2704BB98"
+                        "89FEB934EECD4A628748F8F5101EBABE"
                     ]
                 },
                 {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.data.*.fingerprint_file_info.name",
                     "data_type": "string",
                     "example_values": [
-                        "success",
-                        "failed"
+                        "phantom_6B101E640A000116535C0CFB2704BB98"
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
+                    "data_path": "action_result.data.*.hash_info.*.context",
                     "data_type": "string",
                     "example_values": [
-                        "Fingerprint file name: phantom_6B101E640A000116535C0CFB2704BB98"
+                        ""
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.hash",
+                    "data_path": "action_result.data.*.hash_info.*.data",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hash_info.*.extra_data",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hash_info.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Hash already present in the fingerprint file, not updating"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hash_info.*.parameter.hash",
                     "data_type": "string",
                     "example_values": [
                         "74ce176674b5c7e26874f2a8f3c55153"
@@ -3494,20 +3497,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.group_id",
+                    "data_path": "action_result.data.*.hash_info.*.status",
                     "data_type": "string",
                     "example_values": [
-                        "6B101E640A000116535C0CFB2704BB98"
-                    ],
-                    "contains": [
-                        "symantec group id"
+                        "success"
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.hashes_unblocked",
-                    "data_type": "numeric",
+                    "data_path": "action_result.data.*.hash_info.*.summary",
+                    "data_type": "string",
                     "example_values": [
-                        1
+                        ""
                     ]
                 },
                 {
@@ -3518,10 +3518,24 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary.hashes_unblocked",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
                     "data_path": "action_result.summary.invalid_hashes",
                     "data_type": "numeric",
                     "example_values": [
                         1
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Fingerprint file name: phantom_6B101E640A000116535C0CFB2704BB98"
                     ]
                 },
                 {
@@ -3610,30 +3624,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Command id: 09357DB926FC40CE8B1A38D733DC4695"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.command_id",
-                    "data_type": "string",
-                    "contains": [
-                        "symantec command id"
-                    ],
-                    "example_values": [
-                        "09357DB926FC40CE8B1A38D733DC4695"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.state_id_status",
-                    "data_type": "string",
-                    "example_values": [
-                        "COMPLETED"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.id",
                     "data_type": "string",
                     "contains": [
@@ -3656,6 +3646,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.parameter.timeout",
+                    "data_type": "numeric",
+                    "example_values": [
+                        30
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.type",
                     "data_type": "string",
                     "contains": [
@@ -3667,10 +3664,31 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.timeout",
-                    "data_type": "numeric",
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.command_id",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec command id"
+                    ],
                     "example_values": [
-                        30
+                        "09357DB926FC40CE8B1A38D733DC4695"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.state_id_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "COMPLETED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Command id: 09357DB926FC40CE8B1A38D733DC4695"
                     ]
                 },
                 {
