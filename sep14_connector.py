@@ -281,6 +281,40 @@ class Sep14Connector(BaseConnector):
                                         status=response.status_code,
                                         detail=message), response_data
 
+    def _make_rest_call_paging(self, endpoint, action_result, page_index=1, page_size=20, params=None, **kwargs):
+        get_all_pages = False
+
+        if int(page_index) == 0:
+            get_all_pages = True
+            page_index = 1
+            page_size = 500  # no reason to make this anything smaller
+
+        if int(page_size) == 0:
+            page_size = 20  # set to default value
+
+        if params is None:
+            params = dict()
+
+        params['pageIndex'] = page_index
+        params['pageSize'] = page_size
+
+        kwargs['params'] = params
+
+        while True:
+
+            response_status, response_data = self._make_rest_call_abstract(endpoint, action_result, **kwargs)
+            yield (response_status, response_data)
+
+            if not get_all_pages:
+                break
+
+            if response_data['lastPage']:
+                break
+
+            kwargs['params']['pageIndex'] += 1
+
+        return
+
     def _get_endpoint_details(self, action_result):
         """ Helper function to get endpoint details.
 
@@ -352,28 +386,17 @@ class Sep14Connector(BaseConnector):
 
         # List containing all groups
         group_details = list()
-        params = {'pageIndex': 1}
 
         # Paginating data to get details of all groups
-        while True:
-            # Getting details of groups
-            response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_GROUPS_ENDPOINT,
-                                                                           action_result, params=params)
-
-            # Something went wrong while getting group details
+        for response_status, response_data in self._make_rest_call_paging(consts.SEP_LIST_GROUPS_ENDPOINT,
+                                                                          action_result,
+                                                                          page_index=0):
             if phantom.is_fail(response_status):
                 self.debug_print("Error while getting group details")
                 return action_result.get_status(), None
 
             # Adding group contents
             group_details += response_data['content']
-
-            # Break on last page
-            if response_data['lastPage']:
-                break
-
-            # Incrementing page index to next set of groups
-            params['pageIndex'] += 1
 
         return phantom.APP_SUCCESS, group_details
 
@@ -565,12 +588,10 @@ class Sep14Connector(BaseConnector):
         endpoint_status_details = list()
         command_id = param['id']
 
-        params = {'pageIndex': 1}
-
-        while True:
-            response_status, response_data = self._make_rest_call_abstract("{}/{}".format(
-                consts.SEP_GET_STATUS_ENDPOINT, command_id), action_result, params=params)
-
+        for response_status, response_data in self._make_rest_call_paging("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT,
+                                                                                         command_id),
+                                                                          action_result,
+                                                                          page_size=0):
             if phantom.is_fail(response_status):
                 return action_result.get_status()
 
@@ -586,13 +607,7 @@ class Sep14Connector(BaseConnector):
 
                 action_result.add_data(content)
 
-            if response_data['lastPage']:
-                break
-
-            params['pageIndex'] += 1
-
         summary_data["command_state"] = ", ".join(endpoint_status_details)
-
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _quarantine_device(self, param):
@@ -1086,26 +1101,24 @@ class Sep14Connector(BaseConnector):
             # set the action_result status to error
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_DOMAIN)
 
-        params = {'domain': domain_id, 'pageIndex': 1, 'pageSize': 500}
+        params = {'domain': domain_id}
 
-        while True:
-            response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS,
-                                                                           action_result, params=params)
+        page_index = param.get('page_index', 1)
+        page_size = param.get('page_size', 20)
 
+        for response_status, response_data in self._make_rest_call_paging(consts.SEP_LIST_COMPUTER_ENDPOINTS,
+                                                                          action_result,
+                                                                          page_index=page_index,
+                                                                          page_size=page_size,
+                                                                          params=params):
             if phantom.is_fail(response_status):
                 return action_result.get_status()
 
-            # Filter response
             for item in response_data['content']:
                 if item["ipAddresses"]:
                     item["ipAddresses"] = ", ".join(item["ipAddresses"])
                 action_result.add_data(item)
                 summary_data['system_found'] = True
-
-            if response_data['lastPage']:
-                break
-
-            params['pageIndex'] += 1
 
         summary_data['total_endpoints'] = action_result.get_data_size()
 

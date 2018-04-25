@@ -9,7 +9,7 @@
 
 {% block widget_content %} <!-- Main Start Block -->
 
-<!-- 
+<!--
 File: sep14_list_endpoints.html
 
 Copyright (c) Phantom Cyber Corporation, 2017-2018
@@ -115,10 +115,10 @@ of Phantom Cyber Corporation.
     {% else %}
         <table class="wf-table-vertical">
             <tr>
-                <td>Domain</td>
+                <td>Administrative Domain</td>
                 <td><a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);">
-                    {{ result.param.domain }}
+                   onclick="context_menu(this, [{'contains': ['symantec admin domain'], 'value': '{{ result.param.admin_domain }}' }], 0, {{ container.id }}, null, false);">
+                    {{ result.param.admin_domain }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                     </a>
