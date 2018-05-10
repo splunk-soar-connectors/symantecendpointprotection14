@@ -372,7 +372,7 @@
                     "description": "Page size",
                     "data_type": "numeric",
                     "required": false,
-                    "default": 20,
+                    "default": 500,
                     "order": 3
                 }
             },
@@ -1529,15 +1529,14 @@
             "identifier": "get_system_info",
             "read_only": true,
             "parameters": {
-                "ip_hostname": {
-                    "description": "IP or Computer Name to get the info of",
+                "hostname": {
+                    "description": "Computer Name to get system info",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
                     "order": 0,
                     "contains": [
-                        "host name",
-                        "ip"
+                        "host name"
                     ]
                 }
             },
@@ -1558,13 +1557,12 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_path": "action_result.parameter.hostname",
                     "data_type": "string",
                     "example_values": [
                         "admin-PC"
                     ],
                     "contains": [
-                        "ip",
                         "host name"
                     ]
                 },
