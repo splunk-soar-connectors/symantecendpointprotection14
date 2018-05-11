@@ -281,7 +281,7 @@ class Sep14Connector(BaseConnector):
                                         status=response.status_code,
                                         detail=message), response_data
 
-    def _make_rest_call_paging(self, endpoint, action_result, page_index=1, page_size=20, params=None, **kwargs):
+    def _make_rest_call_paging(self, endpoint, action_result, page_index=1, page_size=500, params=None, **kwargs):
         get_all_pages = False
 
         if int(page_index) == 0:
@@ -290,7 +290,7 @@ class Sep14Connector(BaseConnector):
             page_size = 500  # no reason to make this anything smaller
 
         if int(page_size) == 0:
-            page_size = 20  # set to default value
+            page_size = 500  # set to default value
 
         if params is None:
             params = dict()
@@ -591,7 +591,7 @@ class Sep14Connector(BaseConnector):
         for response_status, response_data in self._make_rest_call_paging("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT,
                                                                                          command_id),
                                                                           action_result,
-                                                                          page_size=0):
+                                                                          page_index=0):
             if phantom.is_fail(response_status):
                 return action_result.get_status()
 
@@ -1052,18 +1052,13 @@ class Sep14Connector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         summary_data = action_result.update_summary({})
 
-        is_ip = False
-
         # Get mandatory parameter
-        ip_hostname = param[consts.SEP_PARAM_IP_HOSTNAME]
-
-        # To check if ip_hostname is IP or hostname
-        if phantom.is_ip(ip_hostname):
-            is_ip = True
+        hostname = param[consts.SEP_PARAM_IP_HOSTNAME]
 
         # Make rest call
         response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS,
-                                                                       action_result)
+                                                                       action_result,
+                                                                       params={'computerName': hostname})
 
         # Something went wrong
         if phantom.is_fail(response_status):
@@ -1071,14 +1066,12 @@ class Sep14Connector(BaseConnector):
 
         # Filter response
         for item in response_data['content']:
-            if ((is_ip is False and ip_hostname.lower() in item['computerName'].lower()) or
-                    (is_ip is True and ip_hostname in item['ipAddresses'])):
-                item["ipAddresses"] = ", ".join(item["ipAddresses"])
-                action_result.add_data(item)
-                summary_data['system_found'] = True
+            item["ipAddresses"] = ", ".join(item["ipAddresses"])
+            action_result.add_data(item)
+            summary_data['system_found'] = True
 
         if action_result.get_data_size() == 0:
-            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_IP_HOSTNAME)
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HOSTNAME)
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -1104,7 +1097,7 @@ class Sep14Connector(BaseConnector):
         params = {'domain': domain_id}
 
         page_index = param.get('page_index', 1)
-        page_size = param.get('page_size', 20)
+        page_size = param.get('page_size', 500)
 
         for response_status, response_data in self._make_rest_call_paging(consts.SEP_LIST_COMPUTER_ENDPOINTS,
                                                                           action_result,

@@ -372,7 +372,7 @@
                     "description": "Page size",
                     "data_type": "numeric",
                     "required": false,
-                    "default": 20,
+                    "default": 500,
                     "order": 3
                 }
             },
@@ -1530,14 +1530,13 @@
             "read_only": true,
             "parameters": {
                 "ip_hostname": {
-                    "description": "IP or Computer Name to get the info of",
+                    "description": "Hostname of the device to get system info",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
                     "order": 0,
                     "contains": [
-                        "host name",
-                        "ip"
+                        "host name"
                     ]
                 }
             },
@@ -1564,7 +1563,6 @@
                         "admin-PC"
                     ],
                     "contains": [
-                        "ip",
                         "host name"
                     ]
                 },
