@@ -1053,7 +1053,7 @@ class Sep14Connector(BaseConnector):
         summary_data = action_result.update_summary({})
 
         # Get mandatory parameter
-        hostname = param[consts.SEP_PARAM_HOSTNAME]
+        hostname = param[consts.SEP_PARAM_IP_HOSTNAME]
 
         # Make rest call
         response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS,

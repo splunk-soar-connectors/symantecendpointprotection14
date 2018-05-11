@@ -1529,8 +1529,8 @@
             "identifier": "get_system_info",
             "read_only": true,
             "parameters": {
-                "hostname": {
-                    "description": "Computer Name to get system info",
+                "ip_hostname": {
+                    "description": "Hostname of the device to get system info",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -1557,7 +1557,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.hostname",
+                    "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "example_values": [
                         "admin-PC"
