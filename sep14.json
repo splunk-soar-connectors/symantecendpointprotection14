@@ -11,7 +11,7 @@
     "utctime_updated": "2018-05-29T19:29:04.000000Z",
     "product_vendor": "Symantec",
     "product_name": "Symantec Endpoint Protection 14",
-    "product_version_regex": "14.0.*",
+    "product_version_regex": "14.*",
     "min_phantom_version": "3.0.284",
     "logo": "logo_symantec.svg",
     "logo_dark": "logo_symantec_dark.svg",
