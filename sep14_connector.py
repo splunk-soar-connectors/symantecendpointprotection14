@@ -328,8 +328,11 @@ class Sep14Connector(BaseConnector):
                 action_result.set_status(phantom.APP_ERROR, 'Error occurred while fetching list of items using pagination')
                 return None
 
+            # Adding the fetched items to existing list generated from previous pages
             items_list.extend(response_data.get('content', []))
 
+            # Updating the pageIndex in params in order to fetch the next page
+            # Also, fetch whether its the last page or not.
             params['pageIndex'] = params['pageIndex'] + 1
             pagination_completed = response_data.get('lastPage', False)
 
@@ -344,6 +347,7 @@ class Sep14Connector(BaseConnector):
         """
 
         endpoints_list = []
+
         # Getting list of all domains
         response_status, domains_list = self._make_rest_call_abstract(consts.SEP_LIST_DOMAINS_ENDPOINT, action_result)
 
@@ -361,6 +365,7 @@ class Sep14Connector(BaseConnector):
             if endpoint_details is None:
                 return action_result.get_status(), None
 
+            # Adding the fetched endpoints to existing list of endpoints generated using previous domain IDs
             endpoints_list.extend(endpoint_details)
 
         return phantom.APP_SUCCESS, endpoints_list
