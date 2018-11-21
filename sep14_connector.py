@@ -359,7 +359,7 @@ class Sep14Connector(BaseConnector):
             params = {'domain': domain['id']}
             params['pageIndex'] = 1
             params['pageSize'] = 500
-            
+
             endpoint_details = self._fetch_items_paginated(consts.SEP_LIST_COMPUTER_ENDPOINTS, params, action_result)
 
             if endpoint_details is None:
@@ -1093,20 +1093,20 @@ class Sep14Connector(BaseConnector):
         # Get mandatory parameter
         hostname = param[consts.SEP_PARAM_IP_HOSTNAME]
 
-        # Make rest call
-        response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS,
-                                                                       action_result,
-                                                                       params={'computerName': hostname})
+        # Getting endpoint details
+        status, endpoint_list = self._get_endpoint_details(action_result)
 
-        # Something went wrong
-        if phantom.is_fail(response_status):
+        # Something went wrong while getting endpoint details
+        if phantom.is_fail(status):
             return action_result.get_status()
 
         # Filter response
-        for item in response_data['content']:
-            item["ipAddresses"] = ", ".join(item["ipAddresses"])
-            action_result.add_data(item)
-            summary_data['system_found'] = True
+        for item in endpoint_list:
+            if item['computerName'] == hostname:
+                item["ipAddresses"] = ", ".join(item["ipAddresses"])
+                action_result.add_data(item)
+                summary_data['system_found'] = True
+                break
 
         if action_result.get_data_size() == 0:
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HOSTNAME)
