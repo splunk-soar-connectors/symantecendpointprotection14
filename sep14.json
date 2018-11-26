@@ -4,7 +4,7 @@
     "description": "Integrate with Symantec Endpoint Protection 14 to execute investigative, containment, and corrective actions",
     "publisher": "Phantom",
     "package_name": "phantom_sep14",
-    "license": "Copyright (c) Phantom Cyber Corporation, 2017-2018",
+    "license": "Copyright (c) 2017-2018 Splunk Inc.",
     "main_module": "sep14_connector.pyc",
     "type": "endpoint",
     "app_version": "1.0.15",
@@ -12,7 +12,7 @@
     "product_vendor": "Symantec",
     "product_name": "Symantec Endpoint Protection 14",
     "product_version_regex": "14.*",
-    "min_phantom_version": "3.0.284",
+    "min_phantom_version": "3.5.210",
     "logo": "logo_symantec.svg",
     "logo_dark": "logo_symantec_dark.svg",
     "configuration": {

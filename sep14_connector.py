@@ -1,16 +1,8 @@
-# --
 # File: sep14_connector.py
+# Copyright (c) 2017-2018 Splunk Inc.
 #
-# Copyright (c) Phantom Cyber Corporation, 2017-2018
-#
-# This unpublished material is proprietary to Phantom Cyber.
-# All rights reserved. The methods and
-# techniques described herein are considered trade secrets
-# and/or confidential. Reproduction or distribution, in whole
-# or in part, is forbidden except by express written permission
-# of Phantom Cyber Corporation.
-#
-# --
+# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
+# without a valid written license from Splunk Inc. is PROHIBITED.
 
 # Standard library imports
 import json
@@ -315,22 +307,68 @@ class Sep14Connector(BaseConnector):
 
         return
 
+    def _fetch_items_paginated(self, url, params, action_result):
+        """Helper function to get list of items for given url using pagination
+
+        :param url: API url to fetch items from
+        :param params: object of parameters to pass in API request call
+        :param action_result: object of ActionResult class
+        :return items list
+        """
+
+        pagination_completed = False
+        items_list = []
+
+        while not pagination_completed:
+            response_status, response_data = self._make_rest_call_abstract(url,
+                                                    action_result, params=params, method="get")
+
+            # Something went wrong while getting list of items
+            if phantom.is_fail(response_status):
+                action_result.set_status(phantom.APP_ERROR, 'Error occurred while fetching list of items using pagination')
+                return None
+
+            # Adding the fetched items to existing list generated from previous pages
+            items_list.extend(response_data.get('content', []))
+
+            # Updating the pageIndex in params in order to fetch the next page
+            # Also, fetch whether its the last page or not.
+            params['pageIndex'] = params['pageIndex'] + 1
+            pagination_completed = response_data.get('lastPage', False)
+
+        self.debug_print(items_list)
+        return items_list
+
     def _get_endpoint_details(self, action_result):
-        """ Helper function to get endpoint details.
+        """ Helper function to get endpoint details based on all the available domains
 
         :param action_result: object of ActionResult class
         :return status(True/False), endpoint details list
         """
 
-        # Getting endpoint details
-        status, endpoint_details = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS, action_result)
+        endpoints_list = []
 
-        # Something went wrong while getting endpoint details
-        if phantom.is_fail(status):
-            self.debug_print("Error while getting endpoint details")
-            return action_result.set_status(phantom.APP_ERROR, "Error while getting endpoint details"), None
+        # Getting list of all domains
+        response_status, domains_list = self._make_rest_call_abstract(consts.SEP_LIST_DOMAINS_ENDPOINT, action_result)
 
-        return phantom.APP_SUCCESS, endpoint_details.get("content", [])
+        if phantom.is_fail(response_status):
+            return action_result.get_status(), None
+
+        for domain in domains_list:
+            # Getting endpoint details for each domain
+            params = {'domain': domain['id']}
+            params['pageIndex'] = 1
+            params['pageSize'] = 500
+
+            endpoint_details = self._fetch_items_paginated(consts.SEP_LIST_COMPUTER_ENDPOINTS, params, action_result)
+
+            if endpoint_details is None:
+                return action_result.get_status(), None
+
+            # Adding the fetched endpoints to existing list of endpoints generated using previous domain IDs
+            endpoints_list.extend(endpoint_details)
+
+        return phantom.APP_SUCCESS, endpoints_list
 
     def _get_endpoint_id_from_ip_hostname(self, action_result, value_to_search, search_key_field):
         """ Helper function to get endpoint ID from given IP or hostname.
@@ -1055,20 +1093,20 @@ class Sep14Connector(BaseConnector):
         # Get mandatory parameter
         hostname = param[consts.SEP_PARAM_IP_HOSTNAME]
 
-        # Make rest call
-        response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS,
-                                                                       action_result,
-                                                                       params={'computerName': hostname})
+        # Getting endpoint details
+        status, endpoint_list = self._get_endpoint_details(action_result)
 
-        # Something went wrong
-        if phantom.is_fail(response_status):
+        # Something went wrong while getting endpoint details
+        if phantom.is_fail(status):
             return action_result.get_status()
 
         # Filter response
-        for item in response_data['content']:
-            item["ipAddresses"] = ", ".join(item["ipAddresses"])
-            action_result.add_data(item)
-            summary_data['system_found'] = True
+        for item in endpoint_list:
+            if item['computerName'] == hostname:
+                item["ipAddresses"] = ", ".join(item["ipAddresses"])
+                action_result.add_data(item)
+                summary_data['system_found'] = True
+                break
 
         if action_result.get_data_size() == 0:
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HOSTNAME)
