@@ -94,8 +94,8 @@ class Sep14Connector(BaseConnector):
         """
 
         authorization = {
-            "username": self._username,
-            "password": self._password
+            "username": requests.compat.quote(self._username),
+            "password": requests.compat.quote(self._password)
         }
         response_status, response = self._make_rest_call(consts.SEP_TEST_CONNECTIVITY_ENDPOINT, action_result,
                                                          data=json.dumps(authorization), timeout=30, method="post")
