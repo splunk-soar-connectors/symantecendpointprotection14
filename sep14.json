@@ -7,8 +7,8 @@
     "license": "Copyright (c) 2017-2019 Splunk Inc.",
     "main_module": "sep14_connector.pyc",
     "type": "endpoint",
-    "app_version": "1.0.18",
-    "utctime_updated": "2019-03-19T20:06:39.000000Z",
+    "app_version": "1.0.19",
+    "utctime_updated": "2019-03-21T17:00:49.000000Z",
     "product_vendor": "Symantec",
     "product_name": "Symantec Endpoint Protection 14",
     "product_version_regex": "14.*",
@@ -811,8 +811,7 @@
                     "contains": [
                         "ip"
                     ],
-                    "example_values": [
-                    ]
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.group.domain.id",
@@ -1423,8 +1422,7 @@
                 {
                     "data_path": "action_result.data.*.subnetMasks",
                     "data_type": "string",
-                    "example_values": [
-                    ]
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.svaId",
@@ -1994,8 +1992,7 @@
                     "contains": [
                         "ip"
                     ],
-                    "example_values": [
-                    ]
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.group.domain.id",
