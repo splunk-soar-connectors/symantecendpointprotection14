@@ -1088,25 +1088,21 @@ class Sep14Connector(BaseConnector):
         """
 
         action_result = self.add_action_result(ActionResult(dict(param)))
-        summary_data = action_result.update_summary({})
 
         # Get mandatory parameter
         hostname = param[consts.SEP_PARAM_IP_HOSTNAME]
 
-        # Getting endpoint details
-        status, endpoint_list = self._get_endpoint_details(action_result)
+        # Getting response data for specific computer name
+        response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS, action_result, params={'computerName': hostname})
 
-        # Something went wrong while getting endpoint details
-        if phantom.is_fail(status):
+        if phantom.is_fail(response_status):
             return action_result.get_status()
 
-        # Filter response
-        for item in endpoint_list:
-            if item['computerName'] == hostname:
+        # Handling view page expectation(all key value pair must be string) by removing list with comma seprated string and after that add result data
+        for item in response_data.get('content', []):
+            if item["ipAddresses"]:
                 item["ipAddresses"] = ", ".join(item["ipAddresses"])
-                action_result.add_data(item)
-                summary_data['system_found'] = True
-                break
+            action_result.add_data(item)
 
         if action_result.get_data_size() == 0:
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HOSTNAME)
