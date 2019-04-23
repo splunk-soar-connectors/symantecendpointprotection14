@@ -239,7 +239,7 @@ class Sep14Connector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, msg_string, e), response_data
 
         if response.status_code in ERROR_RESPONSE_DICT:
-            message = ERROR_RESPONSE_DICT[response.status_code]
+            message = ERROR_RESPONSE_DICT.get(response.status_code)
 
             # overriding message if available in response
             if isinstance(response_data, dict):
@@ -300,7 +300,7 @@ class Sep14Connector(BaseConnector):
             if not get_all_pages:
                 break
 
-            if response_data['lastPage']:
+            if response_data.get('lastPage'):
                 break
 
             kwargs['params']['pageIndex'] += 1
@@ -336,7 +336,6 @@ class Sep14Connector(BaseConnector):
             params['pageIndex'] = params['pageIndex'] + 1
             pagination_completed = response_data.get('lastPage', False)
 
-        self.debug_print(items_list)
         return items_list
 
     def _get_endpoint_details(self, action_result):
@@ -356,7 +355,7 @@ class Sep14Connector(BaseConnector):
 
         for domain in domains_list:
             # Getting endpoint details for each domain
-            params = {'domain': domain['id']}
+            params = {'domain': domain.get('id')}
             params['pageIndex'] = 1
             params['pageSize'] = 500
 
@@ -393,18 +392,18 @@ class Sep14Connector(BaseConnector):
             id_found = False
             for endpoint in endpoint_list:
                 # If key to search has a list, then value will be searched in the list
-                if isinstance(endpoint[search_key], list):
-                    if value_to_search[index] not in endpoint[search_key]:
+                if isinstance(endpoint.get(search_key), list):
+                    if value_to_search[index] not in endpoint.get(search_key):
                         continue
                 # if value is string, then value will be matched exactly to value of key in response
-                elif isinstance(endpoint[search_key], basestring) and endpoint[search_key] != value_to_search[index]:
+                elif isinstance(endpoint.get(search_key), basestring) and endpoint.get(search_key) != value_to_search[index]:
                     continue
 
                 # If computer ID is not provided, then value of computer ID will be obtained based on provided
                 # IP address or hostname
-                if endpoint["uniqueId"]:
+                if endpoint.get("uniqueId"):
                     id_found = True
-                    computer_ids.append(endpoint["uniqueId"])
+                    computer_ids.append(endpoint.get("uniqueId"))
                 break
 
             # If computer ID not found
@@ -422,21 +421,15 @@ class Sep14Connector(BaseConnector):
         :return status(Success/Failure), list of groups
         """
 
-        # List containing all groups
-        group_details = list()
+        params = {}
+        params['pageIndex'] = 1
+        params['pageSize'] = 500
 
-        # Paginating data to get details of all groups
-        for response_status, response_data in self._make_rest_call_paging(consts.SEP_LIST_GROUPS_ENDPOINT,
-                                                                          action_result,
-                                                                          page_index=0):
-            if phantom.is_fail(response_status):
-                self.debug_print("Error while getting group details")
-                return action_result.get_status(), None
+        groups_data = self._fetch_items_paginated(consts.SEP_LIST_GROUPS_ENDPOINT, params, action_result)
+        if groups_data is None:
+            return action_result.get_status(), None
 
-            # Adding group contents
-            group_details += response_data['content']
-
-        return phantom.APP_SUCCESS, group_details
+        return phantom.APP_SUCCESS, groups_data
 
     def _get_domain_id_by_name(self, action_result, domain):
         """ Helper function to get domain id by domain name.
@@ -453,8 +446,8 @@ class Sep14Connector(BaseConnector):
             return action_result.get_status()
 
         for item in response_data:
-            if item['name'].lower() == domain.lower():
-                return item['id']
+            if item.get('name').lower() == domain.lower():
+                return item.get('id')
 
         return None
 
@@ -626,24 +619,26 @@ class Sep14Connector(BaseConnector):
         endpoint_status_details = list()
         command_id = param['id']
 
-        for response_status, response_data in self._make_rest_call_paging("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT,
-                                                                                         command_id),
-                                                                          action_result,
-                                                                          page_index=0):
-            if phantom.is_fail(response_status):
-                return action_result.get_status()
+        params = {}
+        params['pageIndex'] = 1
+        params['pageSize'] = 500
 
-            for content in response_data['content']:
-                endpoint_status_details.append("{}- {}".format(content["computerName"],
-                                                               COMMAND_STATE_DESC.get(str(content["stateId"]), "NA")))
-                self.send_progress(
-                    'Command State: {0}({1}), Sub-State: {2}({3})'.format(
-                        content["stateId"], COMMAND_STATE_DESC.get(str(content["stateId"]), "NA"),
-                        content["subStateId"], COMMAND_SUB_STATE_DESC.get(str(content["subStateId"]), 'NA')
-                    )
+        status_data = self._fetch_items_paginated("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT, command_id), params, action_result)
+        if status_data is None:
+            return action_result.get_status()
+
+        for response_data in status_data:
+
+            endpoint_status_details.append("{}- {}".format(response_data.get("computerName"),
+                                                        COMMAND_STATE_DESC.get(str(response_data.get("stateId")), "NA")))
+
+            self.send_progress('Command State: {0}({1}), Sub-State: {2}({3})'.format(
+                    response_data.get("stateId"), COMMAND_STATE_DESC.get(str(response_data.get("stateId")), "NA"),
+                    response_data.get("subStateId"), COMMAND_SUB_STATE_DESC.get(str(response_data.get("subStateId")), 'NA')
                 )
+            )
 
-                action_result.add_data(content)
+            action_result.add_data(response_data)
 
         summary_data["command_state"] = ", ".join(endpoint_status_details)
         return action_result.set_status(phantom.APP_SUCCESS)
@@ -711,18 +706,18 @@ class Sep14Connector(BaseConnector):
 
             for endpoint in endpoint_list:
                 # If key to search has a list, then value will be searched in the list
-                if isinstance(endpoint[search_key], list):
-                    if value_to_search[index] not in endpoint[search_key]:
+                if isinstance(endpoint.get(search_key), list):
+                    if value_to_search[index] not in endpoint.get(search_key):
                         continue
                 # if value is string, then value will be matched exactly to value of key in response
-                elif isinstance(endpoint[search_key], basestring) and endpoint[search_key] != value_to_search[index]:
+                elif isinstance(endpoint.get(search_key), basestring) and endpoint.get(search_key) != value_to_search[index]:
                     continue
 
                 # If computer ID is not provided, then value of computer ID will be obtained based on provided
                 # IP address or hostname
-                if endpoint["uniqueId"]:
+                if endpoint.get("uniqueId"):
                     id_found = True
-                    computer_ids.append(endpoint["uniqueId"])
+                    computer_ids.append(endpoint.get("uniqueId"))
                 break
 
             # If computer ID not found
@@ -821,10 +816,10 @@ class Sep14Connector(BaseConnector):
 
                 # Iterating over group to get details of group whose ID is provided in input parameter
                 for group_detail in group_list:
-                    if group_detail["id"] != group_id:
+                    if group_detail.get("id") != group_id:
                         continue
 
-                    domain_id = group_detail["domain"]["id"]
+                    domain_id = group_detail.get("domain", {}).get("id")
                     break
 
                 # If no corresponding domain is found for the given group ID
@@ -914,18 +909,18 @@ class Sep14Connector(BaseConnector):
 
             for endpoint in endpoint_list:
                 # If key to search has a list, then value will be searched in the list
-                if isinstance(endpoint[search_key], list):
-                    if value_to_search[index] not in endpoint[search_key]:
+                if isinstance(endpoint.get(search_key), list):
+                    if value_to_search[index] not in endpoint.get(search_key):
                         continue
                 # if value is string, then value will be matched exactly to value of key in response
-                elif isinstance(endpoint[search_key], basestring) and endpoint[search_key] != value_to_search[index]:
+                elif isinstance(endpoint.get(search_key), basestring) and endpoint.get(search_key) != value_to_search[index]:
                     continue
 
                 # If computer ID is not provided, then value of computer ID will be obtained based on provided
                 # IP address or hostname
-                if endpoint["uniqueId"]:
+                if endpoint.get("uniqueId"):
                     id_found = True
-                    computer_ids.append(endpoint["uniqueId"])
+                    computer_ids.append(endpoint.get("uniqueId"))
                 break
 
             # If computer ID not found
@@ -998,10 +993,10 @@ class Sep14Connector(BaseConnector):
 
         # Iterating over group to get details of group whose ID is provided in input parameter
         for group_detail in group_list:
-            if group_detail["id"] != group_id:
+            if group_detail.get("id") != group_id:
                 continue
 
-            domain_id = group_detail["domain"]["id"]
+            domain_id = group_detail.get("domain", {}).get("id")
             break
 
         # If group not found
@@ -1041,7 +1036,7 @@ class Sep14Connector(BaseConnector):
             fingerprint_endpoint_url = consts.SEP_FINGERPRINTS_ENDPOINT
             # If fingerprint file is already present
             if file_details.get("id"):
-                fingerprint_file_id = file_details["id"]
+                fingerprint_file_id = file_details.get("id")
                 fingerprint_endpoint_url = consts.SEP_FINGERPRINT_ENDPOINT.format(
                     fingerprint_id=fingerprint_file_id
                 )
@@ -1063,7 +1058,7 @@ class Sep14Connector(BaseConnector):
                     return action_result.set_status(phantom.APP_ERROR, consts.SEP_BLOCK_HASH_GET_ID_ERROR)
 
                 # Getting file ID of fingerprint list
-                fingerprint_file_id = file_resp_data["id"]
+                fingerprint_file_id = file_resp_data.get("id")
 
             # Executing REST API call to add fingerprint file as blacklist to provided group
             resp_status, blacklist_file_resp_data = self._make_rest_call_abstract(consts.SEP_BLOCK_FILE_ENDPOINT.format(
@@ -1129,23 +1124,18 @@ class Sep14Connector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_DOMAIN)
 
         params = {'domain': domain_id}
+        params['pageIndex'] = 1
+        params['pageSize'] = 1
 
-        page_index = param.get('page_index', 1)
-        page_size = param.get('page_size', 500)
+        endpoint_data = self._fetch_items_paginated(consts.SEP_LIST_COMPUTER_ENDPOINTS, params, action_result)
+        if endpoint_data is None:
+            return action_result.get_status()
 
-        for response_status, response_data in self._make_rest_call_paging(consts.SEP_LIST_COMPUTER_ENDPOINTS,
-                                                                          action_result,
-                                                                          page_index=page_index,
-                                                                          page_size=page_size,
-                                                                          params=params):
-            if phantom.is_fail(response_status):
-                return action_result.get_status()
-
-            for item in response_data['content']:
-                if item["ipAddresses"]:
-                    item["ipAddresses"] = ", ".join(item["ipAddresses"])
-                action_result.add_data(item)
-                summary_data['system_found'] = True
+        for item in endpoint_data:
+            if item["ipAddresses"]:
+                item["ipAddresses"] = ", ".join(item["ipAddresses"])
+            action_result.add_data(item)
+            summary_data['system_found'] = True
 
         summary_data['total_endpoints'] = action_result.get_data_size()
 
@@ -1183,9 +1173,9 @@ class Sep14Connector(BaseConnector):
                 if phantom.is_fail(response_status):
                     return action_result.get_status(), None
 
-                for content in response_data['content']:
-                    state_id = content["stateId"]
-                    sub_state_id = content["subStateId"]
+                for content in response_data.get('content'):
+                    state_id = content.get("stateId")
+                    sub_state_id = content.get("subStateId")
                     self.send_progress(
                         'Command State: {0}({1}), Sub-State: {2}({3})'.format(
                             state_id, COMMAND_STATE_DESC.get(str(state_id), "NA"), sub_state_id,
@@ -1194,7 +1184,7 @@ class Sep14Connector(BaseConnector):
                     )
                     state_ids.append(state_id)
 
-                if response_data['lastPage']:
+                if response_data.get('lastPage'):
                     break
 
                 params['pageIndex'] += 1
@@ -1203,9 +1193,9 @@ class Sep14Connector(BaseConnector):
             if set(state_ids) < (set(completion_state_ids)):
                 timeout = 0
 
-        for content in response_data['content']:
-            if content['resultInXML']:
-                content.update(xmltodict.parse(content['resultInXML']))
+        for content in response_data.get('content'):
+            if content.get('resultInXML'):
+                content.update(xmltodict.parse(content.get('resultInXML')))
                 content.pop("resultInXML")
             action_result.add_data(content)
 
