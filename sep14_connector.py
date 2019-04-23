@@ -273,40 +273,6 @@ class Sep14Connector(BaseConnector):
                                         status=response.status_code,
                                         detail=message), response_data
 
-    def _make_rest_call_paging(self, endpoint, action_result, page_index=1, page_size=500, params=None, **kwargs):
-        get_all_pages = False
-
-        if int(page_index) == 0:
-            get_all_pages = True
-            page_index = 1
-            page_size = 500  # no reason to make this anything smaller
-
-        if int(page_size) == 0:
-            page_size = 500  # set to default value
-
-        if params is None:
-            params = dict()
-
-        params['pageIndex'] = page_index
-        params['pageSize'] = page_size
-
-        kwargs['params'] = params
-
-        while True:
-
-            response_status, response_data = self._make_rest_call_abstract(endpoint, action_result, **kwargs)
-            yield (response_status, response_data)
-
-            if not get_all_pages:
-                break
-
-            if response_data.get('lastPage'):
-                break
-
-            kwargs['params']['pageIndex'] += 1
-
-        return
-
     def _fetch_items_paginated(self, url, params, action_result):
         """Helper function to get list of items for given url using pagination
 
