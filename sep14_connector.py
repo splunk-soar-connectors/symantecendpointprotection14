@@ -273,7 +273,7 @@ class Sep14Connector(BaseConnector):
                                         status=response.status_code,
                                         detail=message), response_data
 
-    def _fetch_items_paginated(self, url, params, action_result):
+    def _fetch_items_paginated(self, url, action_result, params=None):
         """Helper function to get list of items for given url using pagination
 
         :param url: API url to fetch items from
@@ -284,6 +284,17 @@ class Sep14Connector(BaseConnector):
 
         pagination_completed = False
         items_list = []
+
+        if not params:
+            params = dict()
+
+        try:
+            limit = params.pop(consts.SEP_PARAM_LIMIT)
+        except KeyError:
+            limit = None
+
+        params['pageIndex'] = 1
+        params['pageSize'] = 500
 
         while not pagination_completed:
             response_status, response_data = self._make_rest_call_abstract(url,
@@ -296,6 +307,9 @@ class Sep14Connector(BaseConnector):
 
             # Adding the fetched items to existing list generated from previous pages
             items_list.extend(response_data.get('content', []))
+
+            if limit and len(items_list) >= limit:
+                return items_list[:limit]
 
             # Updating the pageIndex in params in order to fetch the next page
             # Also, fetch whether its the last page or not.
@@ -322,10 +336,8 @@ class Sep14Connector(BaseConnector):
         for domain in domains_list:
             # Getting endpoint details for each domain
             params = {'domain': domain.get('id')}
-            params['pageIndex'] = 1
-            params['pageSize'] = 500
 
-            endpoint_details = self._fetch_items_paginated(consts.SEP_LIST_COMPUTER_ENDPOINTS, params, action_result)
+            endpoint_details = self._fetch_items_paginated(consts.SEP_LIST_COMPUTER_ENDPOINTS, action_result, params)
 
             if endpoint_details is None:
                 return action_result.get_status(), None
@@ -387,11 +399,7 @@ class Sep14Connector(BaseConnector):
         :return status(Success/Failure), list of groups
         """
 
-        params = {}
-        params['pageIndex'] = 1
-        params['pageSize'] = 500
-
-        groups_data = self._fetch_items_paginated(consts.SEP_LIST_GROUPS_ENDPOINT, params, action_result)
+        groups_data = self._fetch_items_paginated(consts.SEP_LIST_GROUPS_ENDPOINT, action_result)
         if groups_data is None:
             return action_result.get_status(), None
 
@@ -585,11 +593,7 @@ class Sep14Connector(BaseConnector):
         endpoint_status_details = list()
         command_id = param['id']
 
-        params = {}
-        params['pageIndex'] = 1
-        params['pageSize'] = 500
-
-        status_data = self._fetch_items_paginated("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT, command_id), params, action_result)
+        status_data = self._fetch_items_paginated("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT, command_id), action_result)
         if status_data is None:
             return action_result.get_status()
 
@@ -1082,6 +1086,9 @@ class Sep14Connector(BaseConnector):
 
         # Get mandatory parameter
         domain = param[consts.SEP_PARAM_DOMAIN]
+        limit = param.get(consts.SEP_PARAM_LIMIT)
+        if limit and not str(limit).isdigit() or limit == 0:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_LIMIT)
 
         domain_id = self._get_domain_id_by_name(action_result, domain)
 
@@ -1089,11 +1096,9 @@ class Sep14Connector(BaseConnector):
             # set the action_result status to error
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_DOMAIN)
 
-        params = {'domain': domain_id}
-        params['pageIndex'] = 1
-        params['pageSize'] = 1
+        params = {'domain': domain_id, 'limit': limit}
 
-        endpoint_data = self._fetch_items_paginated(consts.SEP_LIST_COMPUTER_ENDPOINTS, params, action_result)
+        endpoint_data = self._fetch_items_paginated(consts.SEP_LIST_COMPUTER_ENDPOINTS, action_result, params)
         if endpoint_data is None:
             return action_result.get_status()
 

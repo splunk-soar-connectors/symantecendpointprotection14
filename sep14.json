@@ -357,23 +357,11 @@
                         "symantec admin domain"
                     ]
                 },
-                "ph": {
-                    "data_type": "ph",
+                "limit": {
+                    "description": "Maximum number of endpoints to be fetched",
+                    "data_type": "numeric",
+                    "required": false,
                     "order": 1
-                },
-                "page_index": {
-                    "description": "Page index (set to 0 for all results)",
-                    "data_type": "numeric",
-                    "required": false,
-                    "default": 1,
-                    "order": 2
-                },
-                "page_size": {
-                    "description": "Page size",
-                    "data_type": "numeric",
-                    "required": false,
-                    "default": 500,
-                    "order": 3
                 }
             },
             "versions": "EQ(*)",
@@ -403,21 +391,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.domain",
-                    "data_type": "string",
-                    "example_values": [
-                        "Default"
-                    ],
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.page_index",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.parameter.page_size",
+                    "data_path": "action_result.parameter.limit",
                     "data_type": "numeric"
                 },
                 {
@@ -1380,7 +1354,7 @@
                     "data_path": "action_result.data.*.quarantineDesc",
                     "data_type": "string",
                     "example_values": [
-                        "Host Integrity check is disabled.  Host Integrity policy has been disabled by the administrator."
+                        "Host Integrity check is disabled.  Host Integrity policy has been disabled by the administrator"
                     ]
                 },
                 {
@@ -2545,7 +2519,7 @@
                     "data_path": "action_result.data.*.quarantineDesc",
                     "data_type": "string",
                     "example_values": [
-                        "Host Integrity check is disabled.  Host Integrity policy has been disabled by the administrator."
+                        "Host Integrity check is disabled.  Host Integrity policy has been disabled by the administrator"
                     ]
                 },
                 {
@@ -3611,7 +3585,7 @@
                     "data_path": "action_result.data.*.hash_info.*.message",
                     "data_type": "string",
                     "example_values": [
-                        "Hash removed from the fingerprint file."
+                        "Hash removed from the fingerprint file"
                     ]
                 },
                 {
