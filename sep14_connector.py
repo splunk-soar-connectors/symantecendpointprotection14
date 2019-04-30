@@ -171,7 +171,6 @@ class Sep14Connector(BaseConnector):
                         timeout=None):
         """ Function that makes the REST call to the device. It is a generic function that can be called from various
         action handlers.
-
         :param endpoint: REST endpoint that needs to appended to the service address
         :param action_result: object of ActionResult class
         :param headers: request headers
@@ -658,7 +657,7 @@ class Sep14Connector(BaseConnector):
         timeout = param.get(consts.SEP_PARAM_TIMEOUT, 30)
 
         # Validate timeout
-        if not str(timeout).isdigit():
+        if timeout and not str(timeout).isdigit() or timeout == 0:
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
 
@@ -861,7 +860,7 @@ class Sep14Connector(BaseConnector):
         timeout = param.get(consts.SEP_PARAM_TIMEOUT, 30)
 
         # Validate timeout
-        if not str(timeout).isdigit():
+        if timeout and not str(timeout).isdigit() or timeout == 0:
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
 
@@ -1164,6 +1163,9 @@ class Sep14Connector(BaseConnector):
             if set(state_ids) < (set(completion_state_ids)):
                 timeout = 0
 
+        if not response_data or not response_data.get('content'):
+            return action_result.set_status(phantom.APP_ERROR, "Error while fetching the status of command id: {command_id}".format(command_id=command_id)), None
+
         for content in response_data.get('content'):
             if content.get('resultInXML'):
                 content.update(xmltodict.parse(content.get('resultInXML')))
@@ -1219,7 +1221,7 @@ class Sep14Connector(BaseConnector):
         timeout = param.get(consts.SEP_PARAM_TIMEOUT, 30)
 
         # Validate timeout
-        if not str(timeout).isdigit():
+        if timeout and not str(timeout).isdigit() or timeout == 0:
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
 
