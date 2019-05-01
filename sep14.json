@@ -785,7 +785,9 @@
                     "contains": [
                         "ip"
                     ],
-                    "example_values": []
+                    "example_values": [
+                        "10.1.64.1"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.group.domain.id",
@@ -1078,7 +1080,7 @@
                     "data_path": "action_result.data.*.logonUserName",
                     "data_type": "string",
                     "example_values": [
-                        "Splunk"
+                        "Administrator"
                     ],
                     "contains": [
                         "user name"
@@ -1396,7 +1398,9 @@
                 {
                     "data_path": "action_result.data.*.subnetMasks",
                     "data_type": "string",
-                    "example_values": []
+                    "example_values": [
+                        "255.255.252.0"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.svaId",
@@ -1966,13 +1970,18 @@
                     "contains": [
                         "ip"
                     ],
-                    "example_values": []
+                    "example_values": [
+                        "10.1.64.1"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.group.domain.id",
                     "data_type": "string",
                     "example_values": [
                         "FE1A657F0A000116678670ACF7876E1B"
+                    ],
+                    "contains": [
+                        "md5"
                     ]
                 },
                 {
@@ -2036,6 +2045,9 @@
                     "data_type": "string",
                     "example_values": [
                         "0D8147927A78F2AA0959D730955224AD"
+                    ],
+                    "contains": [
+                        "md5"
                     ]
                 },
                 {
@@ -2247,7 +2259,7 @@
                     "data_path": "action_result.data.*.logonUserName",
                     "data_type": "string",
                     "example_values": [
-                        "Splunk"
+                        "Administrator"
                     ],
                     "contains": [
                         "user name"
@@ -2450,6 +2462,9 @@
                     "data_type": "string",
                     "example_values": [
                         "E34961E3DE385D0C25F032E316EAEC9C"
+                    ],
+                    "contains": [
+                        "md5"
                     ]
                 },
                 {
@@ -2561,7 +2576,7 @@
                     "data_path": "action_result.data.*.subnetMasks",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "255.255.252.0"
                     ]
                 },
                 {
@@ -2793,7 +2808,7 @@
                     "data_path": "action_result.data.*.currentLoginUserName",
                     "data_type": "string",
                     "example_values": [
-                        "Splunk"
+                        "Administrator"
                     ],
                     "contains": [
                         "user name"
@@ -3258,6 +3273,9 @@
                     "data_type": "string",
                     "example_values": [
                         "sym-sepm-01"
+                    ],
+                    "contains": [
+                        "host name"
                     ]
                 },
                 {
@@ -3832,7 +3850,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.hashes_unblocked",
+                    "data_path": "action_result.summary.hashes_blocked",
                     "data_type": "numeric",
                     "example_values": [
                         1
@@ -4030,6 +4048,9 @@
                     "data_type": "string",
                     "example_values": [
                         "FULL_SCAN"
+                    ],
+                    "contains": [
+                        "symantec scan type"
                     ]
                 },
                 {
@@ -4126,6 +4147,9 @@
                     "data_type": "string",
                     "example_values": [
                         "sym-sepm-01"
+                    ],
+                    "contains": [
+                        "host name"
                     ]
                 },
                 {

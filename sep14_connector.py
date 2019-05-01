@@ -301,7 +301,6 @@ class Sep14Connector(BaseConnector):
 
             # Something went wrong while getting list of items
             if phantom.is_fail(response_status):
-                action_result.set_status(phantom.APP_ERROR, 'Error occurred while fetching list of items using pagination')
                 return None
 
             # Adding the fetched items to existing list generated from previous pages
@@ -1190,7 +1189,6 @@ class Sep14Connector(BaseConnector):
         scan_type = param.get(consts.SEP_PARAM_SCAN_TYPE, 'QUICK_SCAN')
 
         search_key_field = list()
-
         # If none of the parameters are specified
         if not computer_id and not ip_hostname:
             self.debug_print(consts.SEP_PARAM_NOT_SPECIFIED.format(
