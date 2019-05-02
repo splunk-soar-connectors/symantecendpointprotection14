@@ -355,7 +355,6 @@ class Sep14Connector(BaseConnector):
         """
 
         computer_ids = list()
-
         # Getting endpoint details
         status, endpoint_list = self._get_endpoint_details(action_result)
 
@@ -363,30 +362,17 @@ class Sep14Connector(BaseConnector):
         if phantom.is_fail(status):
             return action_result.get_status(), None
 
-        # Checking if endpoint is already in quarantine state
-        for index, search_key in enumerate(search_key_field):
-            id_found = False
+        for index, value in enumerate(value_to_search):
             for endpoint in endpoint_list:
-                # If key to search has a list, then value will be searched in the list
-                if isinstance(endpoint.get(search_key), list):
-                    if value_to_search[index] not in endpoint.get(search_key):
-                        continue
-                # if value is string, then value will be matched exactly to value of key in response
-                elif isinstance(endpoint.get(search_key), basestring) and endpoint.get(search_key) != value_to_search[index]:
-                    continue
-
-                # If computer ID is not provided, then value of computer ID will be obtained based on provided
-                # IP address or hostname
-                if endpoint.get("uniqueId"):
-                    id_found = True
-                    computer_ids.append(endpoint.get("uniqueId"))
-                break
-
-            # If computer ID not found
-            if not id_found:
-                self.debug_print(consts.SEP_DEVICE_NOT_FOUND.format(action="scan"))
-                return action_result.set_status(phantom.APP_ERROR, "{} {}".format(
-                    consts.SEP_DEVICE_NOT_FOUND.format(action="scan"), value_to_search[index])), None
+                if endpoint.get(search_key_field[index]) == value:
+                    computer_ids.append(endpoint.get('uniqueId'))
+                    break
+            else:
+                self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
+                return action_result.set_status(phantom.APP_ERROR, "{message} for the IP|Hostname: {ip_hostname}".format(
+                    message=consts.SEP_DEVICE_NOT_FOUND,
+                    ip_hostname=value
+                )), None
 
         return phantom.APP_SUCCESS, computer_ids
 
@@ -621,6 +607,7 @@ class Sep14Connector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         summary_data = action_result.update_summary({})
         search_key_field = list()
+        computer_ids_list = list()
 
         # Getting computer IDs to quarantine
         computer_id = param.get(consts.SEP_PARAM_COMPUTER_ID)
@@ -637,11 +624,11 @@ class Sep14Connector(BaseConnector):
             ))
         # If computer_id is specified, then ip_hostname parameter will be ignored
         elif computer_id:
-            search_key_field.append("uniqueId")
-            value_to_search = [x.strip() for x in computer_id.split(',')]
+            computer_ids_list = [x.strip() for x in computer_id.split(',')]
+            computer_ids_list = ' '.join(computer_ids_list).split()
         else:
             value_to_search = ip_hostname = [x.strip() for x in ip_hostname.split(',')]
-
+            value_to_search = ip_hostname = ' '.join(value_to_search).split()
             for index, item in enumerate(ip_hostname):
                 # Checking if given value is an IP address
                 if phantom.is_ip(item):
@@ -660,42 +647,23 @@ class Sep14Connector(BaseConnector):
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
 
-        # Getting endpoint details
-        status, endpoint_list = self._get_endpoint_details(action_result)
+        if not computer_ids_list:
+            # To check for given parameter computer id, IP/ Hostname
+            # if not computer_id:
+            get_endpoint_status, computer_ids_list = self._get_endpoint_id_from_ip_hostname(action_result, value_to_search,
+                                                                                    search_key_field)
 
-        # Something went wrong while getting endpoint details
-        if phantom.is_fail(status):
-            return action_result.get_status()
+            # Something went wrong while getting computer ID based on given IP or hostname
+            if phantom.is_fail(get_endpoint_status):
+                return action_result.get_status()
 
-        computer_ids = list()
-        # Checking if endpoint is already in quarantine state
-        for index, search_key in enumerate(search_key_field):
-            id_found = False
+        # If no endpoint is found
+        if not computer_ids_list:
+            self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
+            return action_result.set_status(phantom.APP_ERROR,
+                                            consts.SEP_DEVICE_NOT_FOUND)
 
-            for endpoint in endpoint_list:
-                # If key to search has a list, then value will be searched in the list
-                if isinstance(endpoint.get(search_key), list):
-                    if value_to_search[index] not in endpoint.get(search_key):
-                        continue
-                # if value is string, then value will be matched exactly to value of key in response
-                elif isinstance(endpoint.get(search_key), basestring) and endpoint.get(search_key) != value_to_search[index]:
-                    continue
-
-                # If computer ID is not provided, then value of computer ID will be obtained based on provided
-                # IP address or hostname
-                if endpoint.get("uniqueId"):
-                    id_found = True
-                    computer_ids.append(endpoint.get("uniqueId"))
-                break
-
-            # If computer ID not found
-            if not id_found:
-                self.debug_print(consts.SEP_DEVICE_NOT_FOUND.format(action="quarantine"))
-                return action_result.set_status(phantom.APP_ERROR, "{message} {computer_id}".format(
-                    message=consts.SEP_DEVICE_NOT_FOUND.format(action="quarantine"), computer_id=value_to_search[index]
-                ))
-
-        computer_id = ",".join(list(set(computer_ids)))
+        computer_id = ",".join(list(set(computer_ids_list)))
 
         # Executing API to quarantine specified endpoint
         response_status, response_data = self._make_rest_call_abstract("{quarantine_api}".format(
@@ -742,6 +710,7 @@ class Sep14Connector(BaseConnector):
         # Getting mandatory parameters
         group_id = param[consts.SEP_PARAM_GROUP_ID]
         hash_values = param[consts.SEP_PARAM_HASH].replace(" ", "").split(",")
+        hash_values = ' '.join(hash_values).split()
 
         fingerprint_filename = "phantom_{group_id}".format(group_id=group_id)
 
@@ -824,6 +793,7 @@ class Sep14Connector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         summary_data = action_result.update_summary({})
         search_key_field = list()
+        computer_ids_list = list()
 
         # Getting computer IDs to quarantine
         computer_id = param.get(consts.SEP_PARAM_COMPUTER_ID)
@@ -840,10 +810,11 @@ class Sep14Connector(BaseConnector):
             ))
         # If computer_id is specified, then ip_hostname parameter will be ignored
         elif computer_id:
-            search_key_field.append("uniqueId")
-            value_to_search = [x.strip() for x in computer_id.split(',')]
+            computer_ids_list = [x.strip() for x in computer_id.split(',')]
+            computer_ids_list = ' '.join(computer_ids_list).split()
         else:
             value_to_search = ip_hostname = [x.strip() for x in ip_hostname.split(',')]
+            value_to_search = ip_hostname = ' '.join(value_to_search).split()
 
             for index, item in enumerate(ip_hostname):
                 # Checking if given value is an IP address
@@ -863,43 +834,23 @@ class Sep14Connector(BaseConnector):
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
 
-        # Getting endpoint details
-        status, endpoint_list = self._get_endpoint_details(action_result)
+        if not computer_ids_list:
+            # To check for given parameter computer id, IP/ Hostname
+            # if not computer_id:
+            get_endpoint_status, computer_ids_list = self._get_endpoint_id_from_ip_hostname(action_result, value_to_search,
+                                                                                    search_key_field)
 
-        # Something went wrong while getting endpoint details
-        if phantom.is_fail(status):
-            return action_result.get_status()
+            # Something went wrong while getting computer ID based on given IP or hostname
+            if phantom.is_fail(get_endpoint_status):
+                return action_result.get_status()
 
-        computer_ids = list()
-        # Checking if endpoint is already in quarantine state
-        for index, search_key in enumerate(search_key_field):
-            id_found = False
+        # If no endpoint is found
+        if not computer_ids_list:
+            self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
+            return action_result.set_status(phantom.APP_ERROR,
+                                            consts.SEP_DEVICE_NOT_FOUND)
 
-            for endpoint in endpoint_list:
-                # If key to search has a list, then value will be searched in the list
-                if isinstance(endpoint.get(search_key), list):
-                    if value_to_search[index] not in endpoint.get(search_key):
-                        continue
-                # if value is string, then value will be matched exactly to value of key in response
-                elif isinstance(endpoint.get(search_key), basestring) and endpoint.get(search_key) != value_to_search[index]:
-                    continue
-
-                # If computer ID is not provided, then value of computer ID will be obtained based on provided
-                # IP address or hostname
-                if endpoint.get("uniqueId"):
-                    id_found = True
-                    computer_ids.append(endpoint.get("uniqueId"))
-                break
-
-            # If computer ID not found
-            if not id_found:
-                self.debug_print(consts.SEP_DEVICE_NOT_FOUND.format(action="unquarantine"))
-                return action_result.set_status(phantom.APP_ERROR, "{message} {computer_id}".format(
-                    message=consts.SEP_DEVICE_NOT_FOUND.format(action="unquarantine"),
-                    computer_id=value_to_search[index]
-                ))
-
-        computer_id = ",".join(list(set(computer_ids)))
+        computer_id = ",".join(list(set(computer_ids_list)))
 
         # Executing API to quarantine specified endpoint
         response_status, response_data = self._make_rest_call_abstract("{unquarantine_api}".format(
@@ -947,6 +898,7 @@ class Sep14Connector(BaseConnector):
         # Getting parameters to create a fingerprint file and group ID to which fingerprints will be assigned
         group_id = param[consts.SEP_PARAM_GROUP_ID]
         hash_values = param[consts.SEP_PARAM_HASH].replace(" ", "").split(",")
+        hash_values = ' '.join(hash_values).split()
 
         fingerprint_filename = "phantom_{group_id}".format(group_id=group_id)
         fingerprint_file_desc = "List of applications that are blocked in group having ID " \
@@ -1189,6 +1141,7 @@ class Sep14Connector(BaseConnector):
         scan_type = param.get(consts.SEP_PARAM_SCAN_TYPE, 'QUICK_SCAN')
 
         search_key_field = list()
+        computer_ids_list = list()
         # If none of the parameters are specified
         if not computer_id and not ip_hostname:
             self.debug_print(consts.SEP_PARAM_NOT_SPECIFIED.format(
@@ -1200,10 +1153,11 @@ class Sep14Connector(BaseConnector):
 
         # If computer_id is specified, then ip_hostname parameter will be ignored
         elif computer_id:
-            search_key_field.append("uniqueId")
-            value_to_search = [x.strip() for x in computer_id.split(',')]
+            computer_ids_list = [x.strip() for x in computer_id.split(',')]
+            computer_ids_list = ' '.join(computer_ids_list).split()
         else:
             ip_hostname = [x.strip() for x in ip_hostname.split(',')]
+            ip_hostname = ' '.join(ip_hostname).split()
             for index, item in enumerate(ip_hostname):
                 # Checking if given value is an IP address
                 if phantom.is_ip(item):
@@ -1223,21 +1177,23 @@ class Sep14Connector(BaseConnector):
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
 
-        # To check for given parameter computer id, IP/ Hostname
-        get_endpoint_status, computer_id = self._get_endpoint_id_from_ip_hostname(action_result, value_to_search,
-                                                                                  search_key_field)
+        if not computer_ids_list:
+            # To check for given parameter computer id, IP/ Hostname
+            # if not computer_id:
+            get_endpoint_status, computer_ids_list = self._get_endpoint_id_from_ip_hostname(action_result, value_to_search,
+                                                                                    search_key_field)
 
-        # Something went wrong while getting computer ID based on given IP or hostname
-        if phantom.is_fail(get_endpoint_status):
-            return action_result.get_status()
+            # Something went wrong while getting computer ID based on given IP or hostname
+            if phantom.is_fail(get_endpoint_status):
+                return action_result.get_status()
 
         # If no endpoint is found
-        if not computer_id:
-            self.debug_print(consts.SEP_DEVICE_NOT_FOUND.format(action="scan"))
+        if not computer_ids_list:
+            self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
             return action_result.set_status(phantom.APP_ERROR,
-                                            consts.SEP_DEVICE_NOT_FOUND.format(action="scan"))
+                                            consts.SEP_DEVICE_NOT_FOUND)
 
-        computer_id = ",".join(list(set(computer_id)))
+        computer_id = ",".join(list(set(computer_ids_list)))
 
         scan_description = "Scan endpoint for computer ID(s) {computer_id}".format(computer_id=computer_id)
         curr_time = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S %p")

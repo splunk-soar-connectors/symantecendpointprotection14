@@ -229,6 +229,9 @@
                     "data_type": "string",
                     "example_values": [
                         "FE1A657F0A000116678670ACF7876E1B"
+                    ],
+                    "contains": [
+                        "md5"
                     ]
                 },
                 {
@@ -2903,13 +2906,13 @@
         {
             "action": "unquarantine device",
             "description": "Unquarantine the endpoint",
-            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to unquarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the unquarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the unquarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action.",
+            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to unquarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the unquarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the unquarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action. If any value of the computerID, IP or hostname is given wrong in the comma separated string in the respective parameters, the action will fail.",
             "type": "correct",
             "identifier": "unquarantine_device",
             "read_only": false,
             "parameters": {
                 "id": {
-                    "description": "Computer ID",
+                    "description": "Comma(,) separated Computer IDs of the endpoints to unquarantine",
                     "data_type": "string",
                     "contains": [
                         "symantec device id"
@@ -2918,7 +2921,7 @@
                     "primary": true
                 },
                 "ip_hostname": {
-                    "description": "Hostname/IP of endpoint to unquarantine",
+                    "description": "Comma(,) separated Hostname/IP of the endpoints to unquarantine",
                     "data_type": "string",
                     "order": 1,
                     "contains": [
@@ -3127,13 +3130,13 @@
         {
             "action": "quarantine device",
             "description": "Quarantine the endpoint",
-            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to quarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the quarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the quarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action.",
+            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to quarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the quarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the quarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action. If any value of the computerID, IP or hostname is given wrong in the comma separated string in the respective parameters, the action will fail.",
             "type": "contain",
             "identifier": "quarantine_device",
             "read_only": false,
             "parameters": {
                 "id": {
-                    "description": "Computer ID",
+                    "description": "Comma(,) separated Computer IDs of the endpoints to quarantine",
                     "data_type": "string",
                     "contains": [
                         "symantec device id"
@@ -3142,7 +3145,7 @@
                     "primary": true
                 },
                 "ip_hostname": {
-                    "description": "Hostname/IP of endpoint to quarantine",
+                    "description": "Comma(,) separated Hostname/IP of the endpoints to quarantine",
                     "data_type": "string",
                     "order": 1,
                     "contains": [
@@ -3207,14 +3210,6 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.beginTime",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.binaryFileId",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.data.*.binaryFileId",
                     "data_type": "string"
                 },
@@ -3226,26 +3221,6 @@
                     ],
                     "contains": [
                         "md5"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerId",
-                    "data_type": "string",
-                    "example_values": [
-                        "589C13110A0110421B622CD50C73B648"
-                    ],
-                    "contains": [
-                        "md5"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.computerIp",
-                    "data_type": "string",
-                    "example_values": [
-                        "10.1.16.66"
-                    ],
-                    "contains": [
-                        "ip"
                     ]
                 },
                 {
@@ -3269,16 +3244,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.computerName",
-                    "data_type": "string",
-                    "example_values": [
-                        "sym-sepm-01"
-                    ],
-                    "contains": [
-                        "host name"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.currentLoginUserName",
                     "data_type": "string",
                     "example_values": [
@@ -3286,26 +3251,6 @@
                     ],
                     "contains": [
                         "user name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.currentLoginUserName",
-                    "data_type": "string",
-                    "example_values": [
-                        "Administrator"
-                    ],
-                    "contains": [
-                        "user name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.domainName",
-                    "data_type": "string",
-                    "example_values": [
-                        "Default"
-                    ],
-                    "contains": [
-                        "domain"
                     ]
                 },
                 {
@@ -3329,34 +3274,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.hardwareKey",
-                    "data_type": "string",
-                    "example_values": [
-                        "B9A4A97D4E4AAB3EE6B052CD1657766F"
-                    ],
-                    "contains": [
-                        "md5"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.lastUpdateTime",
                     "data_type": "string",
                     "example_values": [
                         "2018-09-20T09:28:35Z"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastUpdateTime",
-                    "data_type": "string",
-                    "example_values": [
-                        "2018-09-20T09:28:35Z"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.resultInXML",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
                     ]
                 },
                 {
@@ -3374,31 +3295,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.stateId",
-                    "data_type": "numeric",
-                    "example_values": [
-                        4
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.subStateDesc",
                     "data_type": "string",
                     "example_values": [
                         ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.subStateDesc",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.subStateId",
-                    "data_type": "numeric",
-                    "example_values": [
-                        131
                     ]
                 },
                 {
@@ -3538,6 +3438,9 @@
                     "data_type": "string",
                     "example_values": [
                         "FE1A657F0A000116678670ACF7876E1B"
+                    ],
+                    "contains": [
+                        "md5"
                     ]
                 },
                 {
@@ -3756,7 +3659,7 @@
                         "FE1A657F0A000116678670ACF7876E1B"
                     ],
                     "contains": [
-                        "domain"
+                        "md5"
                     ]
                 },
                 {
@@ -3891,31 +3794,29 @@
         {
             "action": "scan endpoint",
             "description": "Scan an endpoint",
-            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to scan an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The <b>type</b> parameter can be one of the following values:<ul><li>QUICK_SCAN</li><li>FULL_SCAN</li></ul>The action will start the scan and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the poll.",
+            "verbose": "Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to scan an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The <b>type</b> parameter can be one of the following values:<ul><li>QUICK_SCAN</li><li>FULL_SCAN</li></ul>The action will start the scan and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the poll. If any value of the computerID, IP or hostname is given wrong in the comma separated string in the respective parameters, the action will fail.",
             "type": "investigate",
             "identifier": "scan_endpoint",
             "read_only": true,
             "parameters": {
                 "id": {
-                    "description": "Computer ID",
+                    "description": "Comma(,) separated Computer IDs of the endpoints to scan",
                     "data_type": "string",
                     "contains": [
                         "symantec device id"
                     ],
                     "order": 0,
-                    "primary": true,
-                    "allow_list": true
+                    "primary": true
                 },
                 "ip_hostname": {
-                    "description": "Hostname/IP of endpoint to scan",
+                    "description": "Comma(,) separated Hostname/IP of the endpoints to scan",
                     "data_type": "string",
                     "order": 1,
                     "contains": [
                         "ip",
                         "host name"
                     ],
-                    "primary": true,
-                    "allow_list": true
+                    "primary": true
                 },
                 "type": {
                     "description": "Scan Type (Default: QUICK_SCAN)",

@@ -51,7 +51,7 @@ SEP_SCAN_ENDPOINT_PAYLOAD = "<EOC creator='Phantom' version='1.1' id='1'><DataSo
                             "</EOC>"
 SEP_PARAM_NOT_SPECIFIED = "Neither {0} nor {1} specified. Please specify at least one of them"
 SEP_IP_HOSTNAME_VALIDATION_ERROR = "Parameter validation failed for 'ip_hostname' field"
-SEP_DEVICE_NOT_FOUND = "Device not found to {action}"
+SEP_DEVICE_NOT_FOUND = "Device not found"
 SEP_BLOCK_HASH_GET_DETAILS_ERROR = "Error while getting details of fingerprint file with name: {name}"
 SEP_BLOCK_HASH_GET_ID_ERROR = "Error while getting ID of fingerprint file"
 SEL_BLACKLIST_GROUP_ID_NOT_FOUND = "Group ID provided is not found. Please enter a valid group ID"
