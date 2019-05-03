@@ -1550,13 +1550,14 @@
         },
         {
             "action": "get system info",
-            "description": "Get information about an endpoint",
+            "description": "Gets the information about the computers in a specified domain",
             "type": "investigate",
             "identifier": "get_system_info",
             "read_only": true,
             "parameters": {
-                "ip_hostname": {
+                "hostname": {
                     "description": "Hostname of the device to get system info",
+                    "verbose": "Wild card is supported as '*'",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -1583,7 +1584,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_path": "action_result.parameter.hostname",
                     "data_type": "string",
                     "example_values": [
                         "admin-PC"
@@ -2933,7 +2934,7 @@
                 "timeout": {
                     "description": "Timeout (Default: 30 seconds)",
                     "data_type": "numeric",
-                    "order": 3,
+                    "order": 2,
                     "default": 30
                 }
             },
@@ -3157,7 +3158,7 @@
                 "timeout": {
                     "description": "Timeout (Default: 30 secs)",
                     "data_type": "numeric",
-                    "order": 3,
+                    "order": 2,
                     "default": 30
                 }
             },

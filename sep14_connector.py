@@ -364,7 +364,11 @@ class Sep14Connector(BaseConnector):
 
         for index, value in enumerate(value_to_search):
             for endpoint in endpoint_list:
-                if endpoint.get(search_key_field[index]) == value:
+                data = endpoint.get(search_key_field[index])
+                if isinstance(data, list) and len(data) == 1:
+                    data = data[0]
+
+                if data == value:
                     computer_ids.append(endpoint.get('uniqueId'))
                     break
             else:
@@ -608,6 +612,7 @@ class Sep14Connector(BaseConnector):
         summary_data = action_result.update_summary({})
         search_key_field = list()
         computer_ids_list = list()
+        value_to_search = list()
 
         # Getting computer IDs to quarantine
         computer_id = param.get(consts.SEP_PARAM_COMPUTER_ID)
@@ -659,9 +664,9 @@ class Sep14Connector(BaseConnector):
 
         # If no endpoint is found
         if not computer_ids_list:
-            self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
+            self.debug_print(consts.SEP_NO_DEVICE_FOUND)
             return action_result.set_status(phantom.APP_ERROR,
-                                            consts.SEP_DEVICE_NOT_FOUND)
+                                            consts.SEP_NO_DEVICE_FOUND)
 
         computer_id = ",".join(list(set(computer_ids_list)))
 
@@ -712,6 +717,30 @@ class Sep14Connector(BaseConnector):
         hash_values = param[consts.SEP_PARAM_HASH].replace(" ", "").split(",")
         hash_values = ' '.join(hash_values).split()
 
+        # Getting list of groups to get domain ID of the group ID provided
+        status, group_list = self._get_groups(action_result)
+
+        # Something went wrong while getting list of groups
+        if phantom.is_fail(status):
+            return action_result.get_status()
+
+        # Iterating over group to get details of group whose ID is provided in input parameter
+        for group_detail in group_list:
+            if group_detail.get("id") != group_id:
+                continue
+
+            domain_id = group_detail.get("domain", {}).get("id")
+            break
+
+        # If no corresponding domain is found for the given group ID
+        if not domain_id:
+            self.debug_print(consts.SEL_BLACKLIST_GROUP_ID_NOT_FOUND)
+            return action_result.set_status(phantom.APP_ERROR, consts.SEL_BLACKLIST_GROUP_ID_NOT_FOUND)
+
+        if not hash_values:
+            self.debug_print(consts.SEP_INVALID_HASH)
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HASH)
+
         fingerprint_filename = "phantom_{group_id}".format(group_id=group_id)
 
         # Getting fingerprint file information
@@ -744,25 +773,6 @@ class Sep14Connector(BaseConnector):
             # If some hashes are left blocked in a fingerprint file
             if updated_block_hash_list:
                 method = "post"
-                # Getting list of groups to get domain ID of the group ID provided
-                status, group_list = self._get_groups(action_result)
-
-                # Something went wrong while getting list of groups
-                if phantom.is_fail(status):
-                    return action_result.get_status()
-
-                # Iterating over group to get details of group whose ID is provided in input parameter
-                for group_detail in group_list:
-                    if group_detail.get("id") != group_id:
-                        continue
-
-                    domain_id = group_detail.get("domain", {}).get("id")
-                    break
-
-                # If no corresponding domain is found for the given group ID
-                if not domain_id:
-                    self.debug_print(consts.SEL_BLACKLIST_GROUP_ID_NOT_FOUND)
-                    return action_result.set_status(phantom.APP_ERROR, consts.SEL_BLACKLIST_GROUP_ID_NOT_FOUND)
 
                 fingerprint_api_data = json.dumps({"hashType": "MD5",
                                                    "name": "phantom_{group_id}".format(group_id=group_id),
@@ -794,6 +804,7 @@ class Sep14Connector(BaseConnector):
         summary_data = action_result.update_summary({})
         search_key_field = list()
         computer_ids_list = list()
+        value_to_search = list()
 
         # Getting computer IDs to quarantine
         computer_id = param.get(consts.SEP_PARAM_COMPUTER_ID)
@@ -846,9 +857,9 @@ class Sep14Connector(BaseConnector):
 
         # If no endpoint is found
         if not computer_ids_list:
-            self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
+            self.debug_print(consts.SEP_NO_DEVICE_FOUND)
             return action_result.set_status(phantom.APP_ERROR,
-                                            consts.SEP_DEVICE_NOT_FOUND)
+                                            consts.SEP_NO_DEVICE_FOUND)
 
         computer_id = ",".join(list(set(computer_ids_list)))
 
@@ -899,6 +910,10 @@ class Sep14Connector(BaseConnector):
         group_id = param[consts.SEP_PARAM_GROUP_ID]
         hash_values = param[consts.SEP_PARAM_HASH].replace(" ", "").split(",")
         hash_values = ' '.join(hash_values).split()
+
+        if not hash_values:
+            self.debug_print(consts.SEP_INVALID_HASH)
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HASH)
 
         fingerprint_filename = "phantom_{group_id}".format(group_id=group_id)
         fingerprint_file_desc = "List of applications that are blocked in group having ID " \
@@ -1005,7 +1020,7 @@ class Sep14Connector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # Get mandatory parameter
-        hostname = param[consts.SEP_PARAM_IP_HOSTNAME]
+        hostname = param[consts.SEP_PARAM_HOSTNAME]
 
         # Getting response data for specific computer name
         response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS, action_result, params={'computerName': hostname})
@@ -1142,6 +1157,8 @@ class Sep14Connector(BaseConnector):
 
         search_key_field = list()
         computer_ids_list = list()
+        value_to_search = list()
+
         # If none of the parameters are specified
         if not computer_id and not ip_hostname:
             self.debug_print(consts.SEP_PARAM_NOT_SPECIFIED.format(
@@ -1189,9 +1206,9 @@ class Sep14Connector(BaseConnector):
 
         # If no endpoint is found
         if not computer_ids_list:
-            self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
+            self.debug_print(consts.SEP_NO_DEVICE_FOUND)
             return action_result.set_status(phantom.APP_ERROR,
-                                            consts.SEP_DEVICE_NOT_FOUND)
+                                            consts.SEP_NO_DEVICE_FOUND)
 
         computer_id = ",".join(list(set(computer_ids_list)))
 
