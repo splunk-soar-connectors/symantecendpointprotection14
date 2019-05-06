@@ -238,7 +238,7 @@ class Sep14Connector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, msg_string, e), response_data
 
         if response.status_code in ERROR_RESPONSE_DICT:
-            message = ERROR_RESPONSE_DICT.get(response.status_code)
+            message = ERROR_RESPONSE_DICT[response.status_code]
 
             # overriding message if available in response
             if isinstance(response_data, dict):
@@ -408,7 +408,7 @@ class Sep14Connector(BaseConnector):
             return action_result.get_status()
 
         for item in response_data:
-            if item.get('name').lower() == domain.lower():
+            if item.get('name', '').lower() == domain.lower():
                 return item.get('id')
 
         return None
