@@ -98,8 +98,8 @@
             <tr>
                 <td>Hostname</td>
                 <td><a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ result.param.ip_hostname }}' }], 0, {{ container.id }}, null, false);">
-                    {{ result.param.ip_hostname }}
+                   onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ result.param.hostname }}' }], 0, {{ container.id }}, null, false);">
+                    {{ result.param.hostname }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                     </a>
@@ -117,6 +117,12 @@
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                     </a>
                 </td>
+            </tr>
+            <tr>
+                {% if result.param.limit %}
+                    <td>Limit</td>
+                    <td>{{ result.param.limit }}</td>
+                {% endif %}
             </tr>
 
         </table>
