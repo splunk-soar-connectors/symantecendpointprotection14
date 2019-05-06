@@ -9,17 +9,11 @@
 
 {% block widget_content %} <!-- Main Start Block -->
 
-<!-- 
-File: sep14_list_endpoints.html
+<!-- File: sep14_list_endpoints.html
+  Copyright (c) 2017-2019 Splunk Inc.
 
-Copyright (c) Phantom Cyber Corporation, 2017-2018
-
-This unpublished material is proprietary to Phantom Cyber.
-All rights reserved. The methods and
-techniques described herein are considered trade secrets
-and/or confidential. Reproduction or distribution, in whole
-or in part, is forbidden except by express written permission
-of Phantom Cyber Corporation.
+  SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
+  without a valid written license from Splunk Inc. is PROHIBITED.
 -->
 
 <style>
@@ -102,10 +96,10 @@ of Phantom Cyber Corporation.
         <table class="wf-table-vertical">
 
             <tr>
-                <td>IP/Hostname</td>
+                <td>Hostname</td>
                 <td><a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['ip', 'host name'], 'value': '{{ result.param.ip_hostname }}' }], 0, {{ container.id }}, null, false);">
-                    {{ result.param.ip_hostname }}
+                   onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ result.param.hostname }}' }], 0, {{ container.id }}, null, false);">
+                    {{ result.param.hostname }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                     </a>
@@ -115,14 +109,20 @@ of Phantom Cyber Corporation.
     {% else %}
         <table class="wf-table-vertical">
             <tr>
-                <td>Domain</td>
+                <td>Administrative Domain</td>
                 <td><a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);">
-                    {{ result.param.domain }}
+                   onclick="context_menu(this, [{'contains': ['symantec admin domain'], 'value': '{{ result.param.admin_domain }}' }], 0, {{ container.id }}, null, false);">
+                    {{ result.param.admin_domain }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                     </a>
                 </td>
+            </tr>
+            <tr>
+                {% if result.param.limit %}
+                    <td>Limit</td>
+                    <td>{{ result.param.limit }}</td>
+                {% endif %}
             </tr>
 
         </table>
