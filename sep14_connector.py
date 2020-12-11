@@ -581,7 +581,7 @@ class Sep14Connector(BaseConnector):
         endpoint_status_details = list()
         command_id = param['id']
 
-        status_data = self._fetch_items_paginated("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT, command_id), action_result)
+        status_data = self._fetch_items_paginated("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT, requests.compat.quote(command_id)), action_result)
         if status_data is None:
             return action_result.get_status()
 
@@ -673,7 +673,7 @@ class Sep14Connector(BaseConnector):
         # Executing API to quarantine specified endpoint
         response_status, response_data = self._make_rest_call_abstract("{quarantine_api}".format(
             quarantine_api=consts.SEP_QUARANTINE_ENDPOINT.format(
-                params=computer_id
+                params=requests.compat.quote(computer_id)
             )), action_result, method="post")
 
         # Something went wrong while quarantining the endpoint(s)
@@ -866,7 +866,7 @@ class Sep14Connector(BaseConnector):
         # Executing API to quarantine specified endpoint
         response_status, response_data = self._make_rest_call_abstract("{unquarantine_api}".format(
             unquarantine_api=consts.SEP_UNQUARANTINE_ENDPOINT.format(
-                params=computer_id
+                params=requests.compat.quote(computer_id)
             )), action_result, method="post")
 
         # Something went wrong while quarantining the endpoint(s)
@@ -1212,7 +1212,7 @@ class Sep14Connector(BaseConnector):
 
         computer_id = ",".join(list(set(computer_ids_list)))
 
-        scan_description = "Scan endpoint for computer ID(s) {computer_id}".format(computer_id=computer_id)
+        scan_description = "Scan endpoint for computer ID(s) {computer_id}".format(computer_id=computer_id).encode("utf-8")
         curr_time = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S %p")
 
         # Executing scan API on endpoint
