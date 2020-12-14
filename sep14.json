@@ -4,7 +4,7 @@
     "description": "Integrate with Symantec Endpoint Protection 14 to execute investigative, containment, and corrective actions",
     "publisher": "Splunk",
     "package_name": "phantom_sep14",
-    "license": "Copyright (c) 2017-2020 Splunk Inc.",
+    "license": "Copyright (c) 2017-2021 Splunk Inc.",
     "main_module": "sep14_connector.py",
     "type": "endpoint",
     "app_version": "2.0.4",
@@ -95,10 +95,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.contactInfo",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.createdTime",
@@ -195,10 +192,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.childGroups",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.created",
@@ -216,10 +210,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.customIpsNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.description",
@@ -367,7 +358,6 @@
                 "limit": {
                     "description": "Maximum number of endpoints to be fetched",
                     "data_type": "numeric",
-                    "required": false,
                     "order": 1
                 }
             },
@@ -384,7 +374,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -448,24 +439,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.atpDeviceId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.atpServer",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.attributeExtension",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.avEngineOnOff",
@@ -551,7 +533,6 @@
                     "data_path": "action_result.data.*.computerDescription",
                     "data_type": "string",
                     "example_values": [
-                        "",
                         "Symantec Endpoint Protection Manager v14"
                     ]
                 },
@@ -619,10 +600,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.department",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.deploymentMessage",
@@ -663,14 +641,14 @@
                     "data_path": "action_result.data.*.description",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "Symantec Endpoint Protection Manager v14"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.dhcpServer",
                     "data_type": "string",
                     "example_values": [
-                        "172.16.4.1"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -690,7 +668,7 @@
                     "data_path": "action_result.data.*.dnsServers",
                     "data_type": "string",
                     "example_values": [
-                        "10.0.1.1"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -724,7 +702,7 @@
                     "data_path": "action_result.data.*.email",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "test@gmail.com"
                     ],
                     "contains": [
                         "email"
@@ -732,24 +710,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.employeeNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.employeeStatus",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.encryptedDevicePassword",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.fbwf",
@@ -781,10 +750,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.fullName",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.gateways",
@@ -793,7 +759,7 @@
                         "ip"
                     ],
                     "example_values": [
-                        "10.1.64.1"
+                        "122.122.122.122"
                     ]
                 },
                 {
@@ -818,17 +784,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.group.externalId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.group.fullPathName",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.group.id",
@@ -849,10 +809,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.group.source",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.groupUpdateProvider",
@@ -874,10 +831,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.homePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hypervisorVendorId",
@@ -888,24 +842,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.idsChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.idsSerialNo",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.idsVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.infected",
@@ -947,10 +892,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.jobTitle",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.kernel",
@@ -963,7 +905,7 @@
                     "data_path": "action_result.data.*.lastConnectedIpAddr",
                     "data_type": "string",
                     "example_values": [
-                        "10.0.1.1"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -1054,10 +996,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.licenseId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.licenseStatus",
@@ -1126,17 +1065,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.mobilePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.officePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.onlineStatus",
@@ -1211,10 +1144,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.osServicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.osVersion",
@@ -1274,10 +1204,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.osservicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.osversion",
@@ -1326,10 +1253,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.profileChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.profileSerialNo",
@@ -1356,7 +1280,7 @@
                     "data_path": "action_result.data.*.publicKey",
                     "data_type": "string",
                     "example_values": [
-                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
+                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfajbsdvjbaidb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
                     ]
                 },
                 {
@@ -1368,10 +1292,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.rebootReason",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.rebootRequired",
@@ -1383,10 +1304,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.securityVirtualAppliance",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.serialNumber",
@@ -1399,7 +1317,7 @@
                     "data_path": "action_result.data.*.snacLicenseId",
                     "data_type": "string",
                     "example_values": [
-                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
+                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2ajsbdvKUBSKDNVu1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+ndsvKJsdvncNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
                     ]
                 },
                 {
@@ -1411,10 +1329,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.svaId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.tamperOnOff",
@@ -1433,10 +1348,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.tmpDevice",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.totalDiskSpace",
@@ -1497,7 +1409,7 @@
                         "ip"
                     ],
                     "example_values": [
-                        "0.0.0.0"
+                        "122.122.122.122"
                     ]
                 },
                 {
@@ -1509,10 +1421,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.writeFiltersStatus",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.system_found",
@@ -1561,7 +1470,6 @@
             "parameters": {
                 "hostname": {
                     "description": "Hostname of the device to get system info",
-                    "verbose": "Wild card is supported as '*'",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -1584,7 +1492,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -1641,24 +1550,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.atpDeviceId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.atpServer",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.attributeExtension",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.avEngineOnOff",
@@ -1739,10 +1639,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.computerDescription",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.computerName",
@@ -1805,10 +1702,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.department",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.deploymentMessage",
@@ -1840,23 +1734,17 @@
                 },
                 {
                     "data_path": "action_result.data.*.deploymentTargetVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.dhcpServer",
                     "data_type": "string",
                     "example_values": [
-                        "172.16.4.1"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -1876,7 +1764,7 @@
                     "data_path": "action_result.data.*.dnsServers",
                     "data_type": "string",
                     "example_values": [
-                        "8.8.8.8"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -1909,33 +1797,21 @@
                 {
                     "data_path": "action_result.data.*.email",
                     "data_type": "string",
-                    "example_values": [
-                        ""
-                    ],
                     "contains": [
                         "email"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.employeeNumber",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.employeeStatus",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.encryptedDevicePassword",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.fbwf",
@@ -1967,10 +1843,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.fullName",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.gateways",
@@ -1979,7 +1852,7 @@
                         "ip"
                     ],
                     "example_values": [
-                        "10.1.64.1"
+                        "122.122.122.122"
                     ]
                 },
                 {
@@ -2004,17 +1877,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.group.externalId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.group.fullPathName",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.group.id",
@@ -2035,10 +1902,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.group.source",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.groupUpdateProvider",
@@ -2060,10 +1924,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.homePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hypervisorVendorId",
@@ -2074,24 +1935,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.idsChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.idsSerialNo",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.idsVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.infected",
@@ -2111,7 +1963,7 @@
                     "data_path": "action_result.data.*.ipAddresses",
                     "data_type": "string",
                     "example_values": [
-                        "172.16.4.30"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -2133,10 +1985,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.jobTitle",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.kernel",
@@ -2149,7 +1998,7 @@
                     "data_path": "action_result.data.*.lastConnectedIpAddr",
                     "data_type": "string",
                     "example_values": [
-                        "10.0.1.1"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -2234,10 +2083,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.licenseId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.licenseStatus",
@@ -2306,17 +2152,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.mobilePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.officePhone",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.onlineStatus",
@@ -2390,10 +2230,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.osServicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.osVersion",
@@ -2453,10 +2290,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.osservicePack",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.osversion",
@@ -2505,10 +2339,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.profileChecksum",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.profileSerialNo",
@@ -2535,7 +2366,7 @@
                     "data_path": "action_result.data.*.publicKey",
                     "data_type": "string",
                     "example_values": [
-                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
+                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOabsvJBjbdvkJqPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
                     ]
                 },
                 {
@@ -2547,10 +2378,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.rebootReason",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.rebootRequired",
@@ -2561,10 +2389,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.securityVirtualAppliance",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.serialNumber",
@@ -2577,7 +2402,7 @@
                     "data_path": "action_result.data.*.snacLicenseId",
                     "data_type": "string",
                     "example_values": [
-                        "BgIAAACkAABSU0ExAAgAAAEAAQDxE2aOxE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
+                        "BgIAAACkAABSU0ExAAgAAAUBakjbsJKBE1Qfx4Jn4u1qPMYb/WXF6VLbactup8U+RPucE9ojZp8bA2qq+dmOTdXQIrj9cNLOTMNEJXesMR2SCco5X391b+S+wNQbbJsoVueTSfB2XO/rZxVqUn52hsOe2YN0Cj0zlQcNDee96qW0l4O3S7RsTP7EtzgcMn1MApJe295vIz5dQe4YfMVM0B9We4yNAAPtXDjeEhuFMzQmc8OywJmtb1nULeGQxBmxaYLZ7frnWiZ+cpEOJENgYZtF/seMBTV+2o2Ga16bkNbENEq4wDNjHrwZ12ZgGVk5f+GGkT9QZFgMn981VTybT2YWXb59/1pScji7dUYrpFwR4/J"
                     ]
                 },
                 {
@@ -2589,10 +2414,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.svaId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.tamperOnOff",
@@ -2610,10 +2432,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.tmpDevice",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.totalDiskSpace",
@@ -2672,9 +2491,6 @@
                     "data_type": "string",
                     "contains": [
                         "ip"
-                    ],
-                    "example_values": [
-                        ""
                     ]
                 },
                 {
@@ -2686,10 +2502,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.writeFiltersStatus",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.system_found",
@@ -2777,10 +2590,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.binaryFileId",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.computerId",
@@ -2796,7 +2606,7 @@
                     "data_path": "action_result.data.*.computerIp",
                     "data_type": "string",
                     "example_values": [
-                        "172.16.4.30"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -2976,7 +2786,7 @@
                         "host name"
                     ],
                     "example_values": [
-                        "172.16.4.82",
+                        "122.122.122.122",
                         "admin-PC"
                     ]
                 },
@@ -3009,7 +2819,7 @@
                     "data_path": "action_result.data.*.computerIp",
                     "data_type": "string",
                     "example_values": [
-                        "10.1.16.66"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -3064,10 +2874,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.resultInXML",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.stateId",
@@ -3078,10 +2885,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.subStateDesc",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.subStateId",
@@ -3200,7 +3004,7 @@
                         "host name"
                     ],
                     "example_values": [
-                        "172.16.4.82"
+                        "122.122.122.122"
                     ]
                 },
                 {
@@ -3232,7 +3036,7 @@
                     "data_path": "action_result.data.*.computerIp",
                     "data_type": "string",
                     "example_values": [
-                        "10.1.16.66"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -3287,10 +3091,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.resultInXML",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.stateId",
@@ -3301,10 +3102,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.subStateDesc",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.subStateId",
@@ -3488,24 +3286,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.context",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.data",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.extra_data",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.message",
@@ -3535,7 +3324,7 @@
                     "data_path": "action_result.data.*.hash_info.*.summary",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "hashes_unblocked :1"
                     ]
                 },
                 {
@@ -3693,24 +3482,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.context",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.data",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.extra_data",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hash_info.*.message",
@@ -3740,7 +3520,7 @@
                     "data_path": "action_result.data.*.hash_info.*.summary",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "hashes_blocked :1"
                     ]
                 },
                 {
@@ -3879,9 +3659,8 @@
                         "host name"
                     ],
                     "example_values": [
-                        "172.16.4.82",
-                        "admin-PC",
-                        "10.1.16.66"
+                        "122.122.122.122",
+                        "admin-PC"
                     ]
                 },
                 {
@@ -3961,17 +3740,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.EOC.Threat.@category",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.EOC.Threat.@severity",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.EOC.Threat.@time",
@@ -3982,10 +3755,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.EOC.Threat.@type",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.EOC.Threat.Application",
@@ -4014,7 +3784,7 @@
                     "data_path": "action_result.data.*.EOC.Threat.proxy.@ip",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "122.122.122.122"
                     ]
                 },
                 {
@@ -4042,7 +3812,7 @@
                     "data_path": "action_result.data.*.computerIp",
                     "data_type": "string",
                     "example_values": [
-                        "10.1.16.66"
+                        "122.122.122.122"
                     ],
                     "contains": [
                         "ip"
@@ -4104,10 +3874,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.subStateDesc",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.subStateId",
