@@ -81,9 +81,6 @@ class Sep14Connector(BaseConnector):
         if self._state:
             self._token = self._state.get('token')
 
-        # Custom validation for MD5
-        self.set_validator("md5", None)
-
         return phantom.APP_SUCCESS
 
     def _generate_api_token(self, action_result):
