@@ -1,5 +1,5 @@
 # File: sep14_consts.py
-# Copyright (c) 2017-2019 Splunk Inc.
+# Copyright (c) 2017-2020 Splunk Inc.
 #
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
@@ -68,7 +68,7 @@ SEP_PARAM_IP_HOSTNAME = "ip_hostname"
 SEP_PARAM_HOSTNAME = "hostname"
 SEP_PARAM_DOMAIN = "admin_domain"
 SEP_PARAM_LIMIT = "limit"
-SEP_INVALID_LIMIT = "Please provide non-zero positive integer in limit"
+SEP_INVALID_LIMIT = "Please provide a non-zero positive integer in the limit parameter"
 SEP_PARAM_TIMEOUT = "timeout"
 SEP_INVALID_TIMEOUT = "Invalid Timeout"
 SEP_INVALID_DOMAIN = "Invalid Domain"
