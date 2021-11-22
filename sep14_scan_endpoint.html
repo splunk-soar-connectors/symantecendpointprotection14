@@ -10,7 +10,7 @@
 {% block widget_content %} <!-- Main Start Block -->
 
 <!-- File: sep14_scan_endpoint.html
-  Copyright (c) 2017-2020 Splunk Inc.
+  Copyright (c) 2017-2021 Splunk Inc.
 
   SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
   without a valid written license from Splunk Inc. is PROHIBITED.
@@ -159,6 +159,44 @@
             <tr>
                 <td>State ID Status</td>
                 <td>{{ result.summary.state_id_status }}</td>
+            </tr>
+            {% endif %}
+            {% if result.summary.computer_command_id %}
+            <tr>
+                <td>Computer Command ID</td>
+                <td>
+                    <a href="javascript:;"
+                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.computer_command_id }}' }], 0, {{ container.id }}, null, false);">
+                    {{ result.summary.computer_command_id }}
+                    &nbsp;
+                    <span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                    </a>
+                </td>
+            </tr>
+            {% endif %}
+            {% if result.summary.state_computer_id_status %}
+            <tr>
+                <td>State Computer ID Status</td>
+                <td>{{ result.summary.state_computer_id_status }}</td>
+            </tr>
+            {% endif %}
+            {% if result.summary.group_command_id %}
+            <tr>
+                <td>Group Command ID</td>
+                <td>
+                    <a href="javascript:;"
+                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.group_command_id }}' }], 0, {{ container.id }}, null, false);">
+                    {{ result.summary.group_command_id }}
+                    &nbsp;
+                    <span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                    </a>
+                </td>
+            </tr>
+            {% endif %}
+            {% if result.summary.state_group_id_status %}
+            <tr>
+                <td>State Group ID Status</td>
+                <td>{{ result.summary.state_group_id_status }}</td>
             </tr>
             {% endif %}
         </table>

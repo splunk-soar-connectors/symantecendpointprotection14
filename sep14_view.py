@@ -1,5 +1,5 @@
 # File: sep14_view.py
-# Copyright (c) 2017-2020 Splunk Inc.
+# Copyright (c) 2017-2021 Splunk Inc.
 #
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
@@ -133,5 +133,5 @@ def display_view(provides, all_app_runs, context):
     if provides in ["block hash", "unblock hash"]:
         return 'sep14_display_hash_results.html'
 
-    if provides in ["scan endpoint", "quarantine device", "unquarantine device"]:
+    if provides in ["scan endpoint", "quarantine device", "unquarantine device", "full scan"]:
         return 'sep14_scan_endpoint.html'

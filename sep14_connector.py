@@ -1,5 +1,5 @@
 # File: sep14_connector.py
-# Copyright (c) 2017-2020 Splunk Inc.
+# Copyright (c) 2017-2021 Splunk Inc.
 #
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
@@ -82,6 +82,54 @@ class Sep14Connector(BaseConnector):
             self._token = self._state.get('token')
 
         return phantom.APP_SUCCESS
+
+    def _get_error_message_from_exception(self, e):
+        """ This method is used to get appropriate error messages from the exception.
+        :param e: Exception object
+        :return: error message
+        """
+
+        try:
+            if e.args:
+                if len(e.args) > 1:
+                    error_code = e.args[0]
+                    error_msg = e.args[1]
+                elif len(e.args) == 1:
+                    error_code = consts.SEP_ERR_CODE_MSG
+                    error_msg = e.args[0]
+            else:
+                error_code = consts.SEP_ERR_CODE_MSG
+                error_msg = consts.SEP_ERR_MSG_UNAVAILABLE
+        except:
+            error_code = consts.SEP_ERR_CODE_MSG
+            error_msg = consts.SEP_ERR_MSG_UNAVAILABLE
+
+        try:
+            if error_code in consts.SEP_ERR_CODE_MSG:
+                error_text = "Error Message: {0}".format(error_msg)
+            else:
+                error_text = "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
+        except:
+            self.debug_print("Error occurred while parsing error message")
+            error_text = consts.SEP_PARSE_ERR_MSG
+
+        return error_text
+
+    def _validate_integer(self, action_result, parameter, key, allow_zero=False):
+        try:
+            if not float(parameter).is_integer():
+                return action_result.set_status(phantom.APP_ERROR, consts.SEP_INT_ERR_MSG.format(key=key)), None
+
+            parameter = int(parameter)
+        except:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INT_ERR_MSG.format(key=key)), None
+
+        if parameter < 0:
+            return action_result.set_status(phantom.APP_ERROR, 'Please provide a valid non-negative integer value in the "{}" parameter'.format(key)), None
+        if not allow_zero and parameter == 0:
+            return action_result.set_status(phantom.APP_ERROR, "Please provide a positive integer value in the '{}' parameter".format(key)), None
+
+        return phantom.APP_SUCCESS, parameter
 
     def _generate_api_token(self, action_result):
         """Generate new token based on the credentials provided.
@@ -188,9 +236,10 @@ class Sep14Connector(BaseConnector):
             return action_result.set_status(
                 phantom.APP_ERROR, consts.SEP_ERR_API_UNSUPPORTED_METHOD.format(method=method)), response_data
         except Exception as e:
-            self.debug_print(consts.SEP_EXCEPTION_OCCURRED, e)
+            err = self._get_error_message_from_exception(e)
+            self.debug_print(consts.SEP_EXCEPTION_OCCURRED, err)
             # set the action_result status to error, the handler function will most probably return as is
-            return action_result.set_status(phantom.APP_ERROR, consts.SEP_EXCEPTION_OCCURRED, e), response_data
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_EXCEPTION_OCCURRED, err), response_data
 
         if headers:
             if not headers.get("Content-Type"):
@@ -214,9 +263,10 @@ class Sep14Connector(BaseConnector):
                     action_result.add_debug_data({'r_text': 'r is None'})
 
         except Exception as e:
-            self.debug_print(consts.SEP_ERR_SERVER_CONNECTION, e)
+            err = self._get_error_message_from_exception(e)
+            self.debug_print(consts.SEP_ERR_SERVER_CONNECTION, err)
             # set the action_result status to error, the handler function will most probably return as is
-            return action_result.set_status(phantom.APP_ERROR, consts.SEP_ERR_SERVER_CONNECTION, e), response_data
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_ERR_SERVER_CONNECTION, err), response_data
 
         # Try parsing the json
         try:
@@ -360,12 +410,15 @@ class Sep14Connector(BaseConnector):
             return action_result.get_status(), None
 
         for index, value in enumerate(value_to_search):
+            value_found = 0
             for endpoint in endpoint_list:
                 data = endpoint.get(search_key_field[index])
-                if isinstance(data, list) and len(data) == 1:
-                    data = data[0]
-
-                if data == value:
+                if isinstance(data, list):
+                    for ip in data:
+                        if ip == value:
+                            value_found = 1
+                            break
+                if value_found or data == value:
                     computer_ids.append(endpoint.get('uniqueId'))
                     break
             else:
@@ -505,10 +558,13 @@ class Sep14Connector(BaseConnector):
 
         try:
             soup = BeautifulSoup(response.text, "html.parser")
+            # Remove the script, style, footer and navigation part from the HTML message
+            for element in soup(["script", "style", "footer", "nav"]):
+                element.extract()
             error_text = soup.text
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
-            error_text = '\n'.join(split_lines).encode('utf-8').strip()
+            error_text = '\n'.join(split_lines).strip()
         except:
             error_text = "Cannot parse error details"
 
@@ -647,7 +703,7 @@ class Sep14Connector(BaseConnector):
         # Validate timeout
         if timeout and not str(timeout).isdigit() or timeout == 0:
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
-            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT)
 
         if not computer_ids_list:
             # To check for given parameter computer id, IP/ Hostname
@@ -683,7 +739,9 @@ class Sep14Connector(BaseConnector):
         # Providing Command ID in summary
         try:
             summary_data["command_id"] = response_data.pop("commandID_computer")
-        except:
+        except Exception as e:
+            err = self._get_error_message_from_exception(e)
+            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
             pass
 
         # Poll for command status
@@ -840,7 +898,7 @@ class Sep14Connector(BaseConnector):
         # Validate timeout
         if timeout and not str(timeout).isdigit() or timeout == 0:
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
-            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT)
 
         if not computer_ids_list:
             # To check for given parameter computer id, IP/ Hostname
@@ -876,7 +934,9 @@ class Sep14Connector(BaseConnector):
         # Providing Command ID in summary
         try:
             summary_data["command_id"] = response_data.pop("commandID_computer")
-        except:
+        except Exception as e:
+            err = self._get_error_message_from_exception(e)
+            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
             pass
 
         # Poll for command status
@@ -1049,8 +1109,10 @@ class Sep14Connector(BaseConnector):
         # Get mandatory parameter
         domain = param[consts.SEP_PARAM_DOMAIN]
         limit = param.get(consts.SEP_PARAM_LIMIT)
-        if limit and not str(limit).isdigit() or limit == 0:
-            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_LIMIT)
+        if limit or limit == 0:
+            ret_val, limit = self._validate_integer(action_result, limit, consts.SEP_LIMIT_KEY)
+            if phantom.is_fail(ret_val):
+                return action_result.get_status()
 
         domain_id = self._get_domain_id_by_name(action_result, domain)
 
@@ -1189,7 +1251,7 @@ class Sep14Connector(BaseConnector):
         # Validate timeout
         if timeout and not str(timeout).isdigit() or timeout == 0:
             self.debug_print(consts.SEP_INVALID_TIMEOUT)
-            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT), None
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT)
 
         if not computer_ids_list:
             # To check for given parameter computer id, IP/ Hostname
@@ -1227,7 +1289,9 @@ class Sep14Connector(BaseConnector):
 
         try:
             summary_data["command_id"] = scan_resp.pop("commandID_computer")
-        except:
+        except Exception as e:
+            err = self._get_error_message_from_exception(e)
+            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
             pass
 
         # Poll for command status
@@ -1239,6 +1303,91 @@ class Sep14Connector(BaseConnector):
             return action_result.get_status()
 
         summary_data["state_id_status"] = state_id_status
+
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+    def _full_scan(self, param):
+        """ This function to perform full scan/active scan.
+
+        :param param: (dictionary of input parameters
+        :return: status success/failure
+        """
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        summary_data = action_result.update_summary({})
+        params = {}
+
+        # Getting optional parameters
+        computer_id = param.get('computer_id')
+        group_id = param.get('group_id')
+        scan_type = param.get(consts.SEP_PARAM_SCAN_TYPE, 'fullscan')
+        self.debug_print("computer_id: {}".format(computer_id))
+
+        computer_ids_list = list()
+        group_ids_list = list()
+
+        # If none of the parameters are specified
+        if not computer_id and not group_id:
+            self.debug_print(consts.SEP_PARAM_NOT_SPECIFIED.format(
+                'computer_id', 'group_id'
+            ))
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_PARAM_NOT_SPECIFIED.format(
+                'computer_id', 'group_id'
+            ))
+
+        if computer_id:
+            computer_ids_list = [x.strip() for x in computer_id.split(',')]
+            computer_ids_list = ' '.join(computer_ids_list).split()
+            params['computer_ids'] = ",".join(list(set(computer_ids_list)))
+        if group_id:
+            group_ids_list = [x.strip() for x in group_id.split(',')]
+            group_ids_list = ' '.join(group_ids_list).split()
+            params['group_ids'] = ",".join(list(set(group_ids_list)))
+
+        # Optional parameter
+        timeout = param.get(consts.SEP_PARAM_TIMEOUT, 30)
+
+        # Validate timeout
+        if timeout and not str(timeout).isdigit() or timeout == 0:
+            self.debug_print(consts.SEP_INVALID_TIMEOUT)
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_TIMEOUT)
+
+        # Executing scan API on computer
+        status, scan_resp = self._make_rest_call_abstract(
+            consts.SEP_FULLSCAN_ENDPOINT.format(scan_type=scan_type), action_result, params=params, method="post"
+        )
+        self.debug_print(consts.SEP_FULLSCAN_ENDPOINT.format(scan_type=scan_type))
+
+        # Something went wrong while executing scan API on computer
+        if phantom.is_fail(status):
+            return action_result.get_status()
+
+        try:
+            if computer_id:
+                summary_data["computer_command_id"] = scan_resp.pop("commandID_computer")
+                # Poll for command status
+                command_status, state_computer_id_status = self._get_command_status_by_id(action_result,
+                                                                                summary_data.get("computer_command_id"),
+                                                                                timeout)
+                # Something went wrong
+                if phantom.is_fail(command_status):
+                    return action_result.get_status()
+
+                summary_data["state_computer_id_status"] = state_computer_id_status
+            if group_id:
+                summary_data["group_command_id"] = scan_resp.pop("commandID_group")
+                # Poll for command status
+                command_status, state_group_id_status = self._get_command_status_by_id(action_result,
+                                                                                summary_data.get("group_command_id"),
+                                                                                timeout)
+                # Something went wrong
+                if phantom.is_fail(command_status):
+                    return action_result.get_status()
+
+                summary_data["state_group_id_status"] = state_group_id_status
+        except Exception as e:
+            err = self._get_error_message_from_exception(e)
+            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
+            pass
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -1318,7 +1467,8 @@ class Sep14Connector(BaseConnector):
             'block_hash': self._block_hash,
             'list_endpoints': self._list_endpoints,
             'get_system_info': self._get_system_info,
-            'scan_endpoint': self._scan_endpoint
+            'scan_endpoint': self._scan_endpoint,
+            'full_scan': self._full_scan
         }
 
         action = self.get_action_identifier()
