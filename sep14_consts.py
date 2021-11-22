@@ -1,5 +1,5 @@
 # File: sep14_consts.py
-# Copyright (c) 2017-2020 Splunk Inc.
+# Copyright (c) 2017-2021 Splunk Inc.
 #
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
@@ -49,6 +49,7 @@ SEP_SCAN_ENDPOINT_PAYLOAD = "<EOC creator='Phantom' version='1.1' id='1'><DataSo
                             "time='{curr_time}'><Description>{scan_description}" \
                             "</Description><Attacker></Attacker></Threat><Activity></Activity>" \
                             "</EOC>"
+SEP_FULLSCAN_ENDPOINT = "/command-queue/{scan_type}"
 SEP_PARAM_NOT_SPECIFIED = "Neither {0} nor {1} specified. Please specify at least one of them"
 SEP_IP_HOSTNAME_VALIDATION_ERROR = "Parameter validation failed for 'ip_hostname' field"
 SEP_DEVICE_NOT_FOUND = "Device not found"
@@ -68,7 +69,6 @@ SEP_PARAM_IP_HOSTNAME = "ip_hostname"
 SEP_PARAM_HOSTNAME = "hostname"
 SEP_PARAM_DOMAIN = "admin_domain"
 SEP_PARAM_LIMIT = "limit"
-SEP_INVALID_LIMIT = "Please provide a non-zero positive integer in the limit parameter"
 SEP_PARAM_TIMEOUT = "timeout"
 SEP_INVALID_TIMEOUT = "Invalid Timeout"
 SEP_INVALID_DOMAIN = "Invalid Domain"
@@ -79,3 +79,13 @@ SEP_VALIDATE_VERSION_FAILED = "Product version validation failed."
 SEP_JSON_VERSION = "version"
 SEP_UNABLE_TO_GET_VERSION = "Unable to get version from the device"
 SEP_VERSION_VALIDATED = "Version validation done"
+SEP_COMMAND_ID_ERR = "Failed to poll commandID. Details: {}"
+
+# error message constants
+SEP_ERR_CODE_MSG = "Error code unavailable"
+SEP_ERR_MSG_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or action parameters"
+SEP_PARSE_ERR_MSG = "Unable to parse the error message. Please check the asset configuration and|or action parameters"
+
+# integer validation constants
+SEP_INT_ERR_MSG = "Please provide a valid integer value in the {}"
+SEP_LIMIT_KEY = "'limit' action parameter"
