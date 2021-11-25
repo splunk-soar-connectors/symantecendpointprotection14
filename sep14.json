@@ -4,18 +4,18 @@
     "description": "Integrate with Symantec Endpoint Protection 14 to execute investigative, containment, and corrective actions",
     "publisher": "Splunk",
     "package_name": "phantom_sep14",
-    "license": "Copyright (c) 2017-2020 Splunk Inc.",
+    "license": "Copyright (c) 2017-2021 Splunk Inc.",
     "main_module": "sep14_connector.py",
     "type": "endpoint",
-    "app_version": "2.0.6",
-    "utctime_updated": "2020-12-28T21:49:14.000000Z",
+    "app_version": "2.1.6",
+    "utctime_updated": "2021-11-25T15:18:12.000000Z",
     "product_vendor": "Symantec",
     "product_name": "Symantec Endpoint Protection 14",
     "product_version_regex": "14.*",
-    "min_phantom_version": "4.9.39220",
+    "min_phantom_version": "5.0.0",
     "python_version": "3",
     "latest_tested_versions": [
-        "On-prem, Symantec Endpoint Protection v14, 12/17/2020"
+        "On-prem, Symantec Endpoint Protection v14, 11/18/2021"
     ],
     "logo": "logo_symantec.svg",
     "logo_dark": "logo_symantec_dark.svg",
@@ -2538,7 +2538,7 @@
         {
             "action": "get status",
             "description": "Get command status report",
-            "verbose": "This action provides detailed information about the execution of a specified command on a specified client. Status of the command can be evaluated based on three output parameters <b>stateId</b>, <b>subStateId</b> and <b>subStateDesc</b>.<br><b>stateId</b> does not necessarily return one of the below state values. Possible values are:<ul><li>0 = INITIAL</li><li>1 = RECEIVED</li><li>2 = IN_PROGRESS</li><li>3 = COMPLETED</li><li>4 = REJECTED</li><li>5 = CANCELED</li><li>6 = ERROR</li></ul><br><b>subStateId</b> does not necessarily return one of the below state values. Possible values are:<ul><li>-1 = Unknown</li><li>0 = Success</li><li>1 = Client did not execute the command</li><li>2 = Client did not report any status</li><li>3 = Command was a duplicate and not executed</li><li>4 = Spooled command could not restart</li><li>5 = Restart command not allowed from the console</li><li>6 = Unexpected error</li><li>100 = Success</li><li>101 = Security risk found</li><li>102 = Scan was suspended</li><li>103 = Scan was aborted</li><li>105 = Scan did not return status</li><li>106 = Scan failed to start</li><li>110 = Auto-Protect cannot be turned on</li><li>120 = LiveUpdate download is in progress</li><li>121 = LiveUpdate download failed</li><li>131 = Quarantine delete failed</li><li>132 = Quarantine delete partial success</li><li>141 = Evidence of Compromise scan failed</li><li>142 = Evidence of Compromise scan failed: XML invalid or could not be parsed</li><li>146 = Evidence of Compromise file validation failed on the server</li></ul><br><b>subStateDesc</b> does not necessarily return one of the below state values. Possible values are:<ul><li>-1 = Unknown</li><li>0 = Success</li><li>1 = Client did not execute the command</li></ul>",
+            "verbose": "This action provides detailed information about the execution of a specified command on a specified client. Status of the command can be evaluated based on three output parameters <b>stateId</b>, <b>subStateId</b> and <b>subStateDesc</b>.<br><b>stateId</b> does not necessarily return one of the below state values. Possible values are:<ul><li>0 = INITIAL</li><li>1 = RECEIVED</li><li>2 = IN_PROGRESS</li><li>3 = COMPLETED</li><li>4 = REJECTED</li><li>5 = CANCELED</li><li>6 = ERROR</li></ul><br><b>subStateId</b> does not necessarily return one of the below state values. Possible values are:<ul><li>-1 = Unknown</li><li>0 = Success</li><li>1 = Client did not execute the command</li><li>2 = Client did not report any status</li><li>3 = Command was a duplicate and not executed</li><li>4 = Spooled command could not restart</li><li>5 = Restart command not allowed from the console</li><li>6 = Unexpected error</li><li>100 = Success</li><li>101 = Security risk found</li><li>102 = Scan was suspended</li><li>103 = Scan was aborted</li><li>105 = Scan did not return status</li><li>106 = Scan failed to start</li><li>110 = Auto-Protect cannot be turned on</li><li>120 = LiveUpdate download is in progress</li><li>121 = LiveUpdate download failed</li><li>131 = Quarantine delete failed</li><li>132 = Quarantine delete partial success</li><li>141 = Evidence of Compromise scan failed</li><li>142 = Evidence of Compromise scan failed: XML invalid or could not be parsed</li><li>146 = Evidence of Compromise file validation failed on the server</li></ul><br><b>subStateDesc</b> does not necessarily return one of the below state values. Possible values are:<ul><li>-1 = Unknown</li><li>0 = Success</li><li>1 = Client did not execute the command</li></ul>.",
             "type": "investigate",
             "identifier": "get_status",
             "read_only": true,
@@ -3905,6 +3905,233 @@
                     "data_type": "string",
                     "example_values": [
                         "Command id: 09357DB926FC40CE8B1A38D733DC4695"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "action": "full scan",
+            "description": "Scan a computer",
+            "verbose": "Either <b>computer_id</b> or <b>group_id</b> needs to be specified to perform fullscan/activescan. If both <b>computer_id</b> and <b>group_id</b> are specified, selected scan will start for both values.<br>The <b>type</b> parameter can be one of the following values:<ul><li>activescan</li><li>fullscan</li></ul>The action will start the scan and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the poll. If any value of the computerID or groupID is given wrong in the comma separated string in the respective parameters, the action will fail.",
+            "type": "investigate",
+            "identifier": "full_scan",
+            "read_only": true,
+            "parameters": {
+                "computer_id": {
+                    "description": "Comma(,) separated computer IDs to scan",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec device id"
+                    ],
+                    "order": 0,
+                    "primary": true
+                },
+                "group_id": {
+                    "description": "Comma(,) separated group IDs to scan",
+                    "data_type": "string",
+                    "order": 1,
+                    "contains": [
+                        "symantec group id"
+                    ],
+                    "primary": true
+                },
+                "type": {
+                    "description": "Scan Type (Default: fullscan)",
+                    "data_type": "string",
+                    "order": 2,
+                    "value_list": [
+                        "activescan",
+                        "fullscan"
+                    ],
+                    "contains": [
+                        "symantec fullscan type"
+                    ],
+                    "primary": true,
+                    "default": "fullscan"
+                },
+                "timeout": {
+                    "description": "Timeout (Default: 30 seconds)",
+                    "data_type": "numeric",
+                    "order": 3,
+                    "default": 30
+                }
+            },
+            "versions": "EQ(*)",
+            "render": {
+                "width": 12,
+                "height": 5,
+                "type": "custom",
+                "title": "Full Scan",
+                "view": "sep14_view.display_view"
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.computer_id",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec device id"
+                    ],
+                    "example_values": [
+                        "4B568FBB0A0001166741799D38F8597B"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.group_id",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec group id"
+                    ],
+                    "example_values": [
+                        "5BF575520A0110424BF92CD5DA356011"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.timeout",
+                    "data_type": "numeric",
+                    "example_values": [
+                        30,
+                        300
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.type",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec fullscan type"
+                    ],
+                    "example_values": [
+                        "activescan",
+                        "fullscan"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.beginTime",
+                    "data_type": "string",
+                    "example_value": ""
+                },
+                {
+                    "data_path": "action_result.data.*.binaryFileId",
+                    "data_type": "string",
+                    "example_value": ""
+                },
+                {
+                    "data_path": "action_result.data.*.computerId",
+                    "data_type": "string",
+                    "example_value": "CA8A6FD60A011042578C4C712D889811",
+                    "contains": [
+                        "symantec device id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.computerIp",
+                    "data_type": "string",
+                    "example_value": "10.1.67.117"
+                },
+                {
+                    "data_path": "action_result.data.*.computerName",
+                    "data_type": "string",
+                    "example_value": "sepm14u3c1"
+                },
+                {
+                    "data_path": "action_result.data.*.currentLoginUserName",
+                    "data_type": "string",
+                    "example_value": "admin"
+                },
+                {
+                    "data_path": "action_result.data.*.domainName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.hardwareKey",
+                    "data_type": "string",
+                    "example_value": "7113C6C206D0A2A0C88E8D18C7F732E5"
+                },
+                {
+                    "data_path": "action_result.data.*.lastUpdateTime",
+                    "data_type": "string",
+                    "example_value": ""
+                },
+                {
+                    "data_path": "action_result.data.*.resultInXML",
+                    "data_type": "string",
+                    "example_value": ""
+                },
+                {
+                    "data_path": "action_result.data.*.stateId",
+                    "data_type": "numeric",
+                    "example_value": 0
+                },
+                {
+                    "data_path": "action_result.data.*.subStateDesc",
+                    "data_type": "string",
+                    "example_value": ""
+                },
+                {
+                    "data_path": "action_result.data.*.subStateId",
+                    "data_type": "numeric",
+                    "example_value": 0
+                },
+                {
+                    "data_path": "action_result.summary.computer_command_id",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec command id"
+                    ],
+                    "example_values": [
+                        "3896E6272C3B44CDA121258FFC5E4A84"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.group_command_id",
+                    "data_type": "string",
+                    "contains": [
+                        "symantec command id"
+                    ],
+                    "example_values": [
+                        "7826A8E076E84C12934AF0668AB6487E"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.state_computer_id_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "COMPLETED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.state_group_id_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "COMPLETED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Computer command id: 3896E6272C3B44CDA121258FFC5E4A84, State computer id status: INITIAL, Group command id: 7826A8E076E84C12934AF0668AB6487E, State group id status: INITIAL"
                     ]
                 },
                 {
