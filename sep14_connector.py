@@ -15,18 +15,18 @@
 #
 #
 # Standard library imports
-import json
 import datetime
+import json
 import re
 import time
-import requests
-import xmltodict
-from bs4 import BeautifulSoup
 
 # Phantom imports
 import phantom.app as phantom
-from phantom.base_connector import BaseConnector
+import requests
+import xmltodict
+from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 # Local imports
 import sep14_consts as consts
@@ -135,7 +135,8 @@ class Sep14Connector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INT_ERR_MSG.format(key=key)), None
 
         if parameter < 0:
-            return action_result.set_status(phantom.APP_ERROR, 'Please provide a valid non-negative integer value in the "{}" parameter'.format(key)), None
+            return action_result.set_status(phantom.APP_ERROR,
+                'Please provide a valid non-negative integer value in the "{}" parameter'.format(key)), None
         if not allow_zero and parameter == 0:
             return action_result.set_status(phantom.APP_ERROR, "Please provide a positive integer value in the '{}' parameter".format(key)), None
 
@@ -644,7 +645,8 @@ class Sep14Connector(BaseConnector):
         endpoint_status_details = list()
         command_id = param['id']
 
-        status_data = self._fetch_items_paginated("{}/{}".format(consts.SEP_GET_STATUS_ENDPOINT, requests.compat.quote(command_id)), action_result)
+        status_data = self._fetch_items_paginated("{}/{}".format(
+            consts.SEP_GET_STATUS_ENDPOINT, requests.compat.quote(command_id)), action_result)
         if status_data is None:
             return action_result.get_status()
 
@@ -1090,12 +1092,14 @@ class Sep14Connector(BaseConnector):
         hostname = param[consts.SEP_PARAM_HOSTNAME]
 
         # Getting response data for specific computer name
-        response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS, action_result, params={'computerName': hostname})
+        response_status, response_data = self._make_rest_call_abstract(consts.SEP_LIST_COMPUTER_ENDPOINTS, action_result,
+            params={'computerName': hostname})
 
         if phantom.is_fail(response_status):
             return action_result.get_status()
 
-        # Handling view page expectation(all key value pair must be string) by removing list with comma seprated string and after that add result data
+        # Handling view page expectation(all key value pair must be string) by removing list with comma seprated string and
+        # after that add result data
         for item in response_data.get('content', []):
             if item["ipAddresses"]:
                 item["ipAddresses"] = ", ".join(item["ipAddresses"])
@@ -1199,7 +1203,8 @@ class Sep14Connector(BaseConnector):
                 timeout = 0
 
         if not response_data or not response_data.get('content'):
-            return action_result.set_status(phantom.APP_ERROR, "Error while fetching the status of command id: {command_id}".format(command_id=command_id)), None
+            return action_result.set_status(phantom.APP_ERROR, "Error while fetching the status of command id: {command_id}".format(
+                command_id=command_id)), None
 
         for content in response_data.get('content'):
             if content.get('resultInXML'):
@@ -1505,8 +1510,9 @@ class Sep14Connector(BaseConnector):
 
 if __name__ == '__main__':
 
-    import pudb
     import argparse
+
+    import pudb
 
     pudb.set_trace()
 
