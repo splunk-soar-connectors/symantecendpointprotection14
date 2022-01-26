@@ -98,3 +98,5 @@ SEP_PARSE_ERR_MSG = "Unable to parse the error message. Please check the asset c
 # integer validation constants
 SEP_INT_ERR_MSG = "Please provide a valid integer value in the {}"
 SEP_LIMIT_KEY = "'limit' action parameter"
+
+SEP_DEFAULT_TIMEOUT = 30
