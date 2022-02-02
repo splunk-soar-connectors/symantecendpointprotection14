@@ -1,0 +1,630 @@
+{
+	"info": {
+		"_postman_id": "0ad12eae-8dd6-4eb4-913f-dcd8f3dd8035",
+		"name": "Symantec Endpoint Protection 14",
+		"description": "Prerequisite The below mentioned are the required fields to use this collection. So, make sure that all these fields are set before running the request.\n\n*   username = username of the instance you are using\n*   password = password of the instance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Block hash",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var base_url = pm.collectionVariables.get(\"base_url\")",
+							"var group_id = pm.collectionVariables.get(\"group_id\")",
+							"var hash = pm.collectionVariables.get(\"hash\")",
+							"var domain_id = pm.collectionVariables.get(\"domain_id\")",
+							"var token = pm.collectionVariables.get(\"token\")",
+							"",
+							"body = {   ",
+							"    \"name\": \"phantom_\" + group_id,",
+							"    \"data\": [hash],",
+							"    \"domainId\": domain_id",
+							"    }",
+							"",
+							"const req = {",
+							"    url: base_url + \"/policy-objects/fingerprints\",",
+							"    method: \"post\",",
+							"    body: JSON.stringify(",
+							"        body",
+							"    ),",
+							"    header: {",
+							"        \"Authorization\": \"Bearer \" + token,",
+							"        \"Content-Type\": \"application/json\"",
+							"    }",
+							"}",
+							"pm.sendRequest(req, function (err, response) {",
+							"    var r = response.json()",
+							"    var fp_id = r[\"id\"]",
+							"    pm.collectionVariables.set(\"block_fingerprint_id\", fp_id)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/groups/{{group_id}}/system-lockdown/fingerprints/{{block_fingerprint_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"groups",
+						"{{group_id}}",
+						"system-lockdown",
+						"fingerprints",
+						"{{block_fingerprint_id}}"
+					]
+				},
+				"description": "This action remove the provided hash to the blocklist of machine\n\n*   It depends on List groups to get the group_id, domain_id\n*   It requires hash key to be blocked"
+			},
+			"response": []
+		},
+		{
+			"name": "Full Scan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<EOC creator='Phantom' version='1.1' id='1'><DataSource name='Third-Party Provider' id='1' version='1.0'/><ScanType>QUICK_SCAN</ScanType><Threat category='' type='' severity='' time='22-01-24 05:24:13 AM'><Description>b'Scan endpoint for computer ID(s) 1CB8421C0A011042734C7D7254777512'</Description><Attacker></Attacker></Threat><Activity></Activity></EOC>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/command-queue/fullscan?group_ids={{group_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"command-queue",
+						"fullscan"
+					],
+					"query": [
+						{
+							"key": "group_ids",
+							"value": "{{group_id}}"
+						},
+						{
+							"key": "undo",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This action do the full scan of provided endpoints\n\n*   It depends on List Groups action to get the information for group (group_id)."
+			},
+			"response": []
+		},
+		{
+			"name": "Generate token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code == 200) {",
+							"    var token = pm.environment.get(\"token\")",
+							"    var resp = pm.response.json()",
+							"    var token_id = resp[\"token\"]",
+							"    pm.collectionVariables.set(\"token\", token_id)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/identity/authenticate",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"identity",
+						"authenticate"
+					]
+				},
+				"description": "Token needs to be generated before running the action for the first time. Please make sure to run generate token action first.\n\nRequired values are =>\n\n*   username\n*   password"
+			},
+			"response": []
+		},
+		{
+			"name": "Get system info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/computers?computerName={{host_name}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"computers"
+					],
+					"query": [
+						{
+							"key": "computerName",
+							"value": "{{host_name}}"
+						}
+					]
+				},
+				"description": "This action provides the information related with the system you provide.\n\n*   It depends on List Endpoints actions to fetch the list of available machines (host_name)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/command-queue/{{command_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"command-queue",
+						"{{command_id}}"
+					]
+				},
+				"description": "This action provides the status of provided command id\n\n*   It depends on quarantine device action to get the command ID of that machine."
+			},
+			"response": []
+		},
+		{
+			"name": "List groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code == 200) {",
+							"    var resp = pm.response.json()",
+							"    var gr_id = resp[\"content\"][0][\"id\"]",
+							"    var domain_id = resp[\"content\"][0][\"domain\"][\"id\"]",
+							"    pm.collectionVariables.set(\"group_id\", gr_id)",
+							"    pm.collectionVariables.set(\"domain_id\", domain_id)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/groups",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"groups"
+					]
+				},
+				"description": "This action will provide the list of groups available at the given instance of symantec EP."
+			},
+			"response": []
+		},
+		{
+			"name": "List domains",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code == 200) {",
+							"    var domain_id = pm.environment.get(\"domain_id\")",
+							"    var resp = pm.response.json()",
+							"    var dm_id = resp[0][\"id\"]",
+							"    pm.collectionVariables.set(\"domain_id\", dm_id)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/domains",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"domains"
+					]
+				},
+				"description": "This action will provide the list of domains available at the given instance of symantec EP."
+			},
+			"response": []
+		},
+		{
+			"name": "List endpoints",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code == 200) {",
+							"    var host_name = pm.environment.get(\"host_name\")",
+							"    var host_id = pm.environment.get(\"host_id\")",
+							"    var resp = pm.response.json()",
+							"    var hs_name = resp[\"content\"][0][\"computerName\"]",
+							"    var hs_id = resp[\"content\"][0][\"uniqueId\"]",
+							"",
+							"    pm.collectionVariables.set(\"host_name\", hs_name)",
+							"    pm.collectionVariables.set(\"host_id\", hs_id)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/computers?domain_id={{domain_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"computers"
+					],
+					"query": [
+						{
+							"key": "domain_id",
+							"value": "{{domain_id}}"
+						}
+					]
+				},
+				"description": "This action will provide the list of endpoints available at the given instance of symantec EP."
+			},
+			"response": []
+		},
+		{
+			"name": "Quarantine device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code == 200) {",
+							"    var command_id = pm.environment.get(\"command_id\")",
+							"    var resp = pm.response.json()",
+							"    var cm_id = resp[\"commandID_computer\"]",
+							"    pm.collectionVariables.set(\"command_id\", cm_id)",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/command-queue/quarantine?computer_ids={{host_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"command-queue",
+						"quarantine"
+					],
+					"query": [
+						{
+							"key": "computer_ids",
+							"value": "{{host_id}}"
+						}
+					]
+				},
+				"description": "This action provides the functionality to quarantine the provided machines.\n\n*   It depends on List Endpoints action to get the information related with the instance. (host_id)"
+			},
+			"response": []
+		},
+		{
+			"name": "Scan endpoints",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<EOC creator='Phantom' version='1.1' id='1'><DataSource name='Third-Party Provider' id='1' version='1.0'/><ScanType>QUICK_SCAN</ScanType><Threat category='' type='' severity='' time='22-01-24 05:24:13 AM'><Description>b'Scan endpoint for computer ID(s)'</Description><Attacker></Attacker></Threat><Activity></Activity></EOC>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/command-queue/eoc?computer_ids={{host_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"command-queue",
+						"eoc"
+					],
+					"query": [
+						{
+							"key": "computer_ids",
+							"value": "{{host_id}}"
+						},
+						{
+							"key": "undo",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This action scans the provided endpoints\n\n*   It depends on List Endpoints action to get the information for machine (host_id)."
+			},
+			"response": []
+		},
+		{
+			"name": "Unblock hash",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/policy-objects/fingerprints/{{block_fingerprint_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"policy-objects",
+						"fingerprints",
+						"{{block_fingerprint_id}}"
+					]
+				},
+				"description": "This action remove the provided hash to the blocklist of machine\n\n*   It depends on block hash to get the 'block_fingerprint_id' to unblock"
+			},
+			"response": []
+		},
+		{
+			"name": "Unquarantine device",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/command-queue/quarantine?computer_ids={{host_id}}&undo=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"command-queue",
+						"quarantine"
+					],
+					"query": [
+						{
+							"key": "computer_ids",
+							"value": "{{host_id}}"
+						},
+						{
+							"key": "undo",
+							"value": "true"
+						}
+					]
+				},
+				"description": "This action un-quarantine the provide machine\n\n*   It depends on List Endpoints action to get the information for machine (host_id)."
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "group_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "hash",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "base_url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "command_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "host_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "host_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "fingerprint_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "block_fingerprint_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
