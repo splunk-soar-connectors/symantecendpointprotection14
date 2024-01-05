@@ -1,6 +1,6 @@
 # File: sep14_consts.py
 #
-# Copyright (c) 2017-2022 Splunk Inc.
+# Copyright (c) 2017-2024 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # and limitations under the License.
 SEP_CONFIG_URL = "url"
 SEP_CONFIG_USERNAME = "username"
-SEP_CONFIG_PASSWORD = "password"
+SEP_CONFIG_PASSWORD = "password"  # pragma: allowlist secret
 SEP_CONFIG_VERIFY_SSL = "verify_server_cert"
 SEP_ERR_API_UNSUPPORTED_METHOD = "Unsupported method {method}"
 SEP_EXCEPTION_OCCURRED = "Exception occurred"
