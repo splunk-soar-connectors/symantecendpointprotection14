@@ -26,8 +26,9 @@ SEP_REST_RESP_SUCCESS = 200
 SEP_REST_RESP_BAD_REQUEST = 400
 SEP_REST_RESP_BAD_REQUEST_MSG = "Parameters are invalid"
 SEP_REST_RESP_UNAUTHORIZED = 401
-SEP_REST_RESP_UNAUTHORIZED_MSG = "The user that is currently logged on has insufficient rights to execute the web " \
-                                 "method, or the user is unauthorized."
+SEP_REST_RESP_UNAUTHORIZED_MSG = (
+    "The user that is currently logged on has insufficient rights to execute the web " "method, or the user is unauthorized."
+)
 SEP_REST_RESP_FORBIDDEN = 403
 SEP_REST_RESP_FORBIDDEN_MSG = "Forbidden."
 SEP_REST_RESP_NOT_FOUND = 404
@@ -52,12 +53,14 @@ SEP_FINGERPRINTS_ENDPOINT = "/policy-objects/fingerprints"
 SEP_FINGERPRINT_ENDPOINT = "/policy-objects/fingerprints/{fingerprint_id}"
 SEP_BLOCK_FILE_ENDPOINT = "/groups/{group_id}/system-lockdown/fingerprints/{fingerprint_id}"
 SEP_SCAN_ENDPOINT = "/command-queue/eoc?computer_ids={computer_id}"
-SEP_SCAN_ENDPOINT_PAYLOAD = "<EOC creator='Phantom' version='1.1' id='1'><DataSource name='Third-Party Provider' " \
-                            "id='1' version='1.0'/><ScanType>{scan_type}</ScanType>" \
-                            "<Threat category='' type='' severity='' " \
-                            "time='{curr_time}'><Description>{scan_description}" \
-                            "</Description><Attacker></Attacker></Threat><Activity></Activity>" \
-                            "</EOC>"
+SEP_SCAN_ENDPOINT_PAYLOAD = (
+    "<EOC creator='Phantom' version='1.1' id='1'><DataSource name='Third-Party Provider' "
+    "id='1' version='1.0'/><ScanType>{scan_type}</ScanType>"
+    "<Threat category='' type='' severity='' "
+    "time='{curr_time}'><Description>{scan_description}"
+    "</Description><Attacker></Attacker></Threat><Activity></Activity>"
+    "</EOC>"
+)
 SEP_FULLSCAN_ENDPOINT = "/command-queue/{scan_type}"
 SEP_PARAM_NOT_SPECIFIED = "Neither {0} nor {1} specified. Please specify at least one of them"
 SEP_IP_HOSTNAME_VALIDATION_ERR = "Parameter validation failed for 'ip_hostname' field"
