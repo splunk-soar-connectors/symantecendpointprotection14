@@ -50,7 +50,7 @@ ERROR_RESPONSE_DICT = {
     consts.SEP_REST_RESP_UNAUTHORIZED: consts.SEP_REST_RESP_UNAUTHORIZED_MSG,
     consts.SEP_REST_RESP_BAD_REQUEST: consts.SEP_REST_RESP_BAD_REQUEST_MSG,
     consts.SEP_REST_RESP_NOT_FOUND: consts.SEP_REST_RESP_NOT_FOUND_MSG,
-    consts.SEP_REST_RESP_ERROR_IN_PROCESSING: consts.SEP_REST_RESP_ERROR_IN_PROCESSING_MSG,
+    consts.SEP_REST_RESP_ERR_IN_PROCESSING: consts.SEP_REST_RESP_ERR_IN_PROCESSING_MSG,
     consts.SEP_REST_RESP_FORBIDDEN: consts.SEP_REST_RESP_FORBIDDEN_MSG,
     consts.SEP_REST_RESP_GONE: consts.SEP_REST_RESP_GONE_MSG
 }
@@ -314,7 +314,7 @@ class Sep14Connector(BaseConnector):
             return phantom.APP_SUCCESS, response_data
 
         # If response code is unknown
-        message = consts.SEP_REST_RESP_OTHER_ERROR_MSG
+        message = consts.SEP_REST_RESP_OTHER_ERR_MSG
 
         # overriding message if available in response
         if isinstance(response_data, dict):
@@ -494,7 +494,7 @@ class Sep14Connector(BaseConnector):
             # If fingerprint file is not present, its not an error condition. It indicates that no files are blocked.
             if str(file_details.get("errorCode")) != "410" and not str(
                     file_details.get("errorMessage")).__contains__("do not exist"):
-                self.debug_print(consts.SEP_BLOCK_HASH_GET_DETAILS_ERROR.format(
+                self.debug_print(consts.SEP_BLOCK_HASH_GET_DETAILS_ERR.format(
                     name=fingerprint_filename
                 ))
                 return action_result.get_status(), None
@@ -523,7 +523,7 @@ class Sep14Connector(BaseConnector):
             if not phantom.is_md5(hash_value):
                 # Increment value if hash given in the list is invalid
                 hash_value_status["invalid_hashes"] = hash_value_status.get("invalid_hashes", 0) + 1
-                ar_curr_hash.set_status(phantom.APP_ERROR, consts.SEP_HASH_FAILED_VALIDATION.format(
+                ar_curr_hash.set_status(phantom.APP_ERROR, consts.SEP_HASH_FAIL_VALIDATION.format(
                     param=consts.SEP_PARAM_HASH
                 ))
                 continue
@@ -706,8 +706,8 @@ class Sep14Connector(BaseConnector):
                 elif phantom.is_hostname(item):
                     search_key_field.append("computerName")
                 else:
-                    self.debug_print(consts.SEP_IP_HOSTNAME_VALIDATION_ERROR)
-                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_IP_HOSTNAME_VALIDATION_ERROR)
+                    self.debug_print(consts.SEP_IP_HOSTNAME_VALIDATION_ERR)
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_IP_HOSTNAME_VALIDATION_ERR)
 
         # Optional parameter
         timeout = param.get(consts.SEP_PARAM_TIMEOUT, 30)
@@ -901,8 +901,8 @@ class Sep14Connector(BaseConnector):
                 elif phantom.is_hostname(item):
                     search_key_field.append("computerName")
                 else:
-                    self.debug_print(consts.SEP_IP_HOSTNAME_VALIDATION_ERROR)
-                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_IP_HOSTNAME_VALIDATION_ERROR)
+                    self.debug_print(consts.SEP_IP_HOSTNAME_VALIDATION_ERR)
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_IP_HOSTNAME_VALIDATION_ERR)
 
         # Optional parameter
         timeout = param.get(consts.SEP_PARAM_TIMEOUT, 30)
@@ -1058,8 +1058,8 @@ class Sep14Connector(BaseConnector):
             if not fingerprint_file_id:
                 # If fingerprint file ID is not found in the response
                 if isinstance(file_resp_data, dict) and not file_resp_data.get("id"):
-                    self.debug_print(consts.SEP_BLOCK_HASH_GET_ID_ERROR)
-                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_BLOCK_HASH_GET_ID_ERROR)
+                    self.debug_print(consts.SEP_BLOCK_HASH_GET_ID_ERR)
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_BLOCK_HASH_GET_ID_ERR)
 
                 # Getting file ID of fingerprint list
                 fingerprint_file_id = file_resp_data.get("id")
@@ -1256,7 +1256,7 @@ class Sep14Connector(BaseConnector):
                 elif phantom.is_hostname(item):
                     search_key_field.append("computerName")
                 else:
-                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_IP_HOSTNAME_VALIDATION_ERROR)
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_IP_HOSTNAME_VALIDATION_ERR)
 
             value_to_search = ip_hostname
 
@@ -1447,7 +1447,7 @@ class Sep14Connector(BaseConnector):
 
         ret_val, info = self._make_rest_call_abstract(consts.SEP_VERSION_ENDPOINT, action_result)
         if phantom.is_fail(ret_val):
-            action_result.append_to_message(consts.SEP_VALIDATE_VERSION_FAILED)
+            action_result.append_to_message(consts.SEP_VALIDATE_VERSION_FAIL)
             return action_result.get_status()
         device_version = info.get(consts.SEP_JSON_VERSION)
         if not device_version:
