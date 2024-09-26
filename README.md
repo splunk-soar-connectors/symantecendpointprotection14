@@ -2,7 +2,7 @@
 # Symantec Endpoint Protection 14
 
 Publisher: Splunk  
-Connector Version: 2.1.10  
+Connector Version: 2.1.11 
 Product Vendor: Symantec  
 Product Name: Symantec Endpoint Protection 14  
 Product Version Supported (regex): "14.\*"  
@@ -11,7 +11,7 @@ Minimum Product Version: 6.2.1
 Integrate with Symantec Endpoint Protection 14 to execute investigative, containment, and corrective actions
 
 [comment]: # " File: README.md"
-[comment]: # "  Copyright (c) 2017-2022 Splunk Inc."
+[comment]: # "  Copyright (c) 2017-2024 Splunk Inc."
 [comment]: # ""
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."

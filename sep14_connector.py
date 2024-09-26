@@ -1,6 +1,6 @@
 # File: sep14_connector.py
 #
-# Copyright (c) 2017-2022 Splunk Inc.
+# Copyright (c) 2017-2024 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -1406,14 +1406,14 @@ class Sep14Connector(BaseConnector):
         if phantom.is_fail(response_status):
             # if phantom.is_fail(ret_value):
             self.save_progress(action_result.get_message())
-            self.set_status(phantom.APP_ERROR, consts.SEP_TEST_CONNECTIVITY_FAIL)
+            self.set_status(phantom.APP_ERROR, consts.SEP_TEST_CONNECTIVITY_FAILED)
             return action_result.get_status()
 
         ret_val = self._validate_version(action_result)
 
         if phantom.is_fail(ret_val):
             self.set_status(ret_val, action_result.get_message())
-            self.append_to_message(consts.SEP_TEST_CONNECTIVITY_FAIL)
+            self.append_to_message(consts.SEP_TEST_CONNECTIVITY_FAILED)
             return self.get_status()
 
         self.set_status_save_progress(phantom.APP_SUCCESS, consts.SEP_TEST_CONNECTIVITY_PASS)
