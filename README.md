@@ -2,7 +2,7 @@
 # Symantec Endpoint Protection 14
 
 Publisher: Splunk  
-Connector Version: 2.1.11 
+Connector Version: 2.1.11  
 Product Vendor: Symantec  
 Product Name: Symantec Endpoint Protection 14  
 Product Version Supported (regex): "14.\*"  
