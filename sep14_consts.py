@@ -1,6 +1,6 @@
 # File: sep14_consts.py
 #
-# Copyright (c) 2017-2024 Splunk Inc.
+# Copyright (c) 2017-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ SEP_REST_RESP_BAD_REQUEST = 400
 SEP_REST_RESP_BAD_REQUEST_MSG = "Parameters are invalid"
 SEP_REST_RESP_UNAUTHORIZED = 401
 SEP_REST_RESP_UNAUTHORIZED_MSG = (
-    "The user that is currently logged on has insufficient rights to execute the web " "method, or the user is unauthorized."
+    "The user that is currently logged on has insufficient rights to execute the web method, or the user is unauthorized."
 )
 SEP_REST_RESP_FORBIDDEN = 403
 SEP_REST_RESP_FORBIDDEN_MSG = "Forbidden."
