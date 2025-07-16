@@ -89,6 +89,10 @@ class Sep14Connector(BaseConnector):
         :return: error message
         """
 
+        # Initialize variables with default values
+        error_code = consts.SEP_ERR_CODE_MSG
+        error_msg = consts.SEP_ERR_MSG_UNAVAILABLE
+
         try:
             if e.args:
                 if len(e.args) > 1:
@@ -739,7 +743,7 @@ class Sep14Connector(BaseConnector):
             summary_data["command_id"] = response_data.pop("commandID_computer")
         except Exception as e:
             err = self._get_error_message_from_exception(e)
-            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
+            self.debug_print(consts.SEP_COMMAND_ID_ERR.format(err))
             pass
 
         # Poll for command status
@@ -933,7 +937,7 @@ class Sep14Connector(BaseConnector):
             summary_data["command_id"] = response_data.pop("commandID_computer")
         except Exception as e:
             err = self._get_error_message_from_exception(e)
-            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
+            self.debug_print(consts.SEP_COMMAND_ID_ERR.format(err))
             pass
 
         # Poll for command status
@@ -1286,7 +1290,7 @@ class Sep14Connector(BaseConnector):
             summary_data["command_id"] = scan_resp.pop("commandID_computer")
         except Exception as e:
             err = self._get_error_message_from_exception(e)
-            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
+            self.debug_print(consts.SEP_COMMAND_ID_ERR.format(err))
             pass
 
         # Poll for command status
@@ -1375,7 +1379,7 @@ class Sep14Connector(BaseConnector):
                 summary_data["state_group_id_status"] = state_group_id_status
         except Exception as e:
             err = self._get_error_message_from_exception(e)
-            self.debug_print(consts.SEP_COMMANDID_ERR.format(err))
+            self.debug_print(consts.SEP_COMMAND_ID_ERR.format(err))
             pass
 
         return action_result.set_status(phantom.APP_SUCCESS)
