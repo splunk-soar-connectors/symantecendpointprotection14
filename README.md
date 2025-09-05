@@ -1,9 +1,9 @@
 # Symantec Endpoint Protection 14
 
-Publisher: Splunk \
-Connector Version: 2.1.11 \
-Product Vendor: Symantec \
-Product Name: Symantec Endpoint Protection 14 \
+Publisher: Splunk <br>
+Connector Version: 2.1.11 <br>
+Product Vendor: Symantec <br>
+Product Name: Symantec Endpoint Protection 14 <br>
 Minimum Product Version: 5.1.0
 
 Integrate with Symantec Endpoint Protection 14 to execute investigative, containment, and corrective actions
@@ -23,24 +23,24 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate credentials provided for connectivity \
-[list domains](#action-list-domains) - List all of the administrative domains configured on the device \
-[list groups](#action-list-groups) - List all of the administrative groups configured on the device \
-[list endpoints](#action-list-endpoints) - List all the endpoints/sensors configured on the device \
-[get system info](#action-get-system-info) - Gets the information about the computers in a specified domain \
-[get status](#action-get-status) - Get command status report \
-[unquarantine device](#action-unquarantine-device) - Unquarantine the endpoint \
-[quarantine device](#action-quarantine-device) - Quarantine the endpoint \
-[unblock hash](#action-unblock-hash) - Unblock hashes on endpoints \
-[block hash](#action-block-hash) - Block hashes on endpoints \
-[scan endpoint](#action-scan-endpoint) - Scan an endpoint \
+[test connectivity](#action-test-connectivity) - Validate credentials provided for connectivity <br>
+[list domains](#action-list-domains) - List all of the administrative domains configured on the device <br>
+[list groups](#action-list-groups) - List all of the administrative groups configured on the device <br>
+[list endpoints](#action-list-endpoints) - List all the endpoints/sensors configured on the device <br>
+[get system info](#action-get-system-info) - Gets the information about the computers in a specified domain <br>
+[get status](#action-get-status) - Get command status report <br>
+[unquarantine device](#action-unquarantine-device) - Unquarantine the endpoint <br>
+[quarantine device](#action-quarantine-device) - Quarantine the endpoint <br>
+[unblock hash](#action-unblock-hash) - Unblock hashes on endpoints <br>
+[block hash](#action-block-hash) - Block hashes on endpoints <br>
+[scan endpoint](#action-scan-endpoint) - Scan an endpoint <br>
 [full scan](#action-full-scan) - Scan a computer
 
 ## action: 'test connectivity'
 
 Validate credentials provided for connectivity
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -55,7 +55,7 @@ No Output
 
 List all of the administrative domains configured on the device
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -84,7 +84,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 List all of the administrative groups configured on the device
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -121,7 +121,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 List all the endpoints/sensors configured on the device
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -296,7 +296,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Gets the information about the computers in a specified domain
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -468,7 +468,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Get command status report
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action provides detailed information about the execution of a specified command on a specified client. Status of the command can be evaluated based on three output parameters <b>stateId</b>, <b>subStateId</b> and <b>subStateDesc</b>.<br><b>stateId</b> does not necessarily return one of the below state values. Possible values are:<ul><li>0 = INITIAL</li><li>1 = RECEIVED</li><li>2 = IN_PROGRESS</li><li>3 = COMPLETED</li><li>4 = REJECTED</li><li>5 = CANCELED</li><li>6 = ERROR</li></ul><br><b>subStateId</b> does not necessarily return one of the below state values. Possible values are:<ul><li>-1 = Unknown</li><li>0 = Success</li><li>1 = Client did not execute the command</li><li>2 = Client did not report any status</li><li>3 = Command was a duplicate and not executed</li><li>4 = Spooled command could not restart</li><li>5 = Restart command not allowed from the console</li><li>6 = Unexpected error</li><li>100 = Success</li><li>101 = Security risk found</li><li>102 = Scan was suspended</li><li>103 = Scan was aborted</li><li>105 = Scan did not return status</li><li>106 = Scan failed to start</li><li>110 = Auto-Protect cannot be turned on</li><li>120 = LiveUpdate download is in progress</li><li>121 = LiveUpdate download failed</li><li>131 = Quarantine delete failed</li><li>132 = Quarantine delete partial success</li><li>141 = Evidence of Compromise scan failed</li><li>142 = Evidence of Compromise scan failed: XML invalid or could not be parsed</li><li>146 = Evidence of Compromise file validation failed on the server</li></ul><br><b>subStateDesc</b> does not necessarily return one of the below state values. Possible values are:<ul><li>-1 = Unknown</li><li>0 = Success</li><li>1 = Client did not execute the command</li></ul>.
@@ -507,7 +507,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Unquarantine the endpoint
 
-Type: **correct** \
+Type: **correct** <br>
 Read only: **False**
 
 Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to unquarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the unquarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the unquarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action. If any value of the computerID, IP or hostname is given wrong in the comma separated string in the respective parameters, the action will fail.
@@ -551,7 +551,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Quarantine the endpoint
 
-Type: **contain** \
+Type: **contain** <br>
 Read only: **False**
 
 Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to quarantine an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The action <i>sends</i> the quarantine command to the SEP Manager and returns with the command id. The command takes some time (usually under a minute) to complete. The <b>get status</b> action can be used to get the status of the command. The action will start the quarantine process and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the action. If any value of the computerID, IP or hostname is given wrong in the comma separated string in the respective parameters, the action will fail.
@@ -595,7 +595,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Unblock hashes on endpoints
 
-Type: **correct** \
+Type: **correct** <br>
 Read only: **False**
 
 This action removes all the MD5 hashes provided in <b>hash</b> from a fingerprint file. If all hashes from the fingerprint file are removed, then the fingerprint file will be deleted from SEP.
@@ -640,7 +640,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Block hashes on endpoints
 
-Type: **contain** \
+Type: **contain** <br>
 Read only: **False**
 
 This action creates a fingerprint file on SEP manager for a given <b>group_id</b> and adds all the MD5 hashes provided in <b>hash</b> to the file. This file will be connected in blacklist mode to the System Lockdown setting of the group referred by <b>group_id</b>. Hashes of files having extensions either .exe, .com, .dll or .ocx will be used to block an application from launching on endpoints.<br>In order to add an application to a group in blocked mode, the group must not inherit policies and settings of its parent group.
@@ -683,7 +683,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Scan an endpoint
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 Either <b>id</b> or <b>ip_hostname</b> of an endpoint needs to be specified to scan an endpoint. If <b>id</b> is specified, <b>ip_hostname</b> is ignored.<br>The <b>type</b> parameter can be one of the following values:<ul><li>QUICK_SCAN</li><li>FULL_SCAN</li></ul>The action will start the scan and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the poll. If any value of the computerID, IP or hostname is given wrong in the comma separated string in the respective parameters, the action will fail.
@@ -746,7 +746,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Scan a computer
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 Either <b>computer_id</b> or <b>group_id</b> needs to be specified to perform fullscan/activescan. If both <b>computer_id</b> and <b>group_id</b> are specified, selected scan will start for both values.<br>The <b>type</b> parameter can be one of the following values:<ul><li>activescan</li><li>fullscan</li></ul>The action will start the scan and poll for the amount of seconds passed in the <b>timeout</b> parameter to get the latest status of the poll. If any value of the computerID or groupID is given wrong in the comma separated string in the respective parameters, the action will fail.
