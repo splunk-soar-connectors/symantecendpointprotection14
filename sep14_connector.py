@@ -1216,6 +1216,8 @@ class Sep14Connector(BaseConnector):
         computer_id = param.get(consts.SEP_PARAM_COMPUTER_ID)
         ip_hostname = param.get(consts.SEP_PARAM_IP_HOSTNAME)
         scan_type = param.get(consts.SEP_PARAM_SCAN_TYPE, "QUICK_SCAN")
+        if scan_type not in consts.SEP_ENDPOINT_SCAN_TYPES:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_SCAN_TYPE)
 
         search_key_field = list()
         computer_ids_list = list()
@@ -1317,6 +1319,8 @@ class Sep14Connector(BaseConnector):
         computer_id = param.get("computer_id")
         group_id = param.get("group_id")
         scan_type = param.get(consts.SEP_PARAM_SCAN_TYPE, "fullscan")
+        if scan_type not in consts.SEP_FULL_SCAN_TYPES:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_SCAN_TYPE)
         self.debug_print(f"computer_id: {computer_id}")
 
         computer_ids_list = list()

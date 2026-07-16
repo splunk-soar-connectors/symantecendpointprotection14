@@ -1,3 +1,3 @@
 **Unreleased**
 
-* Updated development checks for connector maintenance.
+* Validated scan types before using them in SEPM command paths and XML payloads.
