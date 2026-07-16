@@ -1220,7 +1220,13 @@ class Sep14Connector(BaseConnector):
 
         for content in response_data.get("content"):
             if content.get("resultInXML"):
-                content.update(xmltodict.parse(content.get("resultInXML")))
+                result_xml = content.get("resultInXML")
+                if len(result_xml.encode("utf-8")) > consts.SEP_MAX_RESULT_XML_BYTES:
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_RESULT_XML_TOO_LARGE), None
+                upper_xml = result_xml.upper()
+                if "<!DOCTYPE" in upper_xml or "<!ENTITY" in upper_xml:
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_RESULT_XML_DTD_REJECTED), None
+                content.update(xmltodict.parse(result_xml))
                 content.pop("resultInXML")
             action_result.add_data(content)
 

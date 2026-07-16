@@ -107,3 +107,6 @@ SEP_LIMIT_KEY = "'limit' action parameter"
 
 SEP_DEFAULT_TIMEOUT = 30
 SEP_STATE_TOKEN_ENCRYPTED = "token_encrypted"
+SEP_MAX_RESULT_XML_BYTES = 1_048_576
+SEP_RESULT_XML_TOO_LARGE = "Command result XML exceeds the 1 MiB parsing limit"
+SEP_RESULT_XML_DTD_REJECTED = "Command result XML must not contain DTD or entity declarations"
