@@ -447,18 +447,14 @@ class Sep14Connector(BaseConnector):
             return action_result.get_status(), None
 
         for index, value in enumerate(value_to_search):
-            value_found = 0
+            matching_endpoints = {}
             for endpoint in endpoint_list:
                 data = endpoint.get(search_key_field[index])
-                if isinstance(data, list):
-                    for ip in data:
-                        if ip == value:
-                            value_found = 1
-                            break
-                if value_found or data == value:
-                    computer_ids.append(endpoint.get("uniqueId"))
-                    break
-            else:
+                value_found = value in data if isinstance(data, list) else data == value
+                if value_found and endpoint.get("uniqueId"):
+                    matching_endpoints[endpoint.get("uniqueId")] = endpoint
+
+            if not matching_endpoints:
                 self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
                 return (
                     action_result.set_status(
@@ -467,6 +463,21 @@ class Sep14Connector(BaseConnector):
                     ),
                     None,
                 )
+
+            if len(matching_endpoints) > 1:
+                details = []
+                for unique_id, endpoint in matching_endpoints.items():
+                    domain = endpoint.get("domain", {}).get("name") or endpoint.get("domainName") or "unknown domain"
+                    details.append(f"{unique_id} ({domain})")
+                return (
+                    action_result.set_status(
+                        phantom.APP_ERROR,
+                        f"Multiple endpoints match IP|Hostname {value}: {', '.join(details)}. Re-run with the explicit id parameter",
+                    ),
+                    None,
+                )
+
+            computer_ids.append(next(iter(matching_endpoints)))
 
         return phantom.APP_SUCCESS, computer_ids
 

@@ -7,3 +7,4 @@
 * Rejected oversized command result XML and documents containing DTD or entity declarations.
 * Suppressed authentication response bodies and headers from connector debug data.
 * Reattached fingerprint blocklists to their target groups on retries and no-op hash updates.
+* Failed endpoint resolution when an IP address or hostname matches multiple SEPM records.
