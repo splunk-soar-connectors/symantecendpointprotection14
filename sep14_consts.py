@@ -106,3 +106,4 @@ SEP_INT_ERR_MSG = "Please provide a valid integer value in the {}"
 SEP_LIMIT_KEY = "'limit' action parameter"
 
 SEP_DEFAULT_TIMEOUT = 30
+SEP_STATE_TOKEN_ENCRYPTED = "token_encrypted"

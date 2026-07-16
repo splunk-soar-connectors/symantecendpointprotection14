@@ -21,6 +21,7 @@ import re
 import time
 
 # Phantom imports
+import encryption_helper
 import phantom.app as phantom
 import requests
 import xmltodict
@@ -79,9 +80,24 @@ class Sep14Connector(BaseConnector):
         self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, True)
         self._state = self.load_state()
         if self._state:
-            self._token = self._state.get("token")
+            self._token = self._decrypt_state_token()
 
         return phantom.APP_SUCCESS
+
+    def _decrypt_state_token(self):
+        stored_token = self._state.get("token")
+        if not stored_token:
+            return None
+        if not self._state.get(consts.SEP_STATE_TOKEN_ENCRYPTED):
+            self._state.pop("token", None)
+            return None
+        try:
+            return encryption_helper.decrypt(stored_token, self.get_asset_id())
+        except Exception as e:
+            self.debug_print(f"Unable to decrypt cached SEPM token: {e!s}")
+            self._state.pop("token", None)
+            self._state.pop(consts.SEP_STATE_TOKEN_ENCRYPTED, None)
+            return None
 
     def _get_error_message_from_exception(self, e):
         """This method is used to get appropriate error messages from the exception.
@@ -152,6 +168,7 @@ class Sep14Connector(BaseConnector):
 
         if phantom.is_fail(response_status):
             self._state["token"] = None
+            self._state.pop(consts.SEP_STATE_TOKEN_ENCRYPTED, None)
             return action_result.get_status()
 
         token = response.get("token")
@@ -159,7 +176,14 @@ class Sep14Connector(BaseConnector):
             self.debug_print("Failed to generate token")
             return action_result.set_status(phantom.APP_ERROR, "Failed to generate token")
 
-        self._state["token"] = self._token = token
+        self._token = token
+        try:
+            self._state["token"] = encryption_helper.encrypt(token, self.get_asset_id())
+            self._state[consts.SEP_STATE_TOKEN_ENCRYPTED] = True
+        except Exception as e:
+            self.debug_print(f"Unable to encrypt cached SEPM token: {e!s}")
+            self._state.pop("token", None)
+            self._state.pop(consts.SEP_STATE_TOKEN_ENCRYPTED, None)
 
         return phantom.APP_SUCCESS
 
