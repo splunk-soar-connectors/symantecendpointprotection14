@@ -1,7 +1,7 @@
 # Symantec Endpoint Protection 14
 
 Publisher: Splunk <br>
-Connector Version: 2.1.12 <br>
+Connector Version: 3.0.0 <br>
 Product Vendor: Symantec <br>
 Product Name: Symantec Endpoint Protection 14 <br>
 Minimum Product Version: 5.1.0
