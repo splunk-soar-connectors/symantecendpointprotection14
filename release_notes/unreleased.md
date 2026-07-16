@@ -6,3 +6,4 @@
 * Encrypted cached SEPM bearer tokens before persisting connector state.
 * Rejected oversized command result XML and documents containing DTD or entity declarations.
 * Suppressed authentication response bodies and headers from connector debug data.
+* Reattached fingerprint blocklists to their target groups on retries and no-op hash updates.

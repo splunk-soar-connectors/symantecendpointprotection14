@@ -837,6 +837,7 @@ class Sep14Connector(BaseConnector):
 
         # Getting list of all hashes that are present in fingerprint file
         blocked_hash_list = [hash_value.upper() for hash_value in file_details.get("data", [])]
+        fingerprint_file_id = file_details.get("id")
         # Total number of already blocked hash list
         fingerprint_num_blocked_hash_list = len(blocked_hash_list)
 
@@ -1076,12 +1077,13 @@ class Sep14Connector(BaseConnector):
                 # Getting file ID of fingerprint list
                 fingerprint_file_id = file_resp_data.get("id")
 
-            # Executing REST API call to add fingerprint file as blacklist to provided group
+        if fingerprint_file_id:
+            # Always attach the fingerprint file, including retries where its hashes
+            # were already written but an earlier attachment request failed.
             resp_status, _blacklist_file_resp_data = self._make_rest_call_abstract(
                 consts.SEP_BLOCK_FILE_ENDPOINT.format(group_id=group_id, fingerprint_id=fingerprint_file_id), action_result, method="put"
             )
 
-            # Something went wrong while adding fingerprint file as blacklist
             if phantom.is_fail(resp_status):
                 return action_result.get_status()
 
