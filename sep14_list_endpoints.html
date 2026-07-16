@@ -11,7 +11,7 @@
 {% block widget_content %}
   <!-- Main Start Block -->
   <!-- File: sep14_list_endpoints.html
-  Copyright (c) 2017-2025 Splunk Inc.
+  Copyright (c) 2017-2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -253,7 +253,9 @@ and limitations under the License.
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>{{ current_entry.agentVersion }}</td>
@@ -324,7 +326,9 @@ and limitations under the License.
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>{{ current_entry.lastScanTime }}</td>
@@ -404,7 +408,9 @@ and limitations under the License.
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>
@@ -417,7 +423,9 @@ and limitations under the License.
                                 &nbsp;
                                 <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                               </a>
-                              {% if not forloop.last %}<br />{% endif %}
+                              {% if not forloop.last %}
+                                <br />
+                              {% endif %}
                             {% else %}
                               {{ dns_server }}
                               <br />
@@ -434,7 +442,9 @@ and limitations under the License.
                                 &nbsp;
                                 <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                               </a>
-                              {% if not forloop.last %}<br />{% endif %}
+                              {% if not forloop.last %}
+                                <br />
+                              {% endif %}
                             {% else %}
                               {{ win_server }}
                               <br />
@@ -518,7 +528,9 @@ and limitations under the License.
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>{{ current_entry.operatingSystem }}</td>

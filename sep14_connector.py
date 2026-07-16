@@ -1,6 +1,6 @@
 # File: sep14_connector.py
 #
-# Copyright (c) 2017-2025 Splunk Inc.
+# Copyright (c) 2017-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -838,7 +838,7 @@ class Sep14Connector(BaseConnector):
                 )
 
             # Execute REST API to either delete or update the fingerprint file after unblocking hashes provided
-            response_status, response_data = self._make_rest_call_abstract(
+            response_status, _response_data = self._make_rest_call_abstract(
                 f"{consts.SEP_FINGERPRINTS_ENDPOINT}/{command_id}", action_result, data=fingerprint_api_data, method=method
             )
 
@@ -1047,7 +1047,7 @@ class Sep14Connector(BaseConnector):
                 fingerprint_file_id = file_resp_data.get("id")
 
             # Executing REST API call to add fingerprint file as blacklist to provided group
-            resp_status, blacklist_file_resp_data = self._make_rest_call_abstract(
+            resp_status, _blacklist_file_resp_data = self._make_rest_call_abstract(
                 consts.SEP_BLOCK_FILE_ENDPOINT.format(group_id=group_id, fingerprint_id=fingerprint_file_id), action_result, method="put"
             )
 
