@@ -11,7 +11,7 @@
 {% block widget_content %}
   <!-- Main Start Block -->
   <!-- File: sep14_get_status.html
-  Copyright (c) 2017-2025 Splunk Inc.
+  Copyright (c) 2017-2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ and limitations under the License.
               <tr>
                 <td>
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.param.id }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.param.id|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ result.param.id }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -107,7 +107,7 @@ and limitations under the License.
                 <td>{{ current_entry.lastUpdateTime }}</td>
                 <td>
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ current_entry.computerName }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -115,7 +115,7 @@ and limitations under the License.
                 </td>
                 <td>
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.computerIp }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.computerIp|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ current_entry.computerIp }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -123,7 +123,7 @@ and limitations under the License.
                 </td>
                 <td>
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ current_entry.domainName }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ current_entry.domainName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ current_entry.domainName }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -131,7 +131,7 @@ and limitations under the License.
                 </td>
                 <td>
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.currentLoginUserName }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.currentLoginUserName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ current_entry.currentLoginUserName }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -144,7 +144,7 @@ and limitations under the License.
                 <td>{{ current_entry.resultInXML }}</td>
                 <td>
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['symantec device id'], 'value': '{{ current_entry.computerId }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['symantec device id'], 'value': '{{ current_entry.computerId|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ current_entry.computerId }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -152,7 +152,7 @@ and limitations under the License.
                 </td>
                 <td>
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['md5'], 'value': '{{ current_entry.hardwareKey }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['md5'], 'value': '{{ current_entry.hardwareKey|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ current_entry.hardwareKey }}
                     &nbsp;
                     <span class="fa fa-caret-down" style="font-size: smaller;"></span>

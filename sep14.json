@@ -4,7 +4,7 @@
     "description": "Integrate with Symantec Endpoint Protection 14 to execute investigative, containment, and corrective actions",
     "publisher": "Splunk",
     "package_name": "phantom_sep14",
-    "license": "Copyright (c) 2017-2025 Splunk Inc.",
+    "license": "Copyright (c) 2017-2026 Splunk Inc.",
     "main_module": "sep14_connector.py",
     "type": "endpoint",
     "app_version": "2.1.12",
@@ -31,7 +31,7 @@
             "description": "Verify server certificate",
             "data_type": "boolean",
             "order": 1,
-            "default": false
+            "default": true
         },
         "username": {
             "required": true,
@@ -3160,6 +3160,11 @@
             "verbose": "This action removes all the MD5 hashes provided in <b>hash</b> from a fingerprint file. If all hashes from the fingerprint file are removed, then the fingerprint file will be deleted from SEP.",
             "type": "correct",
             "identifier": "unblock_hash",
+            "lock": {
+                "enabled": true,
+                "data_path": "parameters.group_id",
+                "concurrency": false
+            },
             "read_only": false,
             "parameters": {
                 "group_id": {
@@ -3380,6 +3385,11 @@
             "verbose": "This action creates a fingerprint file on SEP manager for a given <b>group_id</b> and adds all the MD5 hashes provided in <b>hash</b> to the file. This file will be connected in blacklist mode to the System Lockdown setting of the group referred by <b>group_id</b>. Hashes of files having extensions either .exe, .com, .dll or .ocx will be used to block an application from launching on endpoints.<br>In order to add an application to a group in blocked mode, the group must not inherit policies and settings of its parent group.",
             "type": "contain",
             "identifier": "block_hash",
+            "lock": {
+                "enabled": true,
+                "data_path": "parameters.group_id",
+                "concurrency": false
+            },
             "read_only": false,
             "parameters": {
                 "group_id": {

@@ -11,7 +11,7 @@
 {% block widget_content %}
   <!-- Main Start Block -->
   <!-- File: sep14_scan_endpoint.html
-  Copyright (c) 2017-2025 Splunk Inc.
+  Copyright (c) 2017-2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -109,7 +109,7 @@ and limitations under the License.
               <td>IP/Hostname</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['ip', 'host name'], 'value': '{{ result.param.ip_hostname }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['ip', 'host name'], 'value': '{{ result.param.ip_hostname|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.param.ip_hostname }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -122,7 +122,7 @@ and limitations under the License.
               <td>Computer ID</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['symantec device id'], 'value': '{{ result.param.id }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['symantec device id'], 'value': '{{ result.param.id|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.param.id }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -135,7 +135,7 @@ and limitations under the License.
               <td>Scan Type</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['symantec scan type'], 'value': '{{ result.param.type }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['symantec scan type'], 'value': '{{ result.param.type|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.param.type }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -158,7 +158,7 @@ and limitations under the License.
               <td>Command ID</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.command_id }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.command_id|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.summary.command_id }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -183,7 +183,7 @@ and limitations under the License.
               <td>Computer Command ID</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.computer_command_id }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.computer_command_id|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.summary.computer_command_id }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -202,7 +202,7 @@ and limitations under the License.
               <td>Group Command ID</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.group_command_id }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['symantec command id'], 'value': '{{ result.summary.group_command_id|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.summary.group_command_id }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>

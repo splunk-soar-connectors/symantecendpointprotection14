@@ -11,7 +11,7 @@
 {% block widget_content %}
   <!-- Main Start Block -->
   <!-- File: sep14_list_endpoints.html
-  Copyright (c) 2017-2025 Splunk Inc.
+  Copyright (c) 2017-2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -109,7 +109,7 @@ and limitations under the License.
               <td>Hostname</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ result.param.hostname }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ result.param.hostname|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.param.hostname }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -123,7 +123,7 @@ and limitations under the License.
               <td>Administrative Domain</td>
               <td>
                 <a href="javascript:;"
-                   onclick="context_menu(this, [{'contains': ['symantec admin domain'], 'value': '{{ result.param.admin_domain }}' }], 0, {{ container.id }}, null, false);">
+                   onclick="context_menu(this, [{'contains': ['symantec admin domain'], 'value': '{{ result.param.admin_domain|escapejs }}' }], 0, {{ container.id }}, null, false);">
                   {{ result.param.admin_domain }}
                   &nbsp;
                   <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -170,7 +170,7 @@ and limitations under the License.
                       <tr>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.computerName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -179,7 +179,7 @@ and limitations under the License.
                         <td>{{ current_entry.onlineStatus }}</td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.logonUserName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -228,7 +228,7 @@ and limitations under the License.
                       <tr>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.computerName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -237,7 +237,7 @@ and limitations under the License.
                         <td>{{ current_entry.onlineStatus }}</td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.logonUserName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -248,12 +248,14 @@ and limitations under the License.
                             <span class="glyphicon glyphicon-dot"></span>&nbsp;
                             <a class="nowrap"
                                href="javascript:;"
-                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr|escapejs }}' }], 0, {{ container.id }}, null, false);">
                               {{ ip_addr }}
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>{{ current_entry.agentVersion }}</td>
@@ -299,7 +301,7 @@ and limitations under the License.
                       <tr>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.computerName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -308,7 +310,7 @@ and limitations under the License.
                         <td>{{ current_entry.onlineStatus }}</td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.logonUserName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -319,12 +321,14 @@ and limitations under the License.
                             <span class="glyphicon glyphicon-dot"></span>&nbsp;
                             <a class="nowrap"
                                href="javascript:;"
-                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr|escapejs }}' }], 0, {{ container.id }}, null, false);">
                               {{ ip_addr }}
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>{{ current_entry.lastScanTime }}</td>
@@ -371,7 +375,7 @@ and limitations under the License.
                       <tr>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.computerName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -380,7 +384,7 @@ and limitations under the License.
                         <td>{{ current_entry.onlineStatus }}</td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ current_entry.domainOrWorkgroup }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ current_entry.domainOrWorkgroup|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.domainOrWorkgroup }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -388,7 +392,7 @@ and limitations under the License.
                         </td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.logonUserName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -399,12 +403,14 @@ and limitations under the License.
                             <span class="glyphicon glyphicon-dot"></span>&nbsp;
                             <a class="nowrap"
                                href="javascript:;"
-                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr|escapejs }}' }], 0, {{ container.id }}, null, false);">
                               {{ ip_addr }}
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>
@@ -412,12 +418,14 @@ and limitations under the License.
                             <span class="glyphicon glyphicon-dot"></span>&nbsp;
                             {% if dns_server != '...' %}
                               <a href="javascript:;"
-                                 onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ dns_server }}' }], 0, {{ container.id }}, null, false);">
+                                 onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ dns_server|escapejs }}' }], 0, {{ container.id }}, null, false);">
                                 {{ dns_server }}
                                 &nbsp;
                                 <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                               </a>
-                              {% if not forloop.last %}<br />{% endif %}
+                              {% if not forloop.last %}
+                                <br />
+                              {% endif %}
                             {% else %}
                               {{ dns_server }}
                               <br />
@@ -429,12 +437,14 @@ and limitations under the License.
                             <span class="glyphicon glyphicon-dot"></span>&nbsp;
                             {% if win_server != '...' %}
                               <a href="javascript:;"
-                                 onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ win_server }}' }], 0, {{ container.id }}, null, false);">
+                                 onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ win_server|escapejs }}' }], 0, {{ container.id }}, null, false);">
                                 {{ win_server }}
                                 &nbsp;
                                 <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                               </a>
-                              {% if not forloop.last %}<br />{% endif %}
+                              {% if not forloop.last %}
+                                <br />
+                              {% endif %}
                             {% else %}
                               {{ win_server }}
                               <br />
@@ -443,7 +453,7 @@ and limitations under the License.
                         </td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['mac address'], 'value': '{{ current_entry.macAddresses }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['mac address'], 'value': '{{ current_entry.macAddresses|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.macAddresses }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -451,7 +461,7 @@ and limitations under the License.
                         </td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.gateways }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ current_entry.gateways|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.gateways }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -493,7 +503,7 @@ and limitations under the License.
                       <tr>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['host name'], 'value': '{{ current_entry.computerName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.computerName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -502,7 +512,7 @@ and limitations under the License.
                         <td>{{ current_entry.onlineStatus }}</td>
                         <td>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['user name'], 'value': '{{ current_entry.logonUserName|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ current_entry.logonUserName }}
                             &nbsp;
                             <span class="fa fa-caret-down" style="font-size: smaller;"></span>
@@ -513,12 +523,14 @@ and limitations under the License.
                             <span class="glyphicon glyphicon-dot"></span>&nbsp;
                             <a class="nowrap"
                                href="javascript:;"
-                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr }}' }], 0, {{ container.id }}, null, false);">
+                               onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ ip_addr|escapejs }}' }], 0, {{ container.id }}, null, false);">
                               {{ ip_addr }}
                               &nbsp;
                               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                             </a>
-                            {% if not forloop.last %}<br />{% endif %}
+                            {% if not forloop.last %}
+                              <br />
+                            {% endif %}
                           {% endfor %}
                         </td>
                         <td>{{ current_entry.operatingSystem }}</td>

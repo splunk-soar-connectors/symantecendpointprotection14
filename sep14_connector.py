@@ -1,6 +1,6 @@
 # File: sep14_connector.py
 #
-# Copyright (c) 2017-2025 Splunk Inc.
+# Copyright (c) 2017-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import re
 import time
 
 # Phantom imports
+import encryption_helper
 import phantom.app as phantom
 import requests
 import xmltodict
@@ -76,12 +77,27 @@ class Sep14Connector(BaseConnector):
         self._url = config[consts.SEP_CONFIG_URL]
         self._username = config[consts.SEP_CONFIG_USERNAME]
         self._password = config[consts.SEP_CONFIG_PASSWORD]
-        self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, False)
+        self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, True)
         self._state = self.load_state()
         if self._state:
-            self._token = self._state.get("token")
+            self._token = self._decrypt_state_token()
 
         return phantom.APP_SUCCESS
+
+    def _decrypt_state_token(self):
+        stored_token = self._state.get("token")
+        if not stored_token:
+            return None
+        if not self._state.get(consts.SEP_STATE_TOKEN_ENCRYPTED):
+            self._state.pop("token", None)
+            return None
+        try:
+            return encryption_helper.decrypt(stored_token, self.get_asset_id())
+        except Exception as e:
+            self.debug_print(f"Unable to decrypt cached SEPM token: {e!s}")
+            self._state.pop("token", None)
+            self._state.pop(consts.SEP_STATE_TOKEN_ENCRYPTED, None)
+            return None
 
     def _get_error_message_from_exception(self, e):
         """This method is used to get appropriate error messages from the exception.
@@ -147,11 +163,17 @@ class Sep14Connector(BaseConnector):
 
         authorization = {"username": requests.compat.quote(self._username), "password": requests.compat.quote(self._password)}
         response_status, response = self._make_rest_call(
-            consts.SEP_TEST_CONNECTIVITY_ENDPOINT, action_result, data=json.dumps(authorization), timeout=30, method="post"
+            consts.SEP_TEST_CONNECTIVITY_ENDPOINT,
+            action_result,
+            data=json.dumps(authorization),
+            timeout=30,
+            method="post",
+            record_debug_data=False,
         )
 
         if phantom.is_fail(response_status):
             self._state["token"] = None
+            self._state.pop(consts.SEP_STATE_TOKEN_ENCRYPTED, None)
             return action_result.get_status()
 
         token = response.get("token")
@@ -159,7 +181,14 @@ class Sep14Connector(BaseConnector):
             self.debug_print("Failed to generate token")
             return action_result.set_status(phantom.APP_ERROR, "Failed to generate token")
 
-        self._state["token"] = self._token = token
+        self._token = token
+        try:
+            self._state["token"] = encryption_helper.encrypt(token, self.get_asset_id())
+            self._state[consts.SEP_STATE_TOKEN_ENCRYPTED] = True
+        except Exception as e:
+            self.debug_print(f"Unable to encrypt cached SEPM token: {e!s}")
+            self._state.pop("token", None)
+            self._state.pop(consts.SEP_STATE_TOKEN_ENCRYPTED, None)
 
         return phantom.APP_SUCCESS
 
@@ -218,7 +247,7 @@ class Sep14Connector(BaseConnector):
 
         return phantom.APP_SUCCESS, response_data
 
-    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get", timeout=None):
+    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get", timeout=None, record_debug_data=True):
         """Function that makes the REST call to the device. It is a generic function that can be called from various
         action handlers.
         :param endpoint: REST endpoint that needs to appended to the service address
@@ -266,8 +295,9 @@ class Sep14Connector(BaseConnector):
             if hasattr(action_result, "add_debug_data"):
                 if response is not None:
                     action_result.add_debug_data({"r_status_code": response.status_code})
-                    action_result.add_debug_data({"r_text": response.text})
-                    action_result.add_debug_data({"r_headers": response.headers})
+                    if record_debug_data:
+                        action_result.add_debug_data({"r_text": response.text})
+                        action_result.add_debug_data({"r_headers": response.headers})
                 else:
                     action_result.add_debug_data({"r_text": "r is None"})
 
@@ -349,6 +379,8 @@ class Sep14Connector(BaseConnector):
 
         params["pageIndex"] = 1
         params["pageSize"] = 500
+        max_pages = ((limit + params["pageSize"] - 1) // params["pageSize"] + 1) if limit else consts.SEP_MAX_PAGES
+        pages_fetched = 0
 
         while not pagination_completed:
             response_status, response_data = self._make_rest_call_abstract(url, action_result, params=params, method="get")
@@ -358,7 +390,8 @@ class Sep14Connector(BaseConnector):
                 return None
 
             # Adding the fetched items to existing list generated from previous pages
-            items_list.extend(response_data.get("content", []))
+            page_items = response_data.get("content", [])
+            items_list.extend(page_items)
 
             if limit and len(items_list) >= limit:
                 return items_list[:limit]
@@ -367,6 +400,14 @@ class Sep14Connector(BaseConnector):
             # Also, fetch whether its the last page or not.
             params["pageIndex"] = params["pageIndex"] + 1
             pagination_completed = response_data.get("lastPage", False)
+            pages_fetched += 1
+
+            if not pagination_completed and not page_items:
+                action_result.set_status(phantom.APP_ERROR, consts.SEP_PAGINATION_NO_PROGRESS)
+                return None
+            if not pagination_completed and pages_fetched >= max_pages:
+                action_result.set_status(phantom.APP_ERROR, consts.SEP_PAGINATION_LIMIT.format(pages=pages_fetched))
+                return None
 
         return items_list
 
@@ -417,18 +458,14 @@ class Sep14Connector(BaseConnector):
             return action_result.get_status(), None
 
         for index, value in enumerate(value_to_search):
-            value_found = 0
+            matching_endpoints = {}
             for endpoint in endpoint_list:
                 data = endpoint.get(search_key_field[index])
-                if isinstance(data, list):
-                    for ip in data:
-                        if ip == value:
-                            value_found = 1
-                            break
-                if value_found or data == value:
-                    computer_ids.append(endpoint.get("uniqueId"))
-                    break
-            else:
+                value_found = value in data if isinstance(data, list) else data == value
+                if value_found and endpoint.get("uniqueId"):
+                    matching_endpoints[endpoint.get("uniqueId")] = endpoint
+
+            if not matching_endpoints:
                 self.debug_print(consts.SEP_DEVICE_NOT_FOUND)
                 return (
                     action_result.set_status(
@@ -437,6 +474,21 @@ class Sep14Connector(BaseConnector):
                     ),
                     None,
                 )
+
+            if len(matching_endpoints) > 1:
+                details = []
+                for unique_id, endpoint in matching_endpoints.items():
+                    domain = endpoint.get("domain", {}).get("name") or endpoint.get("domainName") or "unknown domain"
+                    details.append(f"{unique_id} ({domain})")
+                return (
+                    action_result.set_status(
+                        phantom.APP_ERROR,
+                        f"Multiple endpoints match IP|Hostname {value}: {', '.join(details)}. Re-run with the explicit id parameter",
+                    ),
+                    None,
+                )
+
+            computer_ids.append(next(iter(matching_endpoints)))
 
         return phantom.APP_SUCCESS, computer_ids
 
@@ -754,7 +806,7 @@ class Sep14Connector(BaseConnector):
 
         summary_data["state_id_status"] = state_id_status
 
-        action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _unblock_hash(self, param):
         """This function is used to unblock existing hashes for a group.
@@ -807,6 +859,7 @@ class Sep14Connector(BaseConnector):
 
         # Getting list of all hashes that are present in fingerprint file
         blocked_hash_list = [hash_value.upper() for hash_value in file_details.get("data", [])]
+        fingerprint_file_id = file_details.get("id")
         # Total number of already blocked hash list
         fingerprint_num_blocked_hash_list = len(blocked_hash_list)
 
@@ -838,7 +891,7 @@ class Sep14Connector(BaseConnector):
                 )
 
             # Execute REST API to either delete or update the fingerprint file after unblocking hashes provided
-            response_status, response_data = self._make_rest_call_abstract(
+            response_status, _response_data = self._make_rest_call_abstract(
                 f"{consts.SEP_FINGERPRINTS_ENDPOINT}/{command_id}", action_result, data=fingerprint_api_data, method=method
             )
 
@@ -948,7 +1001,7 @@ class Sep14Connector(BaseConnector):
 
         summary_data["state_id_status"] = state_id_status
 
-        action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _block_hash(self, param):
         """Function to block file based on given hash values.
@@ -1046,12 +1099,13 @@ class Sep14Connector(BaseConnector):
                 # Getting file ID of fingerprint list
                 fingerprint_file_id = file_resp_data.get("id")
 
-            # Executing REST API call to add fingerprint file as blacklist to provided group
-            resp_status, blacklist_file_resp_data = self._make_rest_call_abstract(
+        if fingerprint_file_id:
+            # Always attach the fingerprint file, including retries where its hashes
+            # were already written but an earlier attachment request failed.
+            resp_status, _blacklist_file_resp_data = self._make_rest_call_abstract(
                 consts.SEP_BLOCK_FILE_ENDPOINT.format(group_id=group_id, fingerprint_id=fingerprint_file_id), action_result, method="put"
             )
 
-            # Something went wrong while adding fingerprint file as blacklist
             if phantom.is_fail(resp_status):
                 return action_result.get_status()
 
@@ -1143,9 +1197,10 @@ class Sep14Connector(BaseConnector):
 
         timeout = int(timeout)
         poll_seconds = 10
-        state_ids = list()
-        completion_state_ids = [3, 4, 5, 6]
+        completion_state_ids = {3, 4, 5, 6}
+        failure_state_ids = {4, 5, 6}
         state_id = response_data = None
+        final_content = []
 
         while timeout > 0:
             if timeout > poll_seconds:
@@ -1156,9 +1211,10 @@ class Sep14Connector(BaseConnector):
 
             time.sleep(poll_seconds)
             params = {"pageIndex": 1}
+            state_ids = []
+            poll_content = []
 
             while True:
-                state_ids = list()
                 response_status, response_data = self._make_rest_call_abstract(
                     f"{consts.SEP_GET_STATUS_ENDPOINT}/{command_id}", action_result, params=params
                 )
@@ -1167,6 +1223,7 @@ class Sep14Connector(BaseConnector):
                     return action_result.get_status(), None
 
                 for content in response_data.get("content"):
+                    poll_content.append(content)
                     state_id = content.get("stateId")
                     sub_state_id = content.get("subStateId")
                     self.send_progress(
@@ -1184,23 +1241,40 @@ class Sep14Connector(BaseConnector):
 
                 params["pageIndex"] += 1
 
-            # All computers have one of the completion state ids
-            if set(state_ids) < (set(completion_state_ids)):
+            final_content = poll_content
+            if state_ids and set(state_ids) <= completion_state_ids:
                 timeout = 0
 
-        if not response_data or not response_data.get("content"):
+        if not final_content:
             return (
                 action_result.set_status(phantom.APP_ERROR, f"Error while fetching the status of command id: {command_id}"),
                 None,
             )
 
-        for content in response_data.get("content"):
+        for content in final_content:
             if content.get("resultInXML"):
-                content.update(xmltodict.parse(content.get("resultInXML")))
+                result_xml = content.get("resultInXML")
+                if len(result_xml.encode("utf-8")) > consts.SEP_MAX_RESULT_XML_BYTES:
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_RESULT_XML_TOO_LARGE), None
+                upper_xml = result_xml.upper()
+                if "<!DOCTYPE" in upper_xml or "<!ENTITY" in upper_xml:
+                    return action_result.set_status(phantom.APP_ERROR, consts.SEP_RESULT_XML_DTD_REJECTED), None
+                content.update(xmltodict.parse(result_xml))
                 content.pop("resultInXML")
             action_result.add_data(content)
 
-        return action_result.set_status(phantom.APP_SUCCESS), COMMAND_STATE_DESC.get(str(state_id), "NA")
+        failed_states = [state for state in state_ids if state in failure_state_ids]
+        pending_states = [state for state in state_ids if state not in completion_state_ids]
+        if failed_states:
+            state_status = ", ".join(dict.fromkeys(COMMAND_STATE_DESC.get(str(state), "NA") for state in failed_states))
+            return action_result.set_status(phantom.APP_ERROR, f"Command {command_id} ended in state: {state_status}"), state_status
+        if pending_states:
+            state_status = ", ".join(dict.fromkeys(COMMAND_STATE_DESC.get(str(state), "NA") for state in pending_states))
+            return action_result.set_status(
+                phantom.APP_ERROR, f"Timed out waiting for command {command_id}; state: {state_status}"
+            ), state_status
+
+        return action_result.set_status(phantom.APP_SUCCESS), COMMAND_STATE_DESC["3"]
 
     def _scan_endpoint(self, param):
         """Function to scan an endpoint.
@@ -1216,6 +1290,8 @@ class Sep14Connector(BaseConnector):
         computer_id = param.get(consts.SEP_PARAM_COMPUTER_ID)
         ip_hostname = param.get(consts.SEP_PARAM_IP_HOSTNAME)
         scan_type = param.get(consts.SEP_PARAM_SCAN_TYPE, "QUICK_SCAN")
+        if scan_type not in consts.SEP_ENDPOINT_SCAN_TYPES:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_SCAN_TYPE)
 
         search_key_field = list()
         computer_ids_list = list()
@@ -1317,6 +1393,8 @@ class Sep14Connector(BaseConnector):
         computer_id = param.get("computer_id")
         group_id = param.get("group_id")
         scan_type = param.get(consts.SEP_PARAM_SCAN_TYPE, "fullscan")
+        if scan_type not in consts.SEP_FULL_SCAN_TYPES:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_SCAN_TYPE)
         self.debug_print(f"computer_id: {computer_id}")
 
         computer_ids_list = list()

@@ -11,7 +11,7 @@
 {% block widget_content %}
   <!-- Main Start Block -->
   <!-- File: sep14_display_hash_results.html
-  Copyright (c) 2017-2025 Splunk Inc.
+  Copyright (c) 2017-2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -95,7 +95,7 @@ and limitations under the License.
           </td>
           <td>
             <a href="javascript:;"
-               onclick="context_menu(this, [{'contains': ['symantec group id'], 'value': '{{ result.param.group_id }}' }], 0, {{ container.id }}, null, false);">
+               onclick="context_menu(this, [{'contains': ['symantec group id'], 'value': '{{ result.param.group_id|escapejs }}' }], 0, {{ container.id }}, null, false);">
               {{ result.param.group_id }}
               &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
             </a>
@@ -145,7 +145,7 @@ and limitations under the License.
                       <ul>
                         <li>
                           <a href="javascript:;"
-                             onclick="context_menu(this, [{'contains': ['symantec group id'], 'value': '{{ group_id }}' }], 0, {{ container.id }}, null, false);">
+                             onclick="context_menu(this, [{'contains': ['symantec group id'], 'value': '{{ group_id|escapejs }}' }], 0, {{ container.id }}, null, false);">
                             {{ group_id }}
                             &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
                           </a>
@@ -172,7 +172,7 @@ and limitations under the License.
                     <ul>
                       <li>
                         <a href="javascript:;"
-                           onclick="context_menu(this, [{'contains': ['md5'], 'value': '{{ hash }}' }], 0, {{ container.id }}, null, false);">
+                           onclick="context_menu(this, [{'contains': ['md5'], 'value': '{{ hash|escapejs }}' }], 0, {{ container.id }}, null, false);">
                           {{ hash }}
                           &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
                         </a>
@@ -204,7 +204,7 @@ and limitations under the License.
                   <tr>
                     <td>
                       <a href="javascript:;"
-                         onclick="context_menu(this, [{'contains': ['md5'], 'value': '{{ curr_hash.parameter.hash }}' }], 0, {{ container.id }}, null, false);">
+                         onclick="context_menu(this, [{'contains': ['md5'], 'value': '{{ curr_hash.parameter.hash|escapejs }}' }], 0, {{ container.id }}, null, false);">
                         {{ curr_hash.parameter.hash }}
                         &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
                       </a>

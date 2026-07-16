@@ -1,6 +1,6 @@
 # File: sep14_consts.py
 #
-# Copyright (c) 2017-2025 Splunk Inc.
+# Copyright (c) 2017-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -87,6 +87,9 @@ SEP_INVALID_DOMAIN = "Invalid Domain"
 SEP_INVALID_HASH = "Invalid Hash"
 SEP_INVALID_HOSTNAME = "Hostname could not be found"
 SEP_PARAM_SCAN_TYPE = "type"
+SEP_ENDPOINT_SCAN_TYPES = {"QUICK_SCAN", "FULL_SCAN"}
+SEP_FULL_SCAN_TYPES = {"activescan", "fullscan"}
+SEP_INVALID_SCAN_TYPE = "Invalid scan type"
 SEP_VALIDATE_VERSION_FAILED = "Product version validation failed."
 SEP_JSON_VERSION = "version"
 SEP_UNABLE_TO_GET_VERSION = "Unable to get version from the device"
@@ -103,3 +106,10 @@ SEP_INT_ERR_MSG = "Please provide a valid integer value in the {}"
 SEP_LIMIT_KEY = "'limit' action parameter"
 
 SEP_DEFAULT_TIMEOUT = 30
+SEP_STATE_TOKEN_ENCRYPTED = "token_encrypted"
+SEP_MAX_RESULT_XML_BYTES = 1_048_576
+SEP_RESULT_XML_TOO_LARGE = "Command result XML exceeds the 1 MiB parsing limit"
+SEP_RESULT_XML_DTD_REJECTED = "Command result XML must not contain DTD or entity declarations"
+SEP_MAX_PAGES = 100
+SEP_PAGINATION_NO_PROGRESS = "SEPM pagination returned no new items without marking the final page"
+SEP_PAGINATION_LIMIT = "SEPM pagination exceeded the {pages}-page safety limit"
