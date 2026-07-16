@@ -10,3 +10,4 @@
 * Failed endpoint resolution when an IP address or hostname matches multiple SEPM records.
 * Bounded SEPM pagination and stopped responses that make no forward progress.
 * Serialized block and unblock hash updates that target the same SEPM group.
+* Reported rejected, canceled, errored, and timed-out SEPM commands as action failures.

@@ -806,7 +806,7 @@ class Sep14Connector(BaseConnector):
 
         summary_data["state_id_status"] = state_id_status
 
-        action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _unblock_hash(self, param):
         """This function is used to unblock existing hashes for a group.
@@ -1001,7 +1001,7 @@ class Sep14Connector(BaseConnector):
 
         summary_data["state_id_status"] = state_id_status
 
-        action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _block_hash(self, param):
         """Function to block file based on given hash values.
@@ -1197,9 +1197,10 @@ class Sep14Connector(BaseConnector):
 
         timeout = int(timeout)
         poll_seconds = 10
-        state_ids = list()
-        completion_state_ids = [3, 4, 5, 6]
+        completion_state_ids = {3, 4, 5, 6}
+        failure_state_ids = {4, 5, 6}
         state_id = response_data = None
+        final_content = []
 
         while timeout > 0:
             if timeout > poll_seconds:
@@ -1210,9 +1211,10 @@ class Sep14Connector(BaseConnector):
 
             time.sleep(poll_seconds)
             params = {"pageIndex": 1}
+            state_ids = []
+            poll_content = []
 
             while True:
-                state_ids = list()
                 response_status, response_data = self._make_rest_call_abstract(
                     f"{consts.SEP_GET_STATUS_ENDPOINT}/{command_id}", action_result, params=params
                 )
@@ -1221,6 +1223,7 @@ class Sep14Connector(BaseConnector):
                     return action_result.get_status(), None
 
                 for content in response_data.get("content"):
+                    poll_content.append(content)
                     state_id = content.get("stateId")
                     sub_state_id = content.get("subStateId")
                     self.send_progress(
@@ -1238,17 +1241,17 @@ class Sep14Connector(BaseConnector):
 
                 params["pageIndex"] += 1
 
-            # All computers have one of the completion state ids
-            if set(state_ids) < (set(completion_state_ids)):
+            final_content = poll_content
+            if state_ids and set(state_ids) <= completion_state_ids:
                 timeout = 0
 
-        if not response_data or not response_data.get("content"):
+        if not final_content:
             return (
                 action_result.set_status(phantom.APP_ERROR, f"Error while fetching the status of command id: {command_id}"),
                 None,
             )
 
-        for content in response_data.get("content"):
+        for content in final_content:
             if content.get("resultInXML"):
                 result_xml = content.get("resultInXML")
                 if len(result_xml.encode("utf-8")) > consts.SEP_MAX_RESULT_XML_BYTES:
@@ -1260,7 +1263,18 @@ class Sep14Connector(BaseConnector):
                 content.pop("resultInXML")
             action_result.add_data(content)
 
-        return action_result.set_status(phantom.APP_SUCCESS), COMMAND_STATE_DESC.get(str(state_id), "NA")
+        failed_states = [state for state in state_ids if state in failure_state_ids]
+        pending_states = [state for state in state_ids if state not in completion_state_ids]
+        if failed_states:
+            state_status = ", ".join(dict.fromkeys(COMMAND_STATE_DESC.get(str(state), "NA") for state in failed_states))
+            return action_result.set_status(phantom.APP_ERROR, f"Command {command_id} ended in state: {state_status}"), state_status
+        if pending_states:
+            state_status = ", ".join(dict.fromkeys(COMMAND_STATE_DESC.get(str(state), "NA") for state in pending_states))
+            return action_result.set_status(
+                phantom.APP_ERROR, f"Timed out waiting for command {command_id}; state: {state_status}"
+            ), state_status
+
+        return action_result.set_status(phantom.APP_SUCCESS), COMMAND_STATE_DESC["3"]
 
     def _scan_endpoint(self, param):
         """Function to scan an endpoint.
