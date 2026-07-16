@@ -379,6 +379,8 @@ class Sep14Connector(BaseConnector):
 
         params["pageIndex"] = 1
         params["pageSize"] = 500
+        max_pages = ((limit + params["pageSize"] - 1) // params["pageSize"] + 1) if limit else consts.SEP_MAX_PAGES
+        pages_fetched = 0
 
         while not pagination_completed:
             response_status, response_data = self._make_rest_call_abstract(url, action_result, params=params, method="get")
@@ -388,7 +390,8 @@ class Sep14Connector(BaseConnector):
                 return None
 
             # Adding the fetched items to existing list generated from previous pages
-            items_list.extend(response_data.get("content", []))
+            page_items = response_data.get("content", [])
+            items_list.extend(page_items)
 
             if limit and len(items_list) >= limit:
                 return items_list[:limit]
@@ -397,6 +400,14 @@ class Sep14Connector(BaseConnector):
             # Also, fetch whether its the last page or not.
             params["pageIndex"] = params["pageIndex"] + 1
             pagination_completed = response_data.get("lastPage", False)
+            pages_fetched += 1
+
+            if not pagination_completed and not page_items:
+                action_result.set_status(phantom.APP_ERROR, consts.SEP_PAGINATION_NO_PROGRESS)
+                return None
+            if not pagination_completed and pages_fetched >= max_pages:
+                action_result.set_status(phantom.APP_ERROR, consts.SEP_PAGINATION_LIMIT.format(pages=pages_fetched))
+                return None
 
         return items_list
 

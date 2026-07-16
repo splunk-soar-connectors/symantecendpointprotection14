@@ -110,3 +110,6 @@ SEP_STATE_TOKEN_ENCRYPTED = "token_encrypted"
 SEP_MAX_RESULT_XML_BYTES = 1_048_576
 SEP_RESULT_XML_TOO_LARGE = "Command result XML exceeds the 1 MiB parsing limit"
 SEP_RESULT_XML_DTD_REJECTED = "Command result XML must not contain DTD or entity declarations"
+SEP_MAX_PAGES = 100
+SEP_PAGINATION_NO_PROGRESS = "SEPM pagination returned no new items without marking the final page"
+SEP_PAGINATION_LIMIT = "SEPM pagination exceeded the {pages}-page safety limit"
