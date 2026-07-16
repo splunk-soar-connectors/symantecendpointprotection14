@@ -163,7 +163,12 @@ class Sep14Connector(BaseConnector):
 
         authorization = {"username": requests.compat.quote(self._username), "password": requests.compat.quote(self._password)}
         response_status, response = self._make_rest_call(
-            consts.SEP_TEST_CONNECTIVITY_ENDPOINT, action_result, data=json.dumps(authorization), timeout=30, method="post"
+            consts.SEP_TEST_CONNECTIVITY_ENDPOINT,
+            action_result,
+            data=json.dumps(authorization),
+            timeout=30,
+            method="post",
+            record_debug_data=False,
         )
 
         if phantom.is_fail(response_status):
@@ -242,7 +247,7 @@ class Sep14Connector(BaseConnector):
 
         return phantom.APP_SUCCESS, response_data
 
-    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get", timeout=None):
+    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get", timeout=None, record_debug_data=True):
         """Function that makes the REST call to the device. It is a generic function that can be called from various
         action handlers.
         :param endpoint: REST endpoint that needs to appended to the service address
@@ -290,8 +295,9 @@ class Sep14Connector(BaseConnector):
             if hasattr(action_result, "add_debug_data"):
                 if response is not None:
                     action_result.add_debug_data({"r_status_code": response.status_code})
-                    action_result.add_debug_data({"r_text": response.text})
-                    action_result.add_debug_data({"r_headers": response.headers})
+                    if record_debug_data:
+                        action_result.add_debug_data({"r_text": response.text})
+                        action_result.add_debug_data({"r_headers": response.headers})
                 else:
                     action_result.add_debug_data({"r_text": "r is None"})
 
