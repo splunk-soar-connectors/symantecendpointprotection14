@@ -76,7 +76,7 @@ class Sep14Connector(BaseConnector):
         self._url = config[consts.SEP_CONFIG_URL]
         self._username = config[consts.SEP_CONFIG_USERNAME]
         self._password = config[consts.SEP_CONFIG_PASSWORD]
-        self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, False)
+        self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, True)
         self._state = self.load_state()
         if self._state:
             self._token = self._state.get("token")
