@@ -688,7 +688,9 @@ class Sep14Connector(BaseConnector):
         endpoint_status_details = list()
         command_id = param["id"]
 
-        status_data = self._fetch_items_paginated(f"{consts.SEP_GET_STATUS_ENDPOINT}/{requests.compat.quote(command_id)}", action_result)
+        status_data = self._fetch_items_paginated(
+            f"{consts.SEP_GET_STATUS_ENDPOINT}/{requests.compat.quote(command_id, safe='')}", action_result
+        )
         if status_data is None:
             return action_result.get_status()
 
