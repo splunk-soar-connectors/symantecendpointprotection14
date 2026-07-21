@@ -1,3 +1,1 @@
 **Unreleased**
-
-* Encode SEPM command identifiers before placing them in get-status request paths. [PSAAS-32518]
