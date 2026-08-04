@@ -80,6 +80,12 @@ class Sep14Connector(BaseConnector):
         self._password = config[consts.SEP_CONFIG_PASSWORD]
         self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, True)
         self._state = self.load_state() or {}
+        credential_url = self._url.rstrip("/")
+        bound_credential_url = self._state.get(consts.SEP_STATE_CREDENTIAL_URL)
+        if bound_credential_url and bound_credential_url != credential_url:
+            self.save_progress(consts.SEP_CREDENTIAL_URL_CHANGED)
+            return phantom.APP_ERROR
+        self._state[consts.SEP_STATE_CREDENTIAL_URL] = credential_url
         if self._state:
             self._token = self._decrypt_state_token()
 

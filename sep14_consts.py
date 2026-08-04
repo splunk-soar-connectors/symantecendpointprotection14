@@ -97,6 +97,10 @@ SEP_JSON_VERSION = "version"
 SEP_UNABLE_TO_GET_VERSION = "Unable to get version from the device"
 SEP_VERSION_VALIDATED = "Version validation done"
 SEP_COMMAND_ID_ERR = "Failed to poll commandID. Details: {}"
+SEP_CREDENTIAL_URL_CHANGED = (
+    "The SEPM server URL changed after credentials were bound to the asset. "
+    "Review the new endpoint, reset connector state, and re-enter the credentials before retrying."
+)
 SEP_UNQUARANTINE_NOT_OWNED = (
     "Refusing to unquarantine endpoint(s) {ids} because this asset has no record of quarantining them. "
     "Re-run with force=true to release containment established elsewhere."
@@ -112,6 +116,7 @@ SEP_INT_ERR_MSG = "Please provide a valid integer value in the {}"
 SEP_LIMIT_KEY = "'limit' action parameter"
 
 SEP_DEFAULT_TIMEOUT = 30
+SEP_STATE_CREDENTIAL_URL = "credential_url"
 SEP_STATE_QUARANTINED_IDS = "quarantined_computer_ids"
 SEP_STATE_TOKEN_ENCRYPTED = "token_encrypted"
 SEP_MAX_RESULT_XML_BYTES = 1_048_576
