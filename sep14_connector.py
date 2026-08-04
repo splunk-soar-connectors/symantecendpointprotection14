@@ -199,7 +199,9 @@ class Sep14Connector(BaseConnector):
 
         return phantom.APP_SUCCESS
 
-    def _make_rest_call_abstract(self, endpoint, action_result, headers=None, data=None, params=None, method="get", timeout=None):
+    def _make_rest_call_abstract(
+        self, endpoint, action_result, headers=None, data=None, params=None, method="get", timeout=consts.SEP_DEFAULT_TIMEOUT
+    ):
         """This method generates a new token if it is not available or if the existing token has expired
         and makes the call using _make_rest_call method.
 
@@ -241,10 +243,10 @@ class Sep14Connector(BaseConnector):
             if phantom.is_fail(ret_code):
                 return action_result.get_status(), response_data
 
-            headers = {"Authorization": f"Bearer {self._token}"}
+            headers["Authorization"] = f"Bearer {self._token}"
 
             rest_ret_code, response_data = self._make_rest_call(
-                endpoint, intermediate_action_result, headers=headers, params=params, data=data, method=method
+                endpoint, intermediate_action_result, headers=headers, params=params, data=data, method=method, timeout=timeout
             )
 
         # Assigning intermediate action_result to action_result, since no further invocation required
@@ -254,7 +256,17 @@ class Sep14Connector(BaseConnector):
 
         return phantom.APP_SUCCESS, response_data
 
-    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get", timeout=None, record_debug_data=True):
+    def _make_rest_call(
+        self,
+        endpoint,
+        action_result,
+        headers=None,
+        params=None,
+        data=None,
+        method="get",
+        timeout=consts.SEP_DEFAULT_TIMEOUT,
+        record_debug_data=True,
+    ):
         """Function that makes the REST call to the device. It is a generic function that can be called from various
         action handlers.
         :param endpoint: REST endpoint that needs to appended to the service address

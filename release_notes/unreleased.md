@@ -6,3 +6,4 @@
 * Scopes managed fingerprint blocklists to the local SOAR installation.
 * Requires local quarantine provenance or an explicit override before unquarantining endpoints.
 * Binds stored SEPM credentials to the asset server URL until connector state is reset.
+* Applies a 30-second default timeout to SEPM requests and authentication retries.
