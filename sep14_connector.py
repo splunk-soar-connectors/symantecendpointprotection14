@@ -461,7 +461,16 @@ class Sep14Connector(BaseConnector):
             matching_endpoints = {}
             for endpoint in endpoint_list:
                 data = endpoint.get(search_key_field[index])
-                value_found = value in data if isinstance(data, list) else data == value
+                if isinstance(data, list):
+                    value_found = value in data
+                elif search_key_field[index] == "computerName" and isinstance(data, str):
+                    endpoint_hostname = data.rstrip(".").casefold()
+                    requested_hostname = value.rstrip(".").casefold()
+                    value_found = (
+                        endpoint_hostname == requested_hostname or endpoint_hostname.split(".", 1)[0] == requested_hostname.split(".", 1)[0]
+                    )
+                else:
+                    value_found = data == value
                 if value_found and endpoint.get("uniqueId"):
                     matching_endpoints[endpoint.get("uniqueId")] = endpoint
 
