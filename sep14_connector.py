@@ -549,6 +549,10 @@ class Sep14Connector(BaseConnector):
 
         # Something went wrong while getting details of fingerprint file
         if phantom.is_fail(resp_status):
+            if not isinstance(file_details, dict):
+                self.debug_print(consts.SEP_BLOCK_HASH_GET_DETAILS_ERR.format(name=fingerprint_filename))
+                return action_result.get_status(), None
+
             # If fingerprint file is not present, its not an error condition. It indicates that no files are blocked.
             if str(file_details.get("errorCode")) != "410" and not str(file_details.get("errorMessage")).__contains__("do not exist"):
                 self.debug_print(consts.SEP_BLOCK_HASH_GET_DETAILS_ERR.format(name=fingerprint_filename))
