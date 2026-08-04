@@ -16,6 +16,7 @@
 #
 # Standard library imports
 import datetime
+import hashlib
 import json
 import re
 import time
@@ -534,6 +535,21 @@ class Sep14Connector(BaseConnector):
 
         return None
 
+    def _get_fingerprint_filename(self, action_result, group_id):
+        try:
+            installation_id = self.get_product_installation_id()
+        except Exception as e:
+            self.debug_print(consts.SEP_INSTALLATION_ID_ERR, self._get_error_message_from_exception(e))
+            action_result.set_status(phantom.APP_ERROR, consts.SEP_INSTALLATION_ID_ERR)
+            return None
+
+        if not installation_id:
+            action_result.set_status(phantom.APP_ERROR, consts.SEP_INSTALLATION_ID_ERR)
+            return None
+
+        installation_scope = hashlib.sha256(str(installation_id).encode("utf-8")).hexdigest()[:16]
+        return f"phantom_{installation_scope}_{group_id}"
+
     def _get_fingerprint_file_info(self, action_result, fingerprint_filename):
         """Helper function to get fingerprint file information based on file name.
 
@@ -863,7 +879,9 @@ class Sep14Connector(BaseConnector):
             self.debug_print(consts.SEP_INVALID_HASH)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HASH)
 
-        fingerprint_filename = f"phantom_{group_id}"
+        fingerprint_filename = self._get_fingerprint_filename(action_result, group_id)
+        if not fingerprint_filename:
+            return action_result.get_status()
 
         # Getting fingerprint file information
         resp_status, file_details = self._get_fingerprint_file_info(action_result, fingerprint_filename)
@@ -899,7 +917,7 @@ class Sep14Connector(BaseConnector):
                 fingerprint_api_data = json.dumps(
                     {
                         "hashType": "MD5",
-                        "name": f"phantom_{group_id}",
+                        "name": fingerprint_filename,
                         "domainId": domain_id,
                         "data": updated_block_hash_list,
                     }
@@ -1039,7 +1057,9 @@ class Sep14Connector(BaseConnector):
             self.debug_print(consts.SEP_INVALID_HASH)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HASH)
 
-        fingerprint_filename = f"phantom_{group_id}"
+        fingerprint_filename = self._get_fingerprint_filename(action_result, group_id)
+        if not fingerprint_filename:
+            return action_result.get_status()
         fingerprint_file_desc = f"List of applications that are blocked in group having ID {group_id}"
 
         # Getting list of groups to get domain ID of the group ID provided
