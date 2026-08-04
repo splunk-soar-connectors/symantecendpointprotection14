@@ -519,6 +519,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **id** | optional | Comma(,) separated Computer IDs of the endpoints to unquarantine | string | `symantec device id` |
 **ip_hostname** | optional | Comma(,) separated Hostname/IP of the endpoints to unquarantine | string | `ip` `host name` |
 **timeout** | optional | Timeout (Default: 30 seconds) | numeric | |
+**force** | optional | Unquarantine even when this asset did not apply the quarantine (Default: false) | boolean | |
 
 #### Action Output
 
@@ -528,6 +529,7 @@ action_result.status | string | | success failed |
 action_result.parameter.id | string | `symantec device id` | 4B568FBB0A0001166741799D38F8597B |
 action_result.parameter.ip_hostname | string | `ip` `host name` | 122.122.122.122 admin-PC |
 action_result.parameter.timeout | numeric | | 30 |
+action_result.parameter.force | boolean | | |
 action_result.data.\*.beginTime | string | | |
 action_result.data.\*.binaryFileId | string | | |
 action_result.data.\*.computerId | string | `md5` | 589C13110A0110421B622CD50C73B648 |

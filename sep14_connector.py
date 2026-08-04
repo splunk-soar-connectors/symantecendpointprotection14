@@ -79,7 +79,7 @@ class Sep14Connector(BaseConnector):
         self._username = config[consts.SEP_CONFIG_USERNAME]
         self._password = config[consts.SEP_CONFIG_PASSWORD]
         self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, True)
-        self._state = self.load_state()
+        self._state = self.load_state() or {}
         if self._state:
             self._token = self._decrypt_state_token()
 
@@ -835,6 +835,9 @@ class Sep14Connector(BaseConnector):
         if phantom.is_fail(command_status):
             return action_result.get_status()
 
+        quarantined_ids = set(self._state.get(consts.SEP_STATE_QUARANTINED_IDS, []))
+        quarantined_ids.update(computer_ids_list)
+        self._state[consts.SEP_STATE_QUARANTINED_IDS] = sorted(quarantined_ids)
         summary_data["state_id_status"] = state_id_status
 
         return action_result.set_status(phantom.APP_SUCCESS)
@@ -1003,6 +1006,11 @@ class Sep14Connector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_NO_DEVICE_FOUND)
 
         computer_id = ",".join(list(set(computer_ids_list)))
+        force = param.get(consts.SEP_PARAM_FORCE, False)
+        quarantined_ids = set(self._state.get(consts.SEP_STATE_QUARANTINED_IDS, []))
+        foreign_ids = sorted(set(computer_ids_list) - quarantined_ids)
+        if foreign_ids and not force:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_UNQUARANTINE_NOT_OWNED.format(ids=", ".join(foreign_ids)))
 
         # Executing API to quarantine specified endpoint
         response_status, response_data = self._make_rest_call_abstract(
@@ -1032,6 +1040,11 @@ class Sep14Connector(BaseConnector):
         if phantom.is_fail(command_status):
             return action_result.get_status()
 
+        remaining_ids = quarantined_ids - set(computer_ids_list)
+        if remaining_ids:
+            self._state[consts.SEP_STATE_QUARANTINED_IDS] = sorted(remaining_ids)
+        else:
+            self._state.pop(consts.SEP_STATE_QUARANTINED_IDS, None)
         summary_data["state_id_status"] = state_id_status
 
         return action_result.set_status(phantom.APP_SUCCESS)
