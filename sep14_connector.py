@@ -1237,8 +1237,9 @@ class Sep14Connector(BaseConnector):
                 if phantom.is_fail(response_status):
                     return action_result.get_status(), None
 
-                for content in response_data.get("content"):
-                    poll_content.append(content)
+                page_content = response_data.get("content") or []
+                poll_content.extend(page_content)
+                for content in page_content:
                     state_id = content.get("stateId")
                     sub_state_id = content.get("subStateId")
                     self.send_progress(
