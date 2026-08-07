@@ -2751,6 +2751,12 @@
                     "data_type": "numeric",
                     "order": 2,
                     "default": 30
+                },
+                "force": {
+                    "description": "Unquarantine even when this asset did not apply the quarantine (Default: false)",
+                    "data_type": "boolean",
+                    "order": 3,
+                    "default": false
                 }
             },
             "render": {
@@ -2797,6 +2803,10 @@
                     "example_values": [
                         30
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.force",
+                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.data.*.beginTime",

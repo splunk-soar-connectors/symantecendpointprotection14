@@ -68,6 +68,7 @@ SEP_DEVICE_NOT_FOUND = "Device not found"
 SEP_NO_DEVICE_FOUND = "No device found for the provided computer IDs or IP|Hostnames"
 SEP_BLOCK_HASH_GET_DETAILS_ERR = "Error while getting details of fingerprint file with name: {name}"
 SEP_BLOCK_HASH_GET_ID_ERR = "Error while getting ID of fingerprint file"
+SEP_INSTALLATION_ID_ERR = "Unable to determine the SOAR installation ID for the fingerprint file"
 SEL_BLACKLIST_GROUP_ID_NOT_FOUND = "Group ID provided is not found. Please enter a valid group ID"
 SEP_HASH_FAILED_VALIDATION = "Parameter {param} failed validation"
 SEP_HASH_ADDED_TO_FILE = "Hash added to the fingerprint file"
@@ -82,6 +83,7 @@ SEP_PARAM_HOSTNAME = "hostname"
 SEP_PARAM_DOMAIN = "admin_domain"
 SEP_PARAM_LIMIT = "limit"
 SEP_PARAM_TIMEOUT = "timeout"
+SEP_PARAM_FORCE = "force"
 SEP_INVALID_TIMEOUT = "Invalid Timeout"
 SEP_INVALID_DOMAIN = "Invalid Domain"
 SEP_INVALID_HASH = "Invalid Hash"
@@ -95,6 +97,14 @@ SEP_JSON_VERSION = "version"
 SEP_UNABLE_TO_GET_VERSION = "Unable to get version from the device"
 SEP_VERSION_VALIDATED = "Version validation done"
 SEP_COMMAND_ID_ERR = "Failed to poll commandID. Details: {}"
+SEP_CREDENTIAL_URL_CHANGED = (
+    "The SEPM server URL changed after credentials were bound to the asset. "
+    "Review the new endpoint, reset connector state, and re-enter the credentials before retrying."
+)
+SEP_UNQUARANTINE_NOT_OWNED = (
+    "Refusing to unquarantine endpoint(s) {ids} because this asset has no record of quarantining them. "
+    "Re-run with force=true to release containment established elsewhere."
+)
 
 # error message constants
 SEP_ERR_CODE_MSG = "Error code unavailable"
@@ -106,6 +116,8 @@ SEP_INT_ERR_MSG = "Please provide a valid integer value in the {}"
 SEP_LIMIT_KEY = "'limit' action parameter"
 
 SEP_DEFAULT_TIMEOUT = 30
+SEP_STATE_CREDENTIAL_URL = "credential_url"
+SEP_STATE_QUARANTINED_IDS = "quarantined_computer_ids"
 SEP_STATE_TOKEN_ENCRYPTED = "token_encrypted"
 SEP_MAX_RESULT_XML_BYTES = 1_048_576
 SEP_RESULT_XML_TOO_LARGE = "Command result XML exceeds the 1 MiB parsing limit"

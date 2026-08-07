@@ -16,6 +16,7 @@
 #
 # Standard library imports
 import datetime
+import hashlib
 import json
 import re
 import time
@@ -78,7 +79,13 @@ class Sep14Connector(BaseConnector):
         self._username = config[consts.SEP_CONFIG_USERNAME]
         self._password = config[consts.SEP_CONFIG_PASSWORD]
         self._verify_server_cert = config.get(consts.SEP_CONFIG_VERIFY_SSL, True)
-        self._state = self.load_state()
+        self._state = self.load_state() or {}
+        credential_url = self._url.rstrip("/")
+        bound_credential_url = self._state.get(consts.SEP_STATE_CREDENTIAL_URL)
+        if bound_credential_url and bound_credential_url != credential_url:
+            self.save_progress(consts.SEP_CREDENTIAL_URL_CHANGED)
+            return phantom.APP_ERROR
+        self._state[consts.SEP_STATE_CREDENTIAL_URL] = credential_url
         if self._state:
             self._token = self._decrypt_state_token()
 
@@ -192,7 +199,9 @@ class Sep14Connector(BaseConnector):
 
         return phantom.APP_SUCCESS
 
-    def _make_rest_call_abstract(self, endpoint, action_result, headers=None, data=None, params=None, method="get", timeout=None):
+    def _make_rest_call_abstract(
+        self, endpoint, action_result, headers=None, data=None, params=None, method="get", timeout=consts.SEP_DEFAULT_TIMEOUT
+    ):
         """This method generates a new token if it is not available or if the existing token has expired
         and makes the call using _make_rest_call method.
 
@@ -234,10 +243,10 @@ class Sep14Connector(BaseConnector):
             if phantom.is_fail(ret_code):
                 return action_result.get_status(), response_data
 
-            headers = {"Authorization": f"Bearer {self._token}"}
+            headers["Authorization"] = f"Bearer {self._token}"
 
             rest_ret_code, response_data = self._make_rest_call(
-                endpoint, intermediate_action_result, headers=headers, params=params, data=data, method=method
+                endpoint, intermediate_action_result, headers=headers, params=params, data=data, method=method, timeout=timeout
             )
 
         # Assigning intermediate action_result to action_result, since no further invocation required
@@ -247,7 +256,17 @@ class Sep14Connector(BaseConnector):
 
         return phantom.APP_SUCCESS, response_data
 
-    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get", timeout=None, record_debug_data=True):
+    def _make_rest_call(
+        self,
+        endpoint,
+        action_result,
+        headers=None,
+        params=None,
+        data=None,
+        method="get",
+        timeout=consts.SEP_DEFAULT_TIMEOUT,
+        record_debug_data=True,
+    ):
         """Function that makes the REST call to the device. It is a generic function that can be called from various
         action handlers.
         :param endpoint: REST endpoint that needs to appended to the service address
@@ -461,7 +480,16 @@ class Sep14Connector(BaseConnector):
             matching_endpoints = {}
             for endpoint in endpoint_list:
                 data = endpoint.get(search_key_field[index])
-                value_found = value in data if isinstance(data, list) else data == value
+                if isinstance(data, list):
+                    value_found = value in data
+                elif search_key_field[index] == "computerName" and isinstance(data, str):
+                    endpoint_hostname = data.rstrip(".").casefold()
+                    requested_hostname = value.rstrip(".").casefold()
+                    value_found = (
+                        endpoint_hostname == requested_hostname or endpoint_hostname.split(".", 1)[0] == requested_hostname.split(".", 1)[0]
+                    )
+                else:
+                    value_found = data == value
                 if value_found and endpoint.get("uniqueId"):
                     matching_endpoints[endpoint.get("uniqueId")] = endpoint
 
@@ -525,6 +553,21 @@ class Sep14Connector(BaseConnector):
 
         return None
 
+    def _get_fingerprint_filename(self, action_result, group_id):
+        try:
+            installation_id = self.get_product_installation_id()
+        except Exception as e:
+            self.debug_print(consts.SEP_INSTALLATION_ID_ERR, self._get_error_message_from_exception(e))
+            action_result.set_status(phantom.APP_ERROR, consts.SEP_INSTALLATION_ID_ERR)
+            return None
+
+        if not installation_id:
+            action_result.set_status(phantom.APP_ERROR, consts.SEP_INSTALLATION_ID_ERR)
+            return None
+
+        installation_scope = hashlib.sha256(str(installation_id).encode("utf-8")).hexdigest()[:16]
+        return f"phantom_{installation_scope}_{group_id}"
+
     def _get_fingerprint_file_info(self, action_result, fingerprint_filename):
         """Helper function to get fingerprint file information based on file name.
 
@@ -540,6 +583,10 @@ class Sep14Connector(BaseConnector):
 
         # Something went wrong while getting details of fingerprint file
         if phantom.is_fail(resp_status):
+            if not isinstance(file_details, dict):
+                self.debug_print(consts.SEP_BLOCK_HASH_GET_DETAILS_ERR.format(name=fingerprint_filename))
+                return action_result.get_status(), None
+
             # If fingerprint file is not present, its not an error condition. It indicates that no files are blocked.
             if str(file_details.get("errorCode")) != "410" and not str(file_details.get("errorMessage")).__contains__("do not exist"):
                 self.debug_print(consts.SEP_BLOCK_HASH_GET_DETAILS_ERR.format(name=fingerprint_filename))
@@ -806,6 +853,9 @@ class Sep14Connector(BaseConnector):
         if phantom.is_fail(command_status):
             return action_result.get_status()
 
+        quarantined_ids = set(self._state.get(consts.SEP_STATE_QUARANTINED_IDS, []))
+        quarantined_ids.update(computer_ids_list)
+        self._state[consts.SEP_STATE_QUARANTINED_IDS] = sorted(quarantined_ids)
         summary_data["state_id_status"] = state_id_status
 
         return action_result.set_status(phantom.APP_SUCCESS)
@@ -850,7 +900,9 @@ class Sep14Connector(BaseConnector):
             self.debug_print(consts.SEP_INVALID_HASH)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HASH)
 
-        fingerprint_filename = f"phantom_{group_id}"
+        fingerprint_filename = self._get_fingerprint_filename(action_result, group_id)
+        if not fingerprint_filename:
+            return action_result.get_status()
 
         # Getting fingerprint file information
         resp_status, file_details = self._get_fingerprint_file_info(action_result, fingerprint_filename)
@@ -886,7 +938,7 @@ class Sep14Connector(BaseConnector):
                 fingerprint_api_data = json.dumps(
                     {
                         "hashType": "MD5",
-                        "name": f"phantom_{group_id}",
+                        "name": fingerprint_filename,
                         "domainId": domain_id,
                         "data": updated_block_hash_list,
                     }
@@ -972,6 +1024,11 @@ class Sep14Connector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_NO_DEVICE_FOUND)
 
         computer_id = ",".join(list(set(computer_ids_list)))
+        force = param.get(consts.SEP_PARAM_FORCE, False)
+        quarantined_ids = set(self._state.get(consts.SEP_STATE_QUARANTINED_IDS, []))
+        foreign_ids = sorted(set(computer_ids_list) - quarantined_ids)
+        if foreign_ids and not force:
+            return action_result.set_status(phantom.APP_ERROR, consts.SEP_UNQUARANTINE_NOT_OWNED.format(ids=", ".join(foreign_ids)))
 
         # Executing API to quarantine specified endpoint
         response_status, response_data = self._make_rest_call_abstract(
@@ -1001,6 +1058,11 @@ class Sep14Connector(BaseConnector):
         if phantom.is_fail(command_status):
             return action_result.get_status()
 
+        remaining_ids = quarantined_ids - set(computer_ids_list)
+        if remaining_ids:
+            self._state[consts.SEP_STATE_QUARANTINED_IDS] = sorted(remaining_ids)
+        else:
+            self._state.pop(consts.SEP_STATE_QUARANTINED_IDS, None)
         summary_data["state_id_status"] = state_id_status
 
         return action_result.set_status(phantom.APP_SUCCESS)
@@ -1026,7 +1088,9 @@ class Sep14Connector(BaseConnector):
             self.debug_print(consts.SEP_INVALID_HASH)
             return action_result.set_status(phantom.APP_ERROR, consts.SEP_INVALID_HASH)
 
-        fingerprint_filename = f"phantom_{group_id}"
+        fingerprint_filename = self._get_fingerprint_filename(action_result, group_id)
+        if not fingerprint_filename:
+            return action_result.get_status()
         fingerprint_file_desc = f"List of applications that are blocked in group having ID {group_id}"
 
         # Getting list of groups to get domain ID of the group ID provided
@@ -1224,8 +1288,9 @@ class Sep14Connector(BaseConnector):
                 if phantom.is_fail(response_status):
                     return action_result.get_status(), None
 
-                for content in response_data.get("content"):
-                    poll_content.append(content)
+                page_content = response_data.get("content") or []
+                poll_content.extend(page_content)
+                for content in page_content:
                     state_id = content.get("stateId")
                     sub_state_id = content.get("subStateId")
                     self.send_progress(
